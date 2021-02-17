@@ -1,0 +1,13 @@
+CREATE TABLE `t_bill` (
+	`L_Id` VARCHAR(20) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`S_Id` VARCHAR(20) NOT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`B_Time` TIME NOT NULL,
+	`B_Cost` INT(10) NOT NULL,
+	PRIMARY KEY (`L_Id`, `S_Id`, `B_Time`) USING BTREE,
+	INDEX `FK__t_store` (`S_Id`) USING BTREE,
+	CONSTRAINT `FK__t_label` FOREIGN KEY (`L_Id`) REFERENCES `stms`.`t_label` (`L_Id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `FK__t_store` FOREIGN KEY (`S_Id`) REFERENCES `stms`.`t_store` (`S_Id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+;
