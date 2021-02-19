@@ -263,8 +263,7 @@ public class test {
         for (Bill s : ss) {
             System.out.println("店铺号："+s.storeid);
             System.out.println("卡号："+s.labelid);
-            System.out.println("消费时间："+s.date+" "+s.time);
-            System.out.println("消费时间："+s.datetime);
+            System.out.println("消费时间："+s.time);
             System.out.println("消费金额："+s.cost);
         }
     }
@@ -275,8 +274,7 @@ public class test {
         for (Bill s : ss) {
             System.out.println("店铺号："+s.storeid);
             System.out.println("卡号："+s.labelid);
-            System.out.println("消费时间："+s.date+" "+s.time);
-            System.out.println("消费时间："+s.datetime);
+            System.out.println("消费时间："+s.time);
             System.out.println("消费金额："+s.cost);
         }
     }
