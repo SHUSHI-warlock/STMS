@@ -1,22 +1,24 @@
-
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Calendar;
+import java.util.Date;
 
 public class test {
 
-    public static void main(String[] args) throws SQLException {
-
-
+    public static void main(String[] args) throws ParseException {
+        addBill();
     }
 
     public static void getOrder(){
 
-        String id;
-        ArrayList<Food> foods=Dao.getOrderById(id);
+        ArrayList<Food> foods=Dao.getOrderById("1S3F3W");
+
         for (Food food : foods) {
-            System.out.println("菜品号："+food.fid);
-            System.out.println("所属店铺："+food.rid);
+            System.out.println("菜品号："+food.id);
+            System.out.println("所属店铺："+"1S3F3W");
             System.out.println("菜品类别："+food.foodClass);
             System.out.println("计算策略："+food.st);
             System.out.println("菜品名："+food.name);
@@ -25,13 +27,14 @@ public class test {
         }
 
     }
+
     public static void getFood(){
 
-        String rid = null;
-        String fid = null;
+        String rid = "1S3F3W";
+        String fid = "F001";
         Food food=Dao.getFoodById(rid,fid);
-        System.out.println("菜品号："+food.fid);
-        System.out.println("所属店铺："+food.rid);
+        System.out.println("菜品号："+fid);
+        System.out.println("所属店铺："+rid);
         System.out.println("菜品类别："+food.foodClass);
         System.out.println("计算策略："+food.st);
         System.out.println("菜品名："+food.name);
@@ -42,9 +45,15 @@ public class test {
 
     public static void addFood() {
 
-        Food f=new Food();
-
-        int a=Dao.addNewFood(f);
+        Food f = new Food();
+        f.id="F005";
+        f.foodClass="称重";
+        f.st="simple";
+        f.name="甜点";
+        f.price=100;
+        f.foodTip="null";
+        String sid="1S3F3W";
+        int a=Dao.addNewFood(sid,f);
         if(a>0)
             System.out.println("成功");
         else
@@ -52,12 +61,17 @@ public class test {
 
     }
 
-
     public static void upFood(){
 
         Food f=new Food();
-
-        int a=Dao.updateFood(f);
+        f.id="F005";
+        f.foodClass="称重";
+        f.st="simple";
+        f.name="甜点";
+        f.price=200;
+        f.foodTip="null";
+        String sid="1S3F3W";
+        int a=Dao.updateFood(sid,f);
         if(a>0)
             System.out.println("成功");
         else
@@ -68,8 +82,14 @@ public class test {
     public static void delFood(){
 
         Food f=new Food();
-
-        int a=Dao.deleteFood(f);
+        f.id="F005";
+        f.foodClass="称重";
+        f.st="simple";
+        f.name="甜点";
+        f.price=100;
+        f.foodTip="null";
+        String sid="1S3F3W";
+        int a=Dao.deleteFood(sid,f);
         if(a>0)
             System.out.println("成功");
         else
@@ -79,9 +99,8 @@ public class test {
 
     public static void getStore(){
 
-        String id;
+        Store s=Dao.getStoreById("1S3F3W");
 
-        Store s=Dao.getStoreById(id);
         System.out.println("店铺号："+s.id);
         System.out.println("位置："+s.loc);
         System.out.println("是否出租："+s.isLease);
@@ -110,7 +129,13 @@ public class test {
     public static void addStore(){
 
         Store s=new Store();
-
+        s.id="1S3F4W";
+        s.isLease=false;
+        s.loc="一食堂三楼4号窗口";
+        s.pa="111";
+        s.name="酸菜鱼";
+        s.master="111";
+        s.rent=1200;
         int a=Dao.addNewStore(s);
         if(a>0)
             System.out.println("成功");
@@ -122,7 +147,13 @@ public class test {
     public static void updStore(){
 
         Store s=new Store();
-
+        s.id="1S3F4W";
+        s.isLease=false;
+        s.loc="一食堂三楼4号窗口";
+        s.pa="111";
+        s.name="酸菜鱼";
+        s.master="111";
+        s.rent=1300;
         int a=Dao.updateStore(s);
         if(a>0)
             System.out.println("成功");
@@ -133,7 +164,13 @@ public class test {
     public static void delStore(){
 
         Store s=new Store();
-
+        s.id="1S3F4W";
+        s.isLease=false;
+        s.loc="一食堂三楼4号窗口";
+        s.pa="111";
+        s.name="酸菜鱼";
+        s.master="111";
+        s.rent=1300;
         int a=Dao.deleteStore(s);
         if(a>0)
             System.out.println("成功");
@@ -143,9 +180,7 @@ public class test {
 
     public static void getLabel(){
 
-        String id;
-
-        Label l=Dao.getLabelById(id);
+        Label l=Dao.getLabelById("L001");
         System.out.println("卡号："+l.id);
         System.out.println("持卡人："+l.name);
         System.out.println("卡密码："+l.password);
@@ -165,10 +200,13 @@ public class test {
 
     }
 
-    public static void addLabel(Label l){
+    public static void addLabel(){
 
         Label l=new Label();
-
+        l.id="L003";
+        l.name="z";
+        l.password="111";
+        l.money=11;
         int a=Dao.addNewLabel(l);
         if(a>0)
             System.out.println("成功");
@@ -176,10 +214,13 @@ public class test {
             System.out.println("失败");
     }
 
-    public static void updLabel(Label l){
+    public static void updLabel(){
 
         Label l=new Label();
-
+        l.id="L003";
+        l.name="z";
+        l.password="111";
+        l.money=111;
         int a=Dao.updateLabel(l);
         if(a>0)
             System.out.println("成功");
@@ -187,10 +228,13 @@ public class test {
             System.out.println("失败");
     }
 
-    public static void delLabel(Label l){
+    public static void delLabel(){
 
         Label l=new Label();
-
+        l.id="L003";
+        l.name="z";
+        l.password="111";
+        l.money=11;
         int a=Dao.deleteLabel(l);
         if(a>0)
             System.out.println("成功");
@@ -198,10 +242,13 @@ public class test {
             System.out.println("失败");
     }
 
-    public static void Rcharge(Label l){
+    public static void Rcharge(){
 
         Label l=new Label();
-
+        l.id="L002";
+        l.name="z";
+        l.password="111";
+        l.money=112;
         int a=Dao.Recharge(l);
         if(a>0)
             System.out.println("成功");
@@ -209,24 +256,27 @@ public class test {
             System.out.println("失败");
     }
 
-    public static void findBillUser(String id){
+    public static void findBUser(){
 
-        ArrayList<Bill> ss=Dao.findBillOfUser(id);
+        ArrayList<Bill> ss=Dao.findBillOfUser("L001");
+
         for (Bill s : ss) {
             System.out.println("店铺号："+s.storeid);
             System.out.println("卡号："+s.labelid);
-            System.out.println("消费时间："+s.time);
+            System.out.println("消费时间："+s.date+" "+s.time);
+            System.out.println("消费时间："+s.datetime);
             System.out.println("消费金额："+s.cost);
         }
     }
 
-    public static void findBillStore(String id){
+    public static void findBStore(){
 
-        ArrayList<Bill> ss=Dao.findBillOfRest(id);
+        ArrayList<Bill> ss=Dao.findBillOfRest("1S3F3W");
         for (Bill s : ss) {
             System.out.println("店铺号："+s.storeid);
             System.out.println("卡号："+s.labelid);
-            System.out.println("消费时间："+s.time);
+            System.out.println("消费时间："+s.date+" "+s.time);
+            System.out.println("消费时间："+s.datetime);
             System.out.println("消费金额："+s.cost);
         }
     }
@@ -234,7 +284,12 @@ public class test {
     public static void addBill(){
 
         Bill b=new Bill();
+        Time time=new Time(0);
 
+        b.labelid="L001";
+        b.storeid="1S3F3W";
+        b.time=time;
+        b.cost=100;
         int a=Dao.addNewBill(b);
         if(a>0)
             System.out.println("成功");
@@ -245,18 +300,19 @@ public class test {
     public static void Pay(){
 
         Bill b=new Bill();
-
+        b.labelid="L001";
+        b.storeid="1S3F3W";
+        b.cost=100;
         int a=Dao.tryPaying(b);
-        System.out.println("余额："+a);
+        if(a==-1)
+            System.out.println("余额不足");
+        else
+            System.out.println("余额："+a);
     }
 
-    public static void Caculate(){
+    public static void Caculate() throws ParseException {
 
-        String id;
-
-        Bill b=new Bill();
-
-        int a=Dao.CaculateTurnover(id);
+        int a=Dao.CaculateTurnover("1S3F3W");
         if(a>0)
             System.out.println("成功");
         else
@@ -265,8 +321,8 @@ public class test {
 
     public static void dkj(){
 
-        String id;
-        String pa;
+        String id="1S3F3W";
+        String pa="000";
         int a=Dao.dkjVerification(id,pa);
         if(a>0)
             System.out.println("成功");
@@ -277,8 +333,8 @@ public class test {
 
     public static void ytj(){
 
-        String id;
-        String pa;
+        String id="L001";
+        String pa="000000";
         int a=Dao.ytjVerification(id,pa);
         if(a>0)
             System.out.println("成功");
@@ -289,8 +345,8 @@ public class test {
 
     public static void kgl(){
 
-        String id;
-        String pa;
+        String id="111";
+        String pa="111";
         int a=Dao.kglVerification(id,pa);
         if(a>0)
             System.out.println("成功");
@@ -301,8 +357,8 @@ public class test {
 
     public static void dgl(){
 
-        String id;
-        String pa;
+        String id="111";
+        String pa="111";
         int a=Dao.dglVerification(id,pa);
         if(a>0)
             System.out.println("成功");
