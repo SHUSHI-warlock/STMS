@@ -13,7 +13,8 @@ import java.util.ArrayList;
 public class test {
 
     public static void main(String[] args) throws ParseException {
-        addBill();
+        //addBill();
+        getOrder();
     }
 
     public static void getOrder(){

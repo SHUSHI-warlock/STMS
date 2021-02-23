@@ -19,7 +19,7 @@ public class YTJServerHandle extends AbstractServerHandle{
         clientSocket = s;
         msr = m;
         user = new Label();
-        Label.id = Lid;
+        user.id = Lid;
     }
 
     @Override
