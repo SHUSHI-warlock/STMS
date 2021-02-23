@@ -23,5 +23,10 @@ namespace Util.Controls.WPFTest
         {
             InitializeComponent();
         }
+
+        private void FButton_Click_Change(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

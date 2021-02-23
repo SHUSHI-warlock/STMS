@@ -28,14 +28,18 @@
     <!--停靠面板：布局页面-->
     <DockPanel Name="dp">
         <!--设置停靠面板变形旋转-->
+        
         <DockPanel.RenderTransform>
             <TransformGroup>
-                <!--能够让某对象产生缩放变化。包括属性ScaleX、ScaleY、CenterX、CenterY，其中ScaleX、ScaleY属性表示对象在X、Y轴进行缩放的倍数，使用CenterX 和 CenterY属性指定一个中心点。-->
+               <!-- 能够让某对象产生缩放变化。包括属性ScaleX、ScaleY、CenterX、CenterY，
+                其中ScaleX、ScaleY属性表示对象在X、Y轴进行缩放的倍数，
+                使用CenterX 和 CenterY属性指定一个中心点。-->
                 <ScaleTransform CenterX="240" CenterY="140"/>
-                <!--RotateTransform：能够让某对象产生旋转变化，根据中心点进行顺时针旋转或逆时针旋转。-->
+                <!-- 能够让某对象产生旋转变化，根据中心点进行顺时针旋转或逆时针旋转。-->
                 <RotateTransform CenterX="240" CenterY="140"/>
             </TransformGroup>
         </DockPanel.RenderTransform>
+        
         <!--页面构成-->
         <Grid>
 
