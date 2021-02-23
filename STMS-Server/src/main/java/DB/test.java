@@ -8,13 +8,38 @@ import Data.Store;
 import java.sql.Time;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class test {
 
     public static void main(String[] args) throws ParseException {
-        //addBill();
-        getOrder();
+        //getOrder();       //ok
+        //getFood();        //ok
+        //addFood();        //ok
+        //delFood();        //ok
+        //upFood();         //ok
+        //getStore();       //ok
+        //getAStore();      //ok
+        //addStore();       //ok
+        //updStore();       //ok
+        //delStore();       //ok
+        //getLabel();       //ok
+        //getALabel();      //ok
+        //addLabel();       //ok
+        //updLabel();       //ok
+        //delLabel();       //ok
+        //Rcharge();        //ok
+        //findBUser();      //ok
+        //findBStore();     //ok
+        //addBill();        //ok
+        //Pay();            //ok
+
+
+        //dkj();
+        //ytj();
+        //kgl();
+        //dgl();
     }
 
     public static void getOrder(){
@@ -27,8 +52,9 @@ public class test {
             System.out.println("菜品类别："+food.foodClass);
             System.out.println("计算策略："+food.st);
             System.out.println("菜品名："+food.name);
-            System.out.println("菜单价："+food.price);
+            System.out.println("菜单价："+(double)food.price/100);
             System.out.println("描述："+food.foodTip);
+            System.out.println("");
         }
 
     }
@@ -36,8 +62,12 @@ public class test {
     public static void getFood(){
 
         String rid = "1S3F3W";
-        String fid = "F001";
+        String fid = "F006";
         Food food=Dao.getFoodById(rid,fid);
+        if(food==null) {
+            System.out.println("未找到菜品！");
+            return;
+        }
         System.out.println("菜品号："+fid);
         System.out.println("所属店铺："+rid);
         System.out.println("菜品类别："+food.foodClass);
@@ -56,7 +86,7 @@ public class test {
         f.st="simple";
         f.name="甜点";
         f.price=100;
-        f.foodTip="null";
+        f.foodTip="很甜很甜";
         String sid="1S3F3W";
         int a=Dao.addNewFood(sid,f);
         if(a>0)
@@ -71,8 +101,8 @@ public class test {
         Food f=new Food();
         f.id="F005";
         f.foodClass="称重";
-        f.st="simple";
-        f.name="甜点";
+        f.st="abc";
+        f.name="苦点";
         f.price=200;
         f.foodTip="null";
         String sid="1S3F3W";
@@ -127,6 +157,7 @@ public class test {
             System.out.println("店租金："+s.rent);
             System.out.println("店主："+s.master);
             System.out.println("打卡机密码："+s.pa);
+            System.out.println(" ");
         }
 
     }
@@ -264,12 +295,17 @@ public class test {
     public static void findBUser(){
 
         ArrayList<Bill> ss=Dao.findBillOfUser("L001");
-
+        if(ss==null)
+        {
+            System.out.println("未找到符合的记录");
+            return;
+        }
         for (Bill s : ss) {
             System.out.println("店铺号："+s.storeid);
             System.out.println("卡号："+s.labelid);
             System.out.println("消费时间："+s.time);
             System.out.println("消费金额："+s.cost);
+            System.out.println(" ");
         }
     }
 
@@ -287,11 +323,11 @@ public class test {
     public static void addBill(){
 
         Bill b=new Bill();
-        Time time=new Time(0);
+        Date time=new Date(0);
 
         b.labelid="L001";
         b.storeid="1S3F3W";
-        b.time=time;
+        //b.time=time;
         b.cost=100;
         int a=Dao.addNewBill(b);
         if(a>0)
@@ -301,7 +337,6 @@ public class test {
     }
 
     public static void Pay(){
-
         Bill b=new Bill();
         b.labelid="L001";
         b.storeid="1S3F3W";

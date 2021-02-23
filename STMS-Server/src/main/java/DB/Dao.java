@@ -544,7 +544,8 @@ public class Dao {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                bill.time = new Time(d.getTime());
+                //bill.time = new Time(d.getTime());
+                bill.time = d;
                 bill.cost = rs.getInt("B_Cost");
                 bills.add(bill);
             }
@@ -590,7 +591,8 @@ public class Dao {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                bill.time = new Time(d.getTime());
+                //bill.time = new Time(d.getTime());
+                bill.time = d;
                 bill.cost = rs.getInt("B_Cost");
                 bills.add(bill);
             }
@@ -604,23 +606,24 @@ public class Dao {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
         if(bills.size()==0)
             return null;        //数据库中无指定数据项，获取失败
         else
             return bills;
-
     }
 
     public static int addNewBill(Bill b){
         //添加账单记录
         String datetime;
         java.util.Date currentTime = new java.util.Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String date = formatter.format(currentTime);
-        SimpleDateFormat formatter1 = new SimpleDateFormat("HH:mm:ss");
-        String time = formatter1.format(b.time);
-        datetime=date+" "+time;
+        //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        //String date = formatter.format(currentTime);
+        //SimpleDateFormat formatter1 = new SimpleDateFormat("HH:mm:ss");
+        //String time = formatter1.format(b.time);
+        //datetime=date+" "+time;
+        SimpleDateFormat formater = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        datetime = formater.format(currentTime);
+
         String sql = "insert into T_Bill(L_Id,S_Id,B_Time,B_Cost) values('" + b.labelid + "','" + b.storeid + "','" + datetime + "'," + b.cost +")";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
@@ -693,7 +696,7 @@ public class Dao {
 
     public static int CaculateTurnover(String id) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Calendar c = Calendar.getInstance();
+        Calendar c = Calendar.getInstance();        //日历类，可以进行时间的计算
 
         Date now=new Date(0);        //获取当前时间
         //获取过去七天时间
@@ -701,12 +704,15 @@ public class Dao {
         c.add(Calendar.DATE, - 7);
         Date d = (Date) c.getTime();
         //转化为字符串
-        String dnow = format.format(now);     //
-        String day = format.format(d);
+        String dnow = format.format(now);     //现在时间
+        String day = format.format(d);        //七天前的时间
         //转化为Date型
         Date dbefore= (Date) format.parse(day);
         Date dafter= (Date) format.parse(dnow);
 
+        /**
+         * 计算该店一星期内所有营业额
+         */
         String ana = "select * from T_Bill where S_Id='" + id + "'";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
@@ -724,13 +730,15 @@ public class Dao {
                 Date date = (Date) format.parse(dt);
                 boolean before = dbefore.before(date);          //消费时间在一周范围内
                 boolean after = dafter.after(date);
-                if(before & after)
+                if(before & after)      //感觉这个after有点没必要了，难道还能超前消费？
                     total += rs.getInt("B_Cost");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        /**
+         * 减去该店租金，并获得店主卡号
+         */
         String cal = "select S_Rent from T_Store where S_Id='" + id + "'";
         try {
             state = conn.createStatement();
@@ -742,7 +750,9 @@ public class Dao {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        /**
+         * 最后把钱打到店主卡里
+         */
         String fin = "select L_Lass from T_Label where L_Id='" + master + "'";
         try {
             state = conn.createStatement();

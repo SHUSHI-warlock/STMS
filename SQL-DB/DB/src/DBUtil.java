@@ -11,7 +11,7 @@ public class DBUtil {
     public static Connection getConnection(){
 
         JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-        DB_URL = "jdbc:mysql://localhost:3306/MS?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";     //MS为指定要连接的数据库名称
+        DB_URL = "jdbc:mysql://localhost:3306/MS?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
         Name = "root";
         Pwd = "root";
 

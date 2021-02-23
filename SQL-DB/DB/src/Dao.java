@@ -1,22 +1,16 @@
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class Dao {
 
     //private static DBUtil d=new DBUtil();
-    private static final Connection conn= DBUtil.getConnection(); //获取数据库连接
+    private static Connection conn= DBUtil.getConnection();
 
     public static ArrayList<Food> getOrderById(String id){
-        //通过商店id获取商店的菜单，参数id表示商店id
-        String sql = "select * from T_Food where S_Id ='" + id + "'";
+
+        String sql = "select * from T_Food where R_Id ='" + id + "'";
         Statement state = null;
         ResultSet rs;
-        ArrayList<Food> foods= new ArrayList<>();
+        ArrayList<Food> foods= new ArrayList<Food>();
 
         try {
             state = conn.createStatement();
@@ -35,22 +29,19 @@ public class Dao {
         }
 
         try {
-            assert state != null;
             state.close();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        if(foods.size()==0)
-            return null;        //数据库中无指定商店，获取菜单失败
-        else
-            return foods;       //返回菜单
+
+        return foods;
 
     }
 
     public static Food getFoodById(String rid,String fid){
-        //通过菜品id和商店id获取菜品实体
-        String sql = "select * from T_Food where F_Id ='" + fid + "' and S_Id='" + rid + "'";
+
+        String sql = "select * from T_Food where F_Id ='" + fid + "' and R_Id='" + rid + "'";
         Statement state = null;
         ResultSet rs;
         Food food = new Food();
@@ -72,22 +63,21 @@ public class Dao {
         }
 
         try {
-            assert state != null;
             state.close();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        if(food.id!=null)
-            return food;        //返回获取到的菜品实体
-        else
-            return null;        //数据库中无此菜品
+
+        return food;
+
     }
 
     public static int addNewFood(String sid,Food f){
-        //添加新菜品，sid为商店id
-        String sql = "insert into T_Food(F_Id,S_Id,F_Class,F_Strategy,F_Name,F_Price,F_Tip) values('" + f.id + "','" + sid + "','" + f.foodClass + "','" + f.st + "','" + f.name + "'," + f.price +",'" + f.foodTip +"')";
+
+        String sql = "insert into T_Food(F_Id,R_Id,F_Class,F_Strategy,F_Name,F_Price,F_Tip) values('" + f.id + "','" + sid + "','" + f.foodClass + "','" + f.st + "','" + f.name + "'," + f.price +",'" + f.foodTip +"')";
         //创建数据库链接
+        //Connection conn = DBUtil.getConnection();
         Statement state = null;
         int a = 0;
 
@@ -105,13 +95,13 @@ public class Dao {
             e.printStackTrace();
         }
 
-        return a;   //a等于0添加失败，a大于0添加成功
+        return a;   //a等于0失败，a大于0成功
 
     }
 
     public static int updateFood(String sid,Food f){
-        //更新原有菜品，sid为商店id
-        String sql = "update T_Food set F_Class='" + f.foodClass + "', F_Strategy='" + f.st + "', F_Name='" + f.name + "',F_Price=" + f.price + ", F_Tip='" + f.foodTip + "' where F_Id='" + f.id + "' and S_Id='" + sid + "'";
+
+        String sql = "update T_Food set R_Id='" + sid + "', F_Class='" + f.foodClass + "', F_Strategy='" + f.st + "', F_Name='" + f.name + "',F_Price=" + f.price + ", F_Tip='" + f.foodTip +"' where F_Id='" + f.fid + "'";
         //String sql = "update course set name='" + course.getName() + "', teacher='" + course.getTeacher() + "', classroom='" + course.getClassroom() + "' where id='" + course.getId() + "'";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
@@ -137,8 +127,8 @@ public class Dao {
     }
 
     public static int deleteFood(String sid,Food f){
-        //删除指定菜品，sid为商店id
-        String sql = "delete from T_Food where F_Id='" + f.id + "' and S_Id='" + sid + "'";
+
+        String sql = "delete from T_Food where F_Id='" + f.id + "' and R_Id='" + sid + "'";
         //String sql = "delete from course where id='" + id + "'";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
@@ -164,7 +154,7 @@ public class Dao {
     }
 
     public static Store getStoreById(String id){
-        //通过商店id获取商店实体
+
         String sql = "select * from T_Store where S_Id ='" + id + "'";
         //Connection conn = DBUtil.getConnection();
         Statement state = null;
@@ -194,20 +184,17 @@ public class Dao {
             e.printStackTrace();
         }
 
-        if(store.id!=null)
-            return store;        //返回获取到的商店实体
-        else
-            return null;        //数据库中无此商店
+        return store;
 
     }
 
     public static ArrayList<Store> getAllStore(){
-    //获取商店表中的所有数据项
+
         String sql = "select * from T_Store";
         //Connection conn = DBUtil.getConnection();
         Statement state = null;
         ResultSet rs;
-        ArrayList<Store> stores= new ArrayList<>();
+        ArrayList<Store> stores= new ArrayList<Store>();
 
         try {
             state = conn.createStatement();
@@ -234,14 +221,12 @@ public class Dao {
             e.printStackTrace();
         }
 
-        if(stores.size()==0)
-            return null;        //数据库中无商店数据项
-        else
-            return stores;       //返回所有商店
+        return stores;
+
     }
 
     public static int addNewStore(Store s){
-        //添加新商店
+
         String sql = "insert into T_Store(S_Id,S_Loc,S_IsLease,S_Name,S_Rent,S_Master,S_Pa) values('" + s.id + "','" + s.loc + "'," + s.isLease + ",'" + s.name + "'," + s.rent + ",'" + s.master + "','" + s.pa + "')";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
@@ -267,8 +252,8 @@ public class Dao {
     }
 
     public static int updateStore(Store s){
-        //更新现有商店信息
-        String sql = "update T_Store set S_Loc='" + s.loc + "', S_IsLease=" + s.isLease + ", S_Name='" + s.name + "', S_Rent=" + s.rent + ", S_Master='" + s.master + "', S_Pa='" + s.pa + "' where S_Id='" + s.id + "'";
+
+        String sql = "update T_Store set S_Loc='" + s.loc + "', S_IsLease=" + s.isLease + ", S_Name='" + s.name + "', S_Rent=" + s.rent + ", S_Master='" + s.master + "', S_Pa='" + s.pa + ", where S_Id='" + s.id + "'";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
         Statement state = null;
@@ -293,7 +278,7 @@ public class Dao {
     }
 
     public static int deleteStore(Store s){
-        //删除指定商店
+
         String sql = "delete from T_Store where S_Id='" + s.id + "'";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
@@ -313,8 +298,8 @@ public class Dao {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        //删除商店同时将该商店的菜单删除
-        String del = "delete from T_Food where S_Id='" + s.id + "'";
+
+        String del = "delete from T_Food where R_Id='" + s.id + "'";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
         Statement state1 = null;
@@ -338,7 +323,7 @@ public class Dao {
     }
 
     public static Label getLabelById(String id){
-        //通过卡id获取对应卡实体
+
         String sql = "select * from T_Label where L_Id ='" + id + "'";
         //Connection conn = DBUtil.getConnection();
         Statement state = null;
@@ -349,9 +334,9 @@ public class Dao {
             state = conn.createStatement();
             rs = state.executeQuery(sql);
             while (rs.next()) {
-                label.id = rs.getString("L_Id");
+                label.id = id;
                 label.name = rs.getString("L_Name");
-                label.password = rs.getString("L_Pa");
+                label.password = rs.getBoolean("L_Pa");
                 label.money = rs.getInt("L_Lass");
             }
         } catch (Exception e) {
@@ -365,21 +350,17 @@ public class Dao {
             e.printStackTrace();
         }
 
-        if(label.id!=null)
-            return label;        //返回获取到的卡实体
-        else
-            return null;        //数据库中无此卡
-
+        return label;
 
     }
 
     public static ArrayList<Label> getAllLabel(){
-    //获取消费卡表的所有数据项
-        String sql = "select * from T_Label";
+
+        String sql = "select * from T_Store";
         //Connection conn = DBUtil.getConnection();
         Statement state = null;
         ResultSet rs;
-        ArrayList<Label> labels= new ArrayList<>();
+        ArrayList<Label> labels= new ArrayList<Label>();
 
         try {
             state = conn.createStatement();
@@ -388,7 +369,7 @@ public class Dao {
                 Label label = new Label();
                 label.id = rs.getString("L_Id");
                 label.name = rs.getString("L_Name");
-                label.password = rs.getString("L_Pa");
+                label.password = rs.getBoolean("L_Pa");
                 label.money = rs.getInt("L_Lass");
                 labels.add(label);
             }
@@ -404,15 +385,12 @@ public class Dao {
         }
 
 
-        if(labels.size()==0)
-            return null;        //表中无数据项，获取失败
-        else
-            return labels;       //返回arraylist
+        return labels;
 
     }
 
     public static int addNewLabel(Label l){
-        //添加新消费卡
+
         String sql = "insert into T_Label(L_Id,L_Name,L_Pa,L_Lass) values('" + l.id + "','" + l.name + "','" + l.password + "'," + l.money + ")";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
@@ -439,7 +417,7 @@ public class Dao {
     }
 
     public static int updateLabel(Label l){
-    //更新消费卡信息
+
         String sql = "update T_Label set L_Name='" + l.name + "', L_Pa='" + l.password + "', L_Lass=" + l.money + " where L_Id='" + l.id + "'";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
@@ -466,7 +444,7 @@ public class Dao {
     }
 
     public static int deleteLabel(Label l){
-        //删除已有的消费卡
+
         String sql = "delete from T_Label where L_Id='" + l.id + "'";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
@@ -493,7 +471,7 @@ public class Dao {
     }
 
     public static int Recharge(Label l){
-        //向指定消费卡中充值金额
+
         String sql = "update T_Label set L_Lass=" + l.money + " where L_Id='" + l.id + "'";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
@@ -514,17 +492,17 @@ public class Dao {
             e.printStackTrace();
         }
 
+
         return a; //a等于0失败，a大于0成功
     }
 
     public static ArrayList<Bill> findBillOfUser(String id){
-    //获取指定消费卡的账单记录，id表示卡id
+
         String sql = "select * from T_Bill where L_id='" + id + "'";
         //Connection conn = DBUtil.getConnection();
         Statement state = null;
         ResultSet rs;
-        ArrayList<Bill> bills= new ArrayList<>();
-        String str = null;
+        ArrayList<Bill> bills= new ArrayList<Bill>();
 
         try {
             state = conn.createStatement();
@@ -533,16 +511,7 @@ public class Dao {
                 Bill bill = new Bill();
                 bill.labelid = rs.getString("L_id");
                 bill.storeid = rs.getString("S_id");
-                str=rs.getString("B_Time");
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                java.util.Date d = null;
-                try {
-                    d = format.parse(str);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                Time time = new Time(d.getTime());
-                bill.time = time;
+                bill.time = rs.getTime("B_Time");
                 bill.cost = rs.getInt("B_Cost");
                 bills.add(bill);
             }
@@ -558,20 +527,16 @@ public class Dao {
         }
 
 
-        if(bills.size()==0)
-            return null;        //数据库中无指定数据项，获取失败
-        else
-            return bills;       //返回账单记录
+        return bills;
     }
 
     public static ArrayList<Bill> findBillOfRest(String id){
-        //获取指定商店的账单记录，id表示商店id
+
         String sql = "select * from T_Bill where S_id='" + id + "'";
         //Connection conn = DBUtil.getConnection();
         Statement state = null;
         ResultSet rs;
-        ArrayList<Bill> bills= new ArrayList<>();
-        String str = null;
+        ArrayList<Bill> bills= new ArrayList<Bill>();
 
         try {
             state = conn.createStatement();
@@ -580,16 +545,7 @@ public class Dao {
                 Bill bill = new Bill();
                 bill.labelid = rs.getString("L_id");
                 bill.storeid = rs.getString("S_id");
-                str=rs.getString("B_Time");
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                java.util.Date d = null;
-                try {
-                    d = format.parse(str);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                Time time = new Time(d.getTime());
-                bill.time = time;
+                bill.time = rs.getTime("B_Time");
                 bill.cost = rs.getInt("B_Cost");
                 bills.add(bill);
             }
@@ -604,23 +560,13 @@ public class Dao {
             e.printStackTrace();
         }
 
-        if(bills.size()==0)
-            return null;        //数据库中无指定数据项，获取失败
-        else
-            return bills;
+        return bills;
 
     }
 
     public static int addNewBill(Bill b){
-        //添加账单记录
-        String datetime=null;
-        Date currentTime = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String date = formatter.format(currentTime);
-        SimpleDateFormat formatter1 = new SimpleDateFormat("HH:mm:ss");
-        String time = formatter1.format(b.time);
-        datetime=date+" "+time;
-        String sql = "insert into T_Bill(L_Id,S_Id,B_Time,B_Cost) values('" + b.labelid + "','" + b.storeid + "','" + datetime + "'," + b.cost +")";
+
+        String sql = "insert into T_Bill(L_Id,S_Id,B_Time,B_Cost) values('" + b.labelid + "','" + b.storeid + "','" + b.time + "'," + b.cost +")";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
         Statement state = null;
@@ -640,12 +586,12 @@ public class Dao {
             e.printStackTrace();
         }
 
-        return a;   //a大于0添加成功，a等于0添加失败
+        return a;
 
     }
 
     public static int tryPaying(Bill b){
-    //消费付款
+
         //Connection conn = DBUtil.getConnection();
         Statement state = null;
         ResultSet rs;
@@ -681,50 +627,30 @@ public class Dao {
                 e.printStackTrace();
             }
             b.billState = a;//a大于0交易成功，等于0交易失败
-            return rcost;   //返回余额
+
         }
         else {
             b.billState = -1;//余额不足
-            return -1;   //返回余额
         }
-
+        return rcost;   //余额
     }
 
-    public static int CaculateTurnover(String id) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Calendar c = Calendar.getInstance();
+    public static int CaculateTurnover(String id){
 
-        Date now=new Date();        //获取当前时间
-        //获取过去七天时间
-        c.setTime(now);
-        c.add(Calendar.DATE, - 7);
-        Date d = c.getTime();
-        //转化为字符串
-        String dnow = format.format(now);     //
-        String day = format.format(d);
-        //转化为Date型
-        Date dbefore=format.parse(day);
-        Date dafter=format.parse(dnow);
-
-        String ana = "select * from T_Bill where S_Id='" + id + "'";
+        String ana = "select B_Cost from T_Bill where S_Id='" + id + "'";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
         Statement state = null;
         ResultSet rs;
         int a = 0;
-        int total=0;            //商店收入
-        String master = null;   //店主
+        int total=0;
+        String master = null;
 
         try {
             state = conn.createStatement();
             rs = state.executeQuery(ana);
             while (rs.next()) {
-                String dt=rs.getString("B_Time");
-                Date date = format.parse(dt);
-                boolean before = dbefore.before(date);          //消费时间在一周范围内
-                boolean after = dafter.after(date);
-                if(before & after)
-                    total += rs.getInt("B_Cost");
+                total += rs.getInt("B_Cost");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -742,7 +668,7 @@ public class Dao {
             e.printStackTrace();
         }
 
-        String fin = "select L_Lass from T_Label where L_Id='" + master + "'";
+        String fin = "select L_Lass from T_Label where L_Name='" + master + "'";
         try {
             state = conn.createStatement();
             rs = state.executeQuery(fin);
@@ -753,7 +679,7 @@ public class Dao {
             e.printStackTrace();
         }
 
-        String sql = "update T_Label set L_Lass=" + total + " where L_Id='" + master + "'";
+        String sql = "update T_Label set L_Lass=" + total + " where L_Name='" + master + "'";
         try {
             state = conn.createStatement();
             a = state.executeUpdate(sql);
@@ -768,12 +694,12 @@ public class Dao {
             e.printStackTrace();
         }
 
-        return a;   //a大于0成功，a等于0失败
+        return a;
 
     }
 
     public static int dkjVerification(String id,String pa){
-    //验证打卡机密码是否正确
+
         String ana = "select S_Pa from T_Store where S_Id='" + id + "'";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
@@ -801,12 +727,12 @@ public class Dao {
             e.printStackTrace();
         }
 
-        return a;       //a大于0正确，a等于0错误
+        return a;
 
     }
 
     public static int ytjVerification(String id,String pa){
-    //验证一体机账号密码是否正确
+
         String ana = "select L_Pa from T_Label where L_Id='" + id + "'";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
@@ -835,11 +761,11 @@ public class Dao {
         }
 
 
-        return a;       //a大于0正确，a等于0错误
+        return a;
     }
 
     public static int kglVerification(String id,String pa){
-        //验证登录账号密码是否正确
+
         String ana = "select U_Pa from T_User where U_Id='" + id + "'";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
@@ -867,7 +793,7 @@ public class Dao {
             e.printStackTrace();
         }
 
-        return a;   //a大于0正确，a等于0错误
+        return a;
     }
 
     public static int dglVerification(String id,String pa){
@@ -904,7 +830,7 @@ public class Dao {
     }
 
     public static void closeDB(){
-        //关闭数据库连接
+
         try {
             conn.close();
         } catch (SQLException e) {
@@ -913,5 +839,4 @@ public class Dao {
         }
 
     }
-
 }
