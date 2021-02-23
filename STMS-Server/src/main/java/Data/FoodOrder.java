@@ -19,6 +19,7 @@ public class FoodOrder {
     public void setFoodid(int foodid) {
         this.foodid = foodid;
     }
+    
 
     public int getStoreid() {
         return storeid;
