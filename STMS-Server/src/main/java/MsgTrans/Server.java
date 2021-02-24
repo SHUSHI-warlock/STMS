@@ -1,5 +1,6 @@
 package MsgTrans;
 
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,7 +19,8 @@ public class Server {
             Msg msg = msgSendReceiver.ReceiveMsg();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
         }
-
     }
 }

@@ -23,7 +23,7 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String str = "<abc>123汪帮传</abc>";
+        String str = "<abcde><abc>123123</abc><abc>123</abc><cde>a</cde></abcde>";
         StringReader sr = new StringReader(str);
         InputSource is = new InputSource(sr);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -37,7 +37,7 @@ public class Client {
         } catch (SAXException e) {
             e.printStackTrace();
         }
-        Msg msg = new Msg(1,10,110,document);
+        Msg msg = new Msg(EProtocol.EP_Disconnect,ETopService.ET_DKJ,110,document);
         MsgSendReceiver msgSendReceiver = new MsgSendReceiver(socket);
         msgSendReceiver.SendMsg(msg);
     }
