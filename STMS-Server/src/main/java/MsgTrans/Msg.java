@@ -2,7 +2,6 @@ package MsgTrans;
 
 import org.w3c.dom.Document;
 
-
 public class Msg {
     private String protocol;
     private String topService;
@@ -30,5 +29,13 @@ public class Msg {
 
     public String getTopService() {
         return topService;
+    }
+
+    public void PrintHead(){
+        System.out.println("Protocol : "+protocol);
+        System.out.println("topService : "+topService);
+        System.out.println("lowService : "+lowService);
+        System.out.println("content : "+content);
+
     }
 }

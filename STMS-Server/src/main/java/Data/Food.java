@@ -81,5 +81,13 @@ public class Food {
     public void setFoodTip(String foodTip) {
         this.foodTip = foodTip;
     }
+
+    public void setFoodNum(int foodNum) {
+        this.foodNum = foodNum;
+    }
+
+    public int getFoodNum() {
+        return foodNum;
+    }
 }
 
