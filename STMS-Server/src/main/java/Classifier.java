@@ -22,18 +22,17 @@ public class Classifier implements Runnable{
         try {
             ///获取消息
             Msg msg = msr.ReceiveMsg();
-            ///协议头处理
-            String topS = msg.getTopService();
-
-            ///分类服务
-            String id = "null";
-            String serverType = "null";
-            //用工厂创建对象
-
-            ServerHandleFactory factory = ServerHandleFactory.getInstence();
-            AbstractServerHandle service = factory.getServerHandle(serverType, clientSocket, msr, id);
-            //服务进行
-            service.ServerHandle();
+            switch (msg.getProtocol())
+            {
+                case EP_Verify:
+                    LoginVerify(msg);
+                case EP_Disconnect:
+                    break;
+                case EP_Other:
+                    System.out.println("其他");
+                default:
+                    System.out.println("未知的种类");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,4 +44,20 @@ public class Classifier implements Runnable{
             e.printStackTrace();
         }
     }
+
+    /**
+     * 协议类型为登录
+     */
+    private void LoginVerify(Msg m){
+        String id = null;
+        ServerHandleFactory factory = ServerHandleFactory.getInstence();
+        AbstractServerHandle service = factory.getServerHandle(m.getTopService(), clientSocket, msr, id);
+
+        //验证
+        if(service.ServiceVerify(m)>0){
+            //服务进行
+            service.ServerHandle();
+        }
+    }
+
 }

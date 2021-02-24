@@ -4,9 +4,7 @@ import DB.Dao;
 import Data.Bill;
 import Data.Food;
 import Data.FoodOrder;
-import MsgTrans.DKJMsgParse;
-import MsgTrans.Msg;
-import MsgTrans.MsgSendReceiver;
+import MsgTrans.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -42,12 +40,12 @@ public class DKJServerHandle extends AbstractServerHandle {
             while (true) {
                 Msg msg = msr.ReceiveMsg();
                 switch (msg.getLowService()) {
-                    case "1":
-                        CaculatePrice(msg);
-                    case "2":
-                        Paying(msg);
-                    case "3":
+                    case 1:
                         SendOrder(msg);
+                    case 2:
+                        CaculatePrice(msg);
+                    case 3:
+                        Paying(msg);
                     default: {
                         System.out.println("错误服务请求 \n");
                         msg.PrintHead();
@@ -59,6 +57,76 @@ public class DKJServerHandle extends AbstractServerHandle {
             System.out.println("连接断开！");
         }
     }
+
+    @Override
+    public int ServiceVerify(Msg m) {
+        String id = null;
+        String pass = null;
+        try {
+            Document document = m.getContent();
+            //获取根
+            Element element = document.getDocumentElement();
+            NodeList nodeList = element.getChildNodes();
+            Node childNode;
+            for (int temp = 0; temp < nodeList.getLength(); temp++) {
+                childNode = nodeList.item(temp);
+                //判断是哪个数据
+                switch (childNode.getNodeName()) {
+                    case "id":
+                        id = childNode.getTextContent();
+                    case "pass":
+                        pass = childNode.getTextContent();
+                }
+            }
+
+            //验证
+            int a = Dao.dkjVerification(id, pass);
+
+            // 初始化一个XML解析工厂
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            // 创建一个DocumentBuilder实例
+            DocumentBuilder builder = null;
+            builder = factory.newDocumentBuilder();
+            // 构建一个Document实例
+            document = builder.newDocument();
+            document.setXmlStandalone(true);
+            // standalone用来表示该文件是否呼叫其它外部的文件。若值是 ”yes” 表示没有呼叫外部文件
+
+            // 创建根节点
+            Element root = document.createElement("result");
+            // 创建状态
+            Element elementState = document.createElement("state");
+            root.appendChild(elementState);
+
+            if (a > 0)
+                //System.out.println("成功");
+                elementState.setTextContent("true");
+            else
+                //System.out.println("失败");
+                elementState.setTextContent("false");
+
+            //生成消息
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 0, document);
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
+            try {
+                //发送消息
+                msr.SendMsg(result);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
+            return a;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
 
     /**
      * 计算价格
@@ -143,7 +211,12 @@ public class DKJServerHandle extends AbstractServerHandle {
             //elementState.setTextContent("100");
         }
         //生成消息
-        Msg result = new Msg("3", "0", "2", document);
+        Msg result = null;
+        try {
+            result = new Msg(EProtocol.EP_Return, ETopService.ET_DKJ, 2 , document);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
 
         try {
             //发送消息
@@ -214,8 +287,12 @@ public class DKJServerHandle extends AbstractServerHandle {
             //elementState.setTextContent("100");
         }
         //生成消息
-        Msg result = new Msg("3", "0", "1", document);
-
+        Msg result = null;
+        try {
+            result = new Msg(EProtocol.EP_Return, ETopService.ET_DKJ, 3 , document);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
         try {
             //发送消息
             msr.SendMsg(result);
@@ -305,8 +382,12 @@ public class DKJServerHandle extends AbstractServerHandle {
             //elementState.setTextContent("100");
         }
         //生成消息
-        Msg result = new Msg("3", "0", "1", document);
-
+        Msg result = null;
+        try {
+            result = new Msg(EProtocol.EP_Return, ETopService.ET_DKJ, 1 , document);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
         try {
             //发送消息
             msr.SendMsg(result);

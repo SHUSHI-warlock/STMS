@@ -1,7 +1,6 @@
 package ServerHandle;
-
+import MsgTrans.ETopService;
 import MsgTrans.MsgSendReceiver;
-
 import java.net.Socket;
 
 public class ServerHandleFactory {
@@ -16,16 +15,16 @@ public class ServerHandleFactory {
         return instence;
     }
 
-    public AbstractServerHandle getServerHandle(String ServerType, Socket s, MsgSendReceiver m,String id)
+    public AbstractServerHandle getServerHandle(ETopService ServerType, Socket s, MsgSendReceiver m, String id)
     {
         switch (ServerType) {
-            case "DKJ":
+            case ET_DKJ:
                 return new DKJServerHandle(id,s,m);
-            case "YTJ":
+            case ET_YTJ:
                 return new YTJServerHandle(id,s,m);
-            case "KGL":
+            case ET_KGL:
                 return new KGLServerHandle(s,m);
-            case "DGL":
+            case ET_DGL:
                 return new DGLServerHandle(s,m);
             default:
                 return null;

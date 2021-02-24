@@ -7,6 +7,7 @@ import Data.Bill;
 import Data.Food;
 import Data.Store;
 
+import MsgTrans.ETopService;
 import MsgTrans.Msg;
 import MsgTrans.MsgSendReceiver;
 import org.w3c.dom.*;
@@ -34,25 +35,25 @@ public class DGLServerHandle extends AbstractServerHandle {
             while (true) {
                 Msg msg = msr.ReceiveMsg();
                 switch (msg.getLowService()) {
-                    case "1":
+                    case 1:
                         SendStores(msg);
-                    case "2":
+                    case 2:
                         CreateStore(msg);
-                    case "3":
+                    case 3:
                         DeleteStore(msg);
-                    case "4":
+                    case 4:
                         SendStore(msg);
-                    case "5":
+                    case 5:
                         ChangeStore(msg);
-                    case "6":
+                    case 6:
                         SendOrder(msg);
-                    case "7":
+                    case 7:
                         CreateFood(msg);
-                    case "8":
+                    case 8:
                         ChangeFood(msg);
-                    case "9":
+                    case 9:
                         DeleteFood(msg);
-                    case "10":
+                    case 10:
                         SendBill(msg);
                     default: {
                         System.out.println("错误服务请求 \n");
@@ -63,6 +64,75 @@ public class DGLServerHandle extends AbstractServerHandle {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("连接断开！");
+        }
+    }
+
+    @Override
+    public int ServiceVerify(Msg m) {
+        String id = null;
+        String pass = null;
+        try {
+            Document document = m.getContent();
+            //获取根
+            Element element = document.getDocumentElement();
+            NodeList nodeList = element.getChildNodes();
+            Node childNode;
+            for (int temp = 0; temp < nodeList.getLength(); temp++) {
+                childNode = nodeList.item(temp);
+                //判断是哪个数据
+                switch (childNode.getNodeName()) {
+                    case "id":
+                        id = childNode.getTextContent();
+                    case "pass":
+                        pass = childNode.getTextContent();
+                }
+            }
+
+            //验证
+            int a = Dao.dglVerification(id, pass);
+
+            // 初始化一个XML解析工厂
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            // 创建一个DocumentBuilder实例
+            DocumentBuilder builder = null;
+            builder = factory.newDocumentBuilder();
+            // 构建一个Document实例
+            document = builder.newDocument();
+            document.setXmlStandalone(true);
+            // standalone用来表示该文件是否呼叫其它外部的文件。若值是 ”yes” 表示没有呼叫外部文件
+
+            // 创建根节点
+            Element root = document.createElement("result");
+            // 创建状态
+            Element elementState = document.createElement("state");
+            root.appendChild(elementState);
+
+            if (a > 0)
+                //System.out.println("成功");
+                elementState.setTextContent("true");
+            else
+                //System.out.println("失败");
+                elementState.setTextContent("false");
+
+            //生成消息
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 0, document);
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
+            try {
+                //发送消息
+                msr.SendMsg(result);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
+            return a;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
         }
     }
 
@@ -120,7 +190,12 @@ public class DGLServerHandle extends AbstractServerHandle {
             //elementState.setTextContent("100");
         }
         //生成消息
-        Msg result = new Msg("3", "1", "1", document);
+        Msg result = null;
+        try {
+            result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 1 , document);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
 
         try {
             //发送消息
@@ -196,8 +271,12 @@ public class DGLServerHandle extends AbstractServerHandle {
                 elementState.setTextContent("false");
 
             //生成消息
-            Msg result = new Msg("3", "1", "3", document);
-
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 5 , document);
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
             try {
                 //发送消息
                 msr.SendMsg(result);
@@ -276,8 +355,12 @@ public class DGLServerHandle extends AbstractServerHandle {
                 elementState.setTextContent("false");
 
             //生成消息
-            Msg result = new Msg("3", "1", "2", document);
-
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 2 , document);
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
             try {
                 //发送消息
                 msr.SendMsg(result);
@@ -359,8 +442,12 @@ public class DGLServerHandle extends AbstractServerHandle {
                 elementState.setTextContent("false");
 
             //生成消息
-            Msg result = new Msg("3", "1", "2", document);
-
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 3 , document);
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
             try {
                 //发送消息
                 msr.SendMsg(result);
@@ -464,8 +551,12 @@ public class DGLServerHandle extends AbstractServerHandle {
             //elementState.setTextContent("100");
         }
         //生成消息
-        Msg result = new Msg("3", "1", "4", document);
-
+        Msg result = null;
+        try {
+            result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 4 , document);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
         try {
             //发送消息
             msr.SendMsg(result);
@@ -553,8 +644,12 @@ public class DGLServerHandle extends AbstractServerHandle {
             //elementState.setTextContent("100");
         }
         //生成消息
-        Msg result = new Msg("3", "1", "1", document);
-
+        Msg result = null;
+        try {
+            result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 6 , document);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
         try {
             //发送消息
             msr.SendMsg(result);
@@ -628,8 +723,12 @@ public class DGLServerHandle extends AbstractServerHandle {
                 elementState.setTextContent("false");
 
             //生成消息
-            Msg result = new Msg("3", "1", "3", document);
-
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 8 , document);
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
             try {
                 //发送消息
                 msr.SendMsg(result);
@@ -707,8 +806,12 @@ public class DGLServerHandle extends AbstractServerHandle {
                 elementState.setTextContent("false");
 
             //生成消息
-            Msg result = new Msg("3", "1", "3", document);
-
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 7 , document);
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
             try {
                 //发送消息
                 msr.SendMsg(result);
@@ -785,8 +888,12 @@ public class DGLServerHandle extends AbstractServerHandle {
                 elementState.setTextContent("false");
 
             //生成消息
-            Msg result = new Msg("3", "1", "3", document);
-
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 9 , document);
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
             try {
                 //发送消息
                 msr.SendMsg(result);
@@ -873,8 +980,12 @@ public class DGLServerHandle extends AbstractServerHandle {
             //elementState.setTextContent("100");
         }
         //生成消息
-        Msg result = new Msg("3", "1", "1", document);
-
+        Msg result = null;
+        try {
+            result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 10 , document);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
         try {
             //发送消息
             msr.SendMsg(result);

@@ -3,6 +3,8 @@ package ServerHandle;
 import DB.Dao;
 import Data.Bill;
 import Data.Label;
+import MsgTrans.EProtocol;
+import MsgTrans.ETopService;
 import MsgTrans.Msg;
 import MsgTrans.MsgSendReceiver;
 import org.w3c.dom.Document;
@@ -39,14 +41,14 @@ public class YTJServerHandle extends AbstractServerHandle{
             while (true) {
                 Msg msg = msr.ReceiveMsg();
                 switch (msg.getLowService()) {
-                    case "1":
-                        SendLabel(msg);
-                    case "2":
+                    case 1:
                         ChangeLabel(msg);
-                    case "4":
+                    case 2:
                         Recharge(msg);
-                    case "5":
+                    case 3:
                         SendBill(msg);
+                    case 4:
+                        SendLabel(msg);
                     default: {
                         System.out.println("错误服务请求 \n");
                         msg.PrintHead();
@@ -58,6 +60,76 @@ public class YTJServerHandle extends AbstractServerHandle{
             System.out.println("连接断开！");
         }
     }
+
+    @Override
+    public int ServiceVerify(Msg m) {
+        String id = null;
+        String pass = null;
+        try {
+            Document document = m.getContent();
+            //获取根
+            Element element = document.getDocumentElement();
+            NodeList nodeList = element.getChildNodes();
+            Node childNode;
+            for (int temp = 0; temp < nodeList.getLength(); temp++) {
+                childNode = nodeList.item(temp);
+                //判断是哪个数据
+                switch (childNode.getNodeName()) {
+                    case "id":
+                        id = childNode.getTextContent();
+                    case "pass":
+                        pass = childNode.getTextContent();
+                }
+            }
+
+            //验证
+            int a = Dao.ytjVerification(id, pass);
+
+            // 初始化一个XML解析工厂
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            // 创建一个DocumentBuilder实例
+            DocumentBuilder builder = null;
+            builder = factory.newDocumentBuilder();
+            // 构建一个Document实例
+            document = builder.newDocument();
+            document.setXmlStandalone(true);
+            // standalone用来表示该文件是否呼叫其它外部的文件。若值是 ”yes” 表示没有呼叫外部文件
+
+            // 创建根节点
+            Element root = document.createElement("result");
+            // 创建状态
+            Element elementState = document.createElement("state");
+            root.appendChild(elementState);
+
+            if (a > 0)
+                //System.out.println("成功");
+                elementState.setTextContent("true");
+            else
+                //System.out.println("失败");
+                elementState.setTextContent("false");
+
+            //生成消息
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 0, document);
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
+            try {
+                //发送消息
+                msr.SendMsg(result);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
+            return a;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
 
     private void SendLabel(Msg m)
     {
@@ -110,8 +182,12 @@ public class YTJServerHandle extends AbstractServerHandle{
             //elementState.setTextContent("100");
         }
         //生成消息
-        Msg result = new Msg("3", "1", "1", document);
-
+        Msg result = null;
+        try {
+            result = new Msg(EProtocol.EP_Return, ETopService.ET_YTJ, 4 , document);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
         try {
             //发送消息
             msr.SendMsg(result);
@@ -175,8 +251,12 @@ public class YTJServerHandle extends AbstractServerHandle{
                 elementState.setTextContent("false");
 
             //生成消息
-            Msg result = new Msg("3", "1", "3", document);
-
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_YTJ, 1 , document);
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
             try {
                 //发送消息
                 msr.SendMsg(result);
@@ -260,8 +340,12 @@ public class YTJServerHandle extends AbstractServerHandle{
             //elementState.setTextContent("100");
         }
         //生成消息
-        Msg result = new Msg("3", "1", "1", document);
-
+        Msg result = null;
+        try {
+            result = new Msg(EProtocol.EP_Return, ETopService.ET_YTJ, 3 , document);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
         try {
             //发送消息
             msr.SendMsg(result);
@@ -326,8 +410,12 @@ public class YTJServerHandle extends AbstractServerHandle{
                     elementState.setTextContent("false");
 
                 //生成消息
-                Msg result = new Msg("3", "1", "3", document);
-
+                Msg result = null;
+                try {
+                    result = new Msg(EProtocol.EP_Return, ETopService.ET_YTJ, 2 , document);
+                } catch (TransformerException e) {
+                    e.printStackTrace();
+                }
                 try {
                     //发送消息
                     msr.SendMsg(result);
