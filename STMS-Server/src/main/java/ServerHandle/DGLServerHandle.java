@@ -1,5 +1,6 @@
 package ServerHandle;
 
+import MsgTrans.EProtocol;
 import MsgTrans.Msg;
 import MsgTrans.MsgSendReceiver;
 

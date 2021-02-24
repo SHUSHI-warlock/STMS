@@ -34,8 +34,8 @@ public class MsgSendReceiver {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         t.transform(new DOMSource(myMsg.getContent()), new StreamResult(bos));
 
-        String msgStr = String.format("%-4d" ,myMsg.getProtocol())
-                + String.format("%-4d" ,myMsg.getTopService())
+        String msgStr = String.format("%-4d" ,myMsg.getProtocol().getIndex())
+                + String.format("%-4d" ,myMsg.getTopService().getIndex())
                 + String.format("%-4d" ,myMsg.getLowService())
                 + bos.toString();
 
@@ -75,10 +75,8 @@ public class MsgSendReceiver {
         } catch (ParserConfigurationException | SAXException e) {
             e.printStackTrace();
         }
-        if(document!=null) {
-            return new Msg(Integer.parseInt(strProtocol), Integer.parseInt(strTopS), Integer.parseInt(strLowS), document);
-        }
-        else
-            return null;
+        return new Msg(EProtocol.getEP(Integer.parseInt(strTopS)),
+                ETopService.getET(Integer.parseInt(strTopS)),
+                Integer.parseInt(strLowS), document);
     }
 }
