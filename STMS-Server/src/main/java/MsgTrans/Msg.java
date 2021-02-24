@@ -10,7 +10,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayOutputStream;
 
-
 public class Msg {
     private EProtocol protocol;
     private ETopService topService;
@@ -43,6 +42,13 @@ public class Msg {
 
     public int getLength() {
         return length;
+    }
+
+    public void PrintHead() {
+        System.out.println("Protocol : " + protocol);
+        System.out.println("topService : " + topService);
+        System.out.println("lowService : " + lowService);
+        System.out.println("content : " + content);
     }
 
     public Document getContent() {

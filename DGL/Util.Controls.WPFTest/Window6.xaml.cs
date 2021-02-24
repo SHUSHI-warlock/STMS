@@ -20,7 +20,8 @@ namespace Util.Controls.WPFTest
     public partial class Window6 : Window
     {
         private DispatcherTimer ShowTimer;
-        public Window6()
+        public String getname { get; set; }
+        public Window6(String name)
         {
             InitializeComponent();
             ShowTime();    //在这里窗体加载的时候不执行文本框赋值，窗体上不会及时的把时间显示出来，而是等待了片刻才显示了出来
@@ -28,6 +29,12 @@ namespace Util.Controls.WPFTest
             ShowTimer.Tick += new EventHandler(ShowCurTimer);//起个Timer一直获取当前时间
             ShowTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
             ShowTimer.Start();
+            Page1 p = new Page1(name);
+            getname = name;
+            Page_Change.Content = new Frame()
+            {
+                Content = p
+            };
         }
 
         public void ShowCurTimer(object sender, EventArgs e)
@@ -42,9 +49,39 @@ namespace Util.Controls.WPFTest
             this.tbTimeText.Text = DateTime.Now.ToString("HH:mm:ss");
         }
 
+
+
         private void FButton_Click_Exit(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void FButton_Click_Shop(object sender, RoutedEventArgs e)
+        {
+            Page1 p = new Page1(getname);
+            Page_Change.Content = new Frame()
+            {
+                Content = p
+            };
+        }
+
+        private void FButton_Click_Dish(object sender, RoutedEventArgs e)
+        {
+            Page2 p2 = new Page2(getname);
+            Page_Change.Content = new Frame() 
+            { 
+                Content=p2
+            };
+
+        }
+
+        private void FButton_Click_Record(object sender, RoutedEventArgs e)
+        {
+            Page3 p3 = new Page3();
+            Page_Change.Content = new Frame()
+            {
+                Content = p3
+            };
         }
     }
 

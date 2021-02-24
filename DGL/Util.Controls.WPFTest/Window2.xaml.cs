@@ -28,7 +28,15 @@ namespace Util.Controls.WPFTest
             String ShopName = t1.Text;
             String ShopNumber = t2.Text;
             String Location = t3.Text;
-            int Rent = t4.Text.ToInt();
+            try
+            {
+                int Rent = t4.Text.ToInt();
+            }
+            catch
+            {
+                MessageBox.Show("请输入正确格式的租金！");
+                t4.Text = "";
+            }
             String Master = t5.Text;
             String Password = t6.Text;
             bool IsLease = false;
