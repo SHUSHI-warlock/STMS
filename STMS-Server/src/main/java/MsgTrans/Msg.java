@@ -1,15 +1,14 @@
 package MsgTrans;
 
-import org.dom4j.Document;
+import org.w3c.dom.Document;
 
-import javax.xml.crypto.dsig.XMLObject;
 
 public class Msg {
-    private ProtocolType protocol;
+    private String protocol;
     private String topService;
     private String lowService;
     private Document content;
-    public Msg(ProtocolType p,String ts,String ls,Document c)
+    public Msg(String p, String ts, String ls, Document c)
     {
         protocol = p;
         topService = ts;
@@ -17,7 +16,7 @@ public class Msg {
         content = c;
     }
 
-    public ProtocolType getProtocol() {
+    public String getProtocol() {
         return protocol;
     }
 
