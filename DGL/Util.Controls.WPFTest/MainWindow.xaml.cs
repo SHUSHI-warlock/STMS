@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Util.Controls.WPFTest
 {
@@ -15,7 +16,6 @@ namespace Util.Controls.WPFTest
         public MainWindow()
         {
             InitializeComponent();
-
         }
 
         private void button_click1(object sender, RoutedEventArgs e)
@@ -26,6 +26,10 @@ namespace Util.Controls.WPFTest
                 win.Show();
                 this.Close();
             }
+            else if (num.Text == "" || pass.Text == "")
+            {
+                MessageBox.Show("请正确输入账号密码！");
+            }
 
         }
 
@@ -33,5 +37,6 @@ namespace Util.Controls.WPFTest
         {
             this.Close();
         }
+
     }
 }

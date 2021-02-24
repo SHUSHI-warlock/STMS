@@ -18,10 +18,10 @@ namespace Util.Controls.WPFTest
     /// </summary>
     public partial class Window4 : Window
     {
-        public Window4()
+        public Window4(String name)
         {
             InitializeComponent();
-            t6.Text = getname;
+            t6.Text = name;
         }
 
         private void FButton_Click_Create(object sender, RoutedEventArgs e)

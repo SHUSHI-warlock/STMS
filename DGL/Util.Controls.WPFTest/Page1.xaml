@@ -4,24 +4,33 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:xly="clr-namespace:Util.Controls;assembly=Util.Controls"
+      xmlns:system="clr-namespace:System;assembly=mscorlib"
+      xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
       xmlns:local="clr-namespace:Util.Controls.WPFTest"
       mc:Ignorable="d" Background="{StaticResource WindowBackground}"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="348" d:DesignWidth="709"
       Title="Page1">
-
+    <Page.Resources>
+        <collections:ArrayList x:Key="items">
+            <system:String >是</system:String>
+            <system:String>否</system:String>
+        </collections:ArrayList>
+    </Page.Resources>
     <Grid>
-        <TextBox x:Name="t1" Width="200" Height="30" Margin="135,97,465,323" IsReadOnly="True" xly:ControlAttachProperty.Watermark="" 
+        <TextBox x:Name="t2" Width="200" Height="30" Margin="99,117,410,201" IsReadOnly="True" xly:ControlAttachProperty.Watermark="" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="店铺号："></TextBox>
-        <TextBox x:Name="t2" Width="200" Height="30" Margin="135,241,465,179" IsReadOnly="True" xly:ControlAttachProperty.Watermark="" 
+        <TextBox x:Name="t1" Width="200" Height="30" Margin="99,47,410,271" IsReadOnly="True" xly:ControlAttachProperty.Watermark="" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="位置："></TextBox>
-        <TextBox x:Name="t3" Width="200" Height="30" Margin="135,165,465,255" IsReadOnly="True" xly:ControlAttachProperty.Watermark="" 
+        <TextBox x:Name="t3" Width="200" Height="30" Margin="99,187,410,131"  xly:ControlAttachProperty.Watermark="" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="店铺名："></TextBox>
-        <TextBox x:Name="t4" Width="200" Height="30" Margin="428,97,172,323" IsReadOnly="True" xly:ControlAttachProperty.Watermark="" 
+        <TextBox x:Name="t5" Width="200" Height="30" Margin="399,118,110,200"  xly:ControlAttachProperty.Watermark="" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="店租金：" RenderTransformOrigin="1.37,-3.4"></TextBox>
-        <TextBox x:Name="t5" Width="200" Height="30" Margin="428,165,172,255" IsReadOnly="True" xly:ControlAttachProperty.Watermark="" 
+        <TextBox x:Name="t6" Width="200" Height="30" Margin="399,186,110,132"  xly:ControlAttachProperty.Watermark="" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="店主："></TextBox>
-        <TextBox x:Name="t6" Width="200" Height="30" Margin="428,241,172,179" IsReadOnly="True" xly:ControlAttachProperty.Watermark="" 
-                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="密码："></TextBox>
-        <xly:FButton FIcon="&#xE629;" Margin="305,379,355,31" Width="140" Height="40" Background="#12B512" IsDefault="True" MouseOverBackground="#08EE08" Click="FButton_Click_Change" Content="更改店铺信息"/>
+        <TextBox x:Name="t4" Width="200" Height="30" Margin="399,48,110,270"  xly:ControlAttachProperty.Watermark="" 
+                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="密码：" RenderTransformOrigin="0.475,-0.5"></TextBox>
+        <ComboBox Name="c1" Margin="99,256,493,62" ItemsSource="{StaticResource items}" xly:ControlAttachProperty.Label="是否出租" 
+                      Style="{StaticResource LabelComboBox}"  Width="Auto" />
+        <xly:FButton FIcon="&#xE629;" Margin="296,298,273,10" Width="140" Height="40" Background="#12B512" IsDefault="True" MouseOverBackground="#08EE08" Click="FButton_Click_Change" Content="更改店铺信息" RenderTransformOrigin="-0.507,1.625"/>
     </Grid>
 </Page>
