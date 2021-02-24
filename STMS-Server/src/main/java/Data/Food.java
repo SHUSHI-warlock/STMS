@@ -4,9 +4,6 @@ import Strategy.IPriceStrategy;
 import Strategy.OrderPriceStrategyFactory;
 
 public class Food {
-
-    public Food() {}
-
     public String id;
     public String foodClass;    //菜品类型
     public String st;           //IPriceStrategy
@@ -14,7 +11,16 @@ public class Food {
     public int price;
     public String foodTip;
     public int foodNum;
+    public Food() {}
 
+    public Food(String id, String foodClass, String st, String name, int price, String foodTip) {
+        this.id = id;
+        this.foodClass = foodClass;
+        this.st = st;
+        this.name = name;
+        this.price = price;
+        this.foodTip = foodTip;
+    }
 
     /**
      * 计算菜价
@@ -26,15 +32,6 @@ public class Food {
             return -1;
         IPriceStrategy strategy = OrderPriceStrategyFactory.getStrategy(st);
         return strategy.quote(this);
-    }
-
-    public Food(String id, String foodClass, String st, String name, int price, String foodTip) {
-        this.id = id;
-        this.foodClass = foodClass;
-        this.st = st;
-        this.name = name;
-        this.price = price;
-        this.foodTip = foodTip;
     }
 
     public String getId() {
@@ -83,7 +80,6 @@ public class Food {
 
     public void setFoodTip(String foodTip) {
         this.foodTip = foodTip;
-
     }
 }
 

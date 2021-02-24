@@ -6,6 +6,8 @@ public class Label {
     public String password;
     public int money;
 
+    public Label(){}
+
     public Label(String id, String name, String password, int money) {
         this.id = id;
         this.name = name;

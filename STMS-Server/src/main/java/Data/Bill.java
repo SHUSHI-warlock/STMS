@@ -7,16 +7,17 @@ import java.util.Date;
 public class Bill {
     public String labelid;
     public String storeid;
-    public Time time;
+    public Date time;
 
     public int cost;
     public int billState;
+    public Bill(){}
 
     public Bill(String labelid, String storeid,int cost,int billState)
     {
         this.labelid = labelid;
         this.storeid = storeid;
-        this.time = new java.sql.Time(new Date().getTime());
+        //this.time = new java.sql.Time(new Date().getTime());
         this.cost = cost;
         this.billState = billState;
     }
@@ -37,7 +38,7 @@ public class Bill {
         this.storeid = storeid;
     }
 
-    public Time getTime() {
+    public Date getTime() {
         return time;
     }
 
