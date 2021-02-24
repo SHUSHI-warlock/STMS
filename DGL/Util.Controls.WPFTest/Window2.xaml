@@ -17,22 +17,22 @@
         </collections:ArrayList>
     </Window.Resources>
     <Grid>
-        <ComboBox Name="c1" Margin="438,245,154,167" ItemsSource="{StaticResource items}" xly:ControlAttachProperty.Label="是否出租" 
-                      Style="{StaticResource LabelComboBox}"  Width="Auto" />
-        <TextBox x:Name="t1" Width="200" Height="30" Margin="115,85,477,327" xly:ControlAttachProperty.Watermark="请输入店名" 
-                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="店名："></TextBox>
-        <TextBox x:Name="t2" Width="200" Height="30" Margin="115,149,477,263" xly:ControlAttachProperty.Watermark="请输入店铺号" 
-                         Style="{StaticResource LabelTextBox}"  xly:ControlAttachProperty.Label=" 店铺号："></TextBox>
-        <TextBox x:Name="t3" Width="200" Height="30" Margin="115,211,477,201" xly:ControlAttachProperty.Watermark="请输入位置" 
-                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="位置："></TextBox>
-        <TextBox x:Name="t4" Width="200" Height="30" Margin="115,278,477,134" xly:ControlAttachProperty.Watermark="请输入店租金" 
-                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="租金："></TextBox>
-        <TextBox x:Name="t5" Width="200" Height="30" Margin="438,95,154,317" xly:ControlAttachProperty.Watermark="请输入店主姓名" 
-                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="店主："></TextBox>
-        <TextBox x:Name="t6" Width="200" Height="30" Margin="438,170,154,242" xly:ControlAttachProperty.Watermark="请输入打卡机密码" 
-                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="密码："></TextBox>
-        <xly:FButton Margin="175,355,477,47" Width="140" Height="40" Background="#12B512" IsDefault="True" MouseOverBackground="#08EE08" Click="FButton_Click_Create" RenderTransformOrigin="0.007,3.525">创建</xly:FButton>
-        <xly:FButton Margin="438,355,214,47" Width="140" Height="40" Background="#FF931E1E" IsDefault="True" MouseOverBackground="#FFC52929" Click="FButton_Click_Delete">取消</xly:FButton>
-        <Label Content="店铺创建" HorizontalAlignment="Left" Margin="325,21,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White"/>
+        <ComboBox Name="c1" Margin="438,237,143,165" ItemsSource="{StaticResource items}" xly:ControlAttachProperty.Label="是否出租" 
+                      Style="{StaticResource LabelComboBox}"  Width="Auto" Height="Auto" />
+        <TextBox x:Name="t1" Width="Auto" Margin="115,85,463,317" xly:ControlAttachProperty.Watermark="请输入店名" 
+                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="店名："/>
+        <TextBox x:Name="t2" Width="Auto" Margin="115,149,463,254" xly:ControlAttachProperty.Watermark="请输入店铺号" 
+                         Style="{StaticResource LabelTextBox}"  xly:ControlAttachProperty.Label=" 店铺号："/>
+        <TextBox x:Name="t3" Width="Auto" Margin="115,211,463,191" xly:ControlAttachProperty.Watermark="请输入位置" 
+                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="位置："/>
+        <TextBox x:Name="t4" Width="Auto" Margin="115,278,463,124" xly:ControlAttachProperty.Watermark="请输入店租金" 
+                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="租金："/>
+        <TextBox x:Name="t5" Width="Auto" Margin="438,85,143,317" xly:ControlAttachProperty.Watermark="请输入店主姓名" 
+                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="店主："/>
+        <TextBox x:Name="t6" Width="Auto" Margin="438,163,143,239" xly:ControlAttachProperty.Watermark="请输入打卡机密码" 
+                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="密码："/>
+        <xly:FButton FontSize="18" Margin="175,355,477,36" Width="140" Height="Auto" Background="#12B512" IsDefault="True" MouseOverBackground="#08EE08" Click="FButton_Click_Create" RenderTransformOrigin="0.007,3.525">创建</xly:FButton>
+        <xly:FButton FontSize="18" Margin="438,355,214,36" Width="140" Height="Auto" Background="#FF931E1E" IsDefault="True" MouseOverBackground="#FFC52929" Click="FButton_Click_Delete">取消</xly:FButton>
+        <TextBlock HorizontalAlignment="Left" Margin="324,26,0,0" FontSize="26" TextWrapping="Wrap" Text="店铺创建" VerticalAlignment="Top"/>
     </Grid>
 </Window>

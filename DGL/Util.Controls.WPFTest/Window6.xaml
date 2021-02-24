@@ -8,9 +8,12 @@
         mc:Ignorable="d" Background="{StaticResource WindowBackground}" WindowStyle="None"
         Title="Window6" Height="450" Width="800">
     <Grid>
-        <ContentControl x:Name="Page_Change" HorizontalAlignment="Left" Margin="73,121,0,0" VerticalAlignment="Top" Height="282" Width="709"/>
+        <ContentControl x:Name="Page_Change" HorizontalAlignment="Left" Margin="83,84,0,0" VerticalAlignment="Top" Height="348" Width="709" BorderBrush="White" BorderThickness="1,1,1,1"/>
+        <xly:FButton FIcon="" Margin="0,115,714,287" Width="Auto" Height="40" Background="#12B512" IsDefault="True" MouseOverBackground="#08EE08" Click="FButton_Click_Shop" RenderTransformOrigin="0.007,3.525">店铺信息</xly:FButton>
+        <xly:FButton FIcon="" Margin="0,173,714,229" Width="Auto" Height="40" Background="#12B512" IsDefault="True" MouseOverBackground="#08EE08" Click="FButton_Click_Dish" RenderTransformOrigin="0.007,3.525">菜品管理</xly:FButton>
+        <xly:FButton FIcon="" Margin="0,233,714,169" Width="Auto" Height="40" Background="#12B512" IsDefault="True" MouseOverBackground="#08EE08" Click="FButton_Click_Record" RenderTransformOrigin="0.007,3.525">交易记录</xly:FButton>
         <Grid HorizontalAlignment="Left" Height="79" VerticalAlignment="Top" Width="792" Background="#FF1EA4F1">
-            <Label Content="店铺管理" Foreground="White" HorizontalAlignment="Left" Margin="340,19,0,0" VerticalAlignment="Top" FontSize="24"/>
+            
             <Label Content="欢迎您，管理员" Foreground="White" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" FontSize="16"/>
             <TextBlock Height="Auto"
                        Margin="10,5,0,0"
@@ -20,13 +23,16 @@
                        FontFamily="Arial"
                        FontSize="15" />
             <TextBlock Height="Auto"
-                       Margin="0,5,10,0"
+                       Margin="10,15,0,0"
                        x:Name="tbTimeText"
                        Foreground="#ffa51f"
                        FontWeight="Bold"
                        FontFamily="Calibri"
                        FontSize="23" />
+
             <xly:FButton Margin="699,10,10,39" Width="Auto" Height="Auto" Background="#FF931E1E" IsDefault="True" MouseOverBackground="#FFC52929" Click="FButton_Click_Exit">退出</xly:FButton>
+            <TextBlock HorizontalAlignment="Left" Margin="330,26,0,0" TextWrapping="Wrap" Text="店铺管理" FontSize="24" VerticalAlignment="Top"/>
+
         </Grid>
     </Grid>
 </Window>

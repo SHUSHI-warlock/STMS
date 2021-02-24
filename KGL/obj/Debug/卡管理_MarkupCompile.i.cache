@@ -4,11 +4,16 @@
 winexe
 C#
 .cs
+<<<<<<< HEAD
 F:\My FILS\大三\ZZT\STMS\STMS\卡管理\obj\Debug\
+=======
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\KGL\obj\Debug\
+>>>>>>> de595521e3ec09bbb9ec4699181e2b5251984f74
 卡管理
 none
 false
 DEBUG;TRACE
+<<<<<<< HEAD
 F:\My FILS\大三\ZZT\STMS\STMS\卡管理\App.xaml
 5922583747
 
@@ -17,4 +22,14 @@ F:\My FILS\大三\ZZT\STMS\STMS\卡管理\App.xaml
 MainWindow.xaml;Window1.xaml;Window2.xaml;Window3.xaml;Window4.xaml;
 
 True
+=======
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\KGL\App.xaml
+5922583747
+
+141480076730
+14-1175798665
+MainWindow.xaml;Window1.xaml;Window2.xaml;Window3.xaml;Window4.xaml;
+
+False
+>>>>>>> de595521e3ec09bbb9ec4699181e2b5251984f74
 

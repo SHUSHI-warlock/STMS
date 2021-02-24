@@ -19,95 +19,42 @@ namespace Util.Controls.WPFTest
     /// </summary>
     public partial class Window3 : Window
     {
-        public Window3()
+        String Price;
+        public Window3(String shopname,String Number,String name,String Class,String Strategy,int price)
         {
             InitializeComponent();
-            //从数据库获取数据
-            //循环进行列表的初始化操作
-            List<Dish> ds = new List<Dish>();
-            String shopName = getname;
-            int i = 0; //从服务器获取的菜品数
-            for(int j = 0; j < i; j++)
-            {
-                var d1 = new Dish()
-                {
-                    Number="1",
-                    Name = "a",
-                    Price=1,
-                    Class="a",
-                    Shop=shopName,
-                    Strategy="a"
-                };
-                ds.Add(d1);
-            }
-            this.gridList.ItemsSource = ds; //设置列表
+
+            t2.Text = shopname;
+            t6.Text = Number;
+            t1.Text = name;
+            t3.Text = Class;
+            t4.Text = Strategy;
+            t5.Text= price.ToString();
+            Price = price.ToString();
         }
         public String getname { get; set; }
+        public String getNumber { get; set; }
 
-        private void gridList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void FButton_Click_Create(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        public class Dish
-        {
-            public String Number { get; set; }
-            public String Name { get; set; }
-            public int Price { get; set; }
-            public String Class { get; set; }
-            public String Shop { get;set; }
-            public String Strategy { get; set; }
-        }
-
-        private void FButton_Click_Fresh(object sender, RoutedEventArgs e)
-        {
-            //循环进行列表的初始化操作
-            List<Dish> ds = new List<Dish>();
-            String shopName = getname;
-
-            //根据店名重新从服务器中获取菜品列表
-
-            int i = 0; //从服务器获取的菜品数
-            for (int j = 0; j < i; j++)
+            String shopname=t2.Text;
+            String Number=t6.Text;
+            String name=t1.Text;
+            String Class=t3.Text;
+            String Strategy=t4.Text;
+            try
             {
-                var d1 = new Dish()
-                {
-                    Number = "1",
-                    Name = "a",
-                    Price = 1,
-                    Class = "a",
-                    Shop = shopName,
-                    Strategy = "a"
-                };
-                ds.Add(d1);
+                int price = t5.Text.ToInt();
             }
-            this.gridList.ItemsSource = ds; //设置列表
-        }
-
-        private void FButton_Click_Add(object sender, RoutedEventArgs e)
-        {
-            Window4 win = new Window4();
-            win.getname = getname;
-            win.Show();
+            catch
+            {
+                MessageBox.Show("请输入正确格式的价格！");
+                t5.Text = Price; //回归原本的价格
+            }
 
         }
 
         private void FButton_Click_Delete(object sender, RoutedEventArgs e)
-        {
-            String Number;
-            Number=gridList.SelectedItem.ToString();
-            //根据菜品号进行菜品的删除
-        }
-
-        private void FButton_Click_Change(object sender, RoutedEventArgs e)
-        {
-            String Number;
-            Number = gridList.SelectedItem.ToString();
-
-            
-        }
-
-        private void FButton_Click_Exit(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
