@@ -18,9 +18,9 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <StackPanel Margin="0,0,0,383" Height="Auto">
-            <Label Content="管理员，欢迎您！" Margin="0,50,0,0" Width="145" Foreground="White" FontSize="18" />
-            <Label Content="店铺管理" HorizontalAlignment="Left" Margin="200,10,0,0" VerticalAlignment="Top" FontSize="24" Foreground="White" RenderTransformOrigin="0.36,0.616" Width="112" />
+        <Grid Margin="0,0,0,386" Height="Auto" Background="{StaticResource WindowBackground}">
+            <Label Content="管理员，欢迎您！" Margin="10,50,669,0" Width="145" Foreground="White" FontSize="18" />
+
             <TextBlock Height="Auto"
                        Margin="10,5,0,0"
                        x:Name="tbDateText"
@@ -29,15 +29,16 @@
                        FontFamily="Arial"
                        FontSize="15" />
             <TextBlock Height="Auto"
-                       Margin="10,5,0,0"
+                       Margin="10,15,0,0"
                        x:Name="tbTimeText"
                        Foreground="#ffa51f"
                        FontWeight="Bold"
                        FontFamily="Calibri"
                        FontSize="23" />
-            <xly:FButton FIcon=""   Margin="130,-8,0,5" Width="50" Height="40" Background="Red" MouseOverBackground="#F20BA0"  Click="FButton_Click" Content="退出" FontWeight="Bold" FontSize="14" HorizontalContentAlignment="Center" />
+            <xly:FButton FIcon=""   Margin="730,10,21,34" Width="Auto" Height="40" Background="Red" MouseOverBackground="#F20BA0"  Click="FButton_Click" Content="退出" FontWeight="Bold" FontSize="14" HorizontalContentAlignment="Center" RenderTransformOrigin="0.232,0.612" />
+            <TextBlock HorizontalAlignment="Left" Margin="358,16,0,0" TextWrapping="Wrap" FontSize="26" Text="店铺管理" VerticalAlignment="Top"/>
 
-        </StackPanel>
+        </Grid>
         <RadioButton x:Name="r1" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="35,87,683,318" RenderTransformOrigin="0.537,0.321" ></RadioButton>
         <RadioButton x:Name="r2" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="161,87,557,318"></RadioButton>
         <RadioButton x:Name="r3" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="288,87,430,318"></RadioButton>

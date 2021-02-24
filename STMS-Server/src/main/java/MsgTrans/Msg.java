@@ -3,11 +3,11 @@ package MsgTrans;
 import org.w3c.dom.Document;
 
 public class Msg {
-    private String protocol;
-    private String topService;
-    private String lowService;
+    private int protocol;
+    private int topService;
+    private int lowService;
     private Document content;
-    public Msg(String p, String ts, String ls, Document c)
+    public Msg(int p, int ts, int ls, Document c)
     {
         protocol = p;
         topService = ts;
@@ -15,19 +15,21 @@ public class Msg {
         content = c;
     }
 
-    public String getProtocol() {
+    public int getProtocol() {
         return protocol;
     }
 
-    public Document getContent() {
-        return content;
-    }
+    /**
+     * Protocol的类型：
+     * 0.验证登录
+     * 2.
+     */
 
-    public String getLowService() {
+    public int getLowService() {
         return lowService;
     }
 
-    public String getTopService() {
+    public int getTopService() {
         return topService;
     }
 
@@ -37,5 +39,7 @@ public class Msg {
         System.out.println("lowService : "+lowService);
         System.out.println("content : "+content);
 
+    public Document getContent() {
+        return content;
     }
 }

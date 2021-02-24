@@ -4,35 +4,32 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xly="clr-namespace:Util.Controls;assembly=Util.Controls"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
         xmlns:local="clr-namespace:Util.Controls.WPFTest"
         mc:Ignorable="d" Background="{StaticResource WindowBackground}" WindowStyle="None"
         Title="Window3" Height="450" Width="800">
-    <Grid Margin="0,0,-8,0">
-        <DataGrid x:Name="gridList" Margin="0,0,323,6" GridLinesVisibility="None" BorderThickness="0" SelectionUnit="FullRow" SelectionChanged="gridList_SelectionChanged">
-            <DataGrid.Columns>
-                <DataGridTextColumn Width="70" Header="菜品号" Binding="{Binding Number}"></DataGridTextColumn>
-                <DataGridTextColumn Width="70" Header="菜品名" Binding="{Binding Name}"></DataGridTextColumn>
-                <DataGridTextColumn Header="菜品单价" Binding="{Binding Price}"></DataGridTextColumn>
-                <DataGridTextColumn Header="菜品类别" Binding="{Binding Class}"></DataGridTextColumn>
-                <DataGridTextColumn Header="所属店铺" Binding="{Binding Shop}"></DataGridTextColumn>
-                <DataGridTextColumn Header="计算策略" Binding="{Binding Strategy}"></DataGridTextColumn>
-                <!--
-                <DataGridTemplateColumn Header="选择">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <CheckBox xly:ControlAttachProperty.FIconSize="18">选中</CheckBox>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                                        -->
-            </DataGrid.Columns>
-
-        </DataGrid>
-
-        <xly:FButton FIcon="&#xe629;" Margin="559,24,93,355" Width="140" Height="40" Background="#12B512" IsDefault="True" MouseOverBackground="#08EE08" Click="FButton_Click_Fresh">刷新列表</xly:FButton>
-        <xly:FButton FIcon="&#xe629;" Margin="559,108,93,271" Width="140" Height="40" Background="#12B512" IsDefault="True" MouseOverBackground="#08EE08" Click="FButton_Click_Add">添加菜品</xly:FButton>
-        <xly:FButton FIcon="&#xe629;" Margin="559,200,93,179" Width="140" Height="40" Background="#12B512" IsDefault="True" MouseOverBackground="#08EE08" Click="FButton_Click_Delete">删除菜品</xly:FButton>
-        <xly:FButton FIcon="&#xe629;" Margin="559,284,93,95" Width="140" Height="40" Background="#12B512" IsDefault="True" MouseOverBackground="#08EE08" Click="FButton_Click_Change">更改菜品信息</xly:FButton>
-        <xly:FButton Margin="559,375,93,27" Width="140" Height="40" Background="#FF931E1E" IsDefault="True" MouseOverBackground="#FFC52929" Click="FButton_Click_Exit">退出</xly:FButton>
+    <Window.Resources>
+        <collections:ArrayList x:Key="items">
+            <system:String >是</system:String>
+            <system:String>否</system:String>
+        </collections:ArrayList>
+    </Window.Resources>
+    <Grid>
+        <TextBox x:Name="t1" Width="200" Margin="115,95,477,308" xly:ControlAttachProperty.Watermark="请输入菜品名" 
+                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="菜品名："/>
+        <TextBox x:Name="t2" Width="200" Margin="115,170,477,231" xly:ControlAttachProperty.Watermark="请输入菜品号" 
+                         Style="{StaticResource LabelTextBox}"  xly:ControlAttachProperty.Label=" 菜品号："/>
+        <TextBox x:Name="t3" Width="200" Margin="115,250,477,148" xly:ControlAttachProperty.Watermark="请输入菜品类别" 
+                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="类别："/>
+        <TextBox x:Name="t6" Width="200" Margin="438,250,154,148" IsReadOnly="True" xly:ControlAttachProperty.Watermark="" 
+                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="店铺："/>
+        <TextBox x:Name="t4" Width="200" Margin="438,95,154,308" xly:ControlAttachProperty.Watermark="请输入计算策略" 
+                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="策略："/>
+        <TextBox x:Name="t5" Width="200" Margin="438,170,154,231" xly:ControlAttachProperty.Watermark="请输入菜品单价" 
+                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="单价："/>
+        <xly:FButton Margin="175,344,477,47" Width="140" Height="Auto" Background="#12B512" IsDefault="True" MouseOverBackground="#08EE08" Click="FButton_Click_Create" RenderTransformOrigin="0.007,3.525">修改</xly:FButton>
+        <xly:FButton Margin="438,344,214,47" Width="140" Height="Auto" Background="#FF931E1E" IsDefault="True" MouseOverBackground="#FFC52929" Click="FButton_Click_Delete" RenderTransformOrigin="0.579,0.49">取消</xly:FButton>
+        <TextBlock HorizontalAlignment="Left" Margin="332,33,0,0" TextWrapping="Wrap" Text="菜品修改" VerticalAlignment="Top" FontSize="24"/>
     </Grid>
 </Window>
