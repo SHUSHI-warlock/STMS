@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
+using System.IO.Ports;
 using Database;
 
 namespace 卡管理
@@ -25,37 +27,45 @@ namespace 卡管理
             InitializeComponent();
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void combobox2_Copy_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
+        private string date;
+        private static int index;
+        private DateTime dt = DateTime.Now;
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-    
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            int sexnumber;
-            if (combobox1.Text.Equals("男"))
-            {
-                sexnumber = 1;
-            }
-            else
-            {
-                sexnumber = 2;
-            }
-            if (textbox1.Text != string.Empty && password1.Password != string.Empty && password2.Password != string.Empty)
+            if (Text1.Text != string.Empty && Text2.Text != string.Empty && password1.Password != string.Empty
+                && password2.Password != string.Empty && combobox1.Text != string.Empty && combobox2.Text != string.Empty && Text7.Text != string.Empty)
             {
                 if (password1.Password.Equals(password2.Password))
                 {
-                    string sql1 = "UPDATE User_Table SET Id = '" + textbox1.Text + "',Password='" + password1.Password + "',Name='" + textbox2.Text + "',Sex='" + sexnumber + "'WHERE Id='" + MainWindow.user.Id + "'";
+                    string sql = "INSERT INTO User_table VALUES ("+Text7.Text+","  + Text1.Text +"," + password1.Password + ",'"+Text2.Text + ",";
+                    if (combobox1.Text.Equals("男"))
+                        sql += "1,'";
+                    else
+                        sql += "0,'";
+                    if (combobox2.Text.Equals("学生"))
+                    {
+                        sql += "学生'";
+                    }
+                    else
+                    {
+                        sql += "管理员'";
+                    }
+                    sql += ")";
                     Program p = new Program();
                     p.OpenDB();
-                    p.Change(sql1);
+                    p.Insert(sql);
                     p.CloseDB();
-                    MessageBox.Show("修改成功", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("注册成功！");
+                    index++;
+                    StreamWriter sw = new StreamWriter("date", false, Encoding.GetEncoding("UTF-8"));
+                    sw.WriteLine(DateTime.Now.ToString("yyyyMMdd"));
+                    sw.WriteLine(index.ToString());
+                    sw.Close();
                 }
                 else
                 {

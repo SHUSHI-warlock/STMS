@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 
 using Database;
 
-
 namespace 卡管理
 {
     /// <summary>
@@ -50,26 +49,30 @@ namespace 卡管理
                 else
                 {
                     user = U[0];
-                    Window a1;
-                    MessageBox.Show("欢迎" + user.Name + "进入", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
-                    a1 = new Window1();
-                    this.Hide();
-                    if (a1.ShowDialog() == true)
+                    if (user.Role.Equals("管理员"))
                     {
-                        this.Show();
+                        Window a1;
+                        MessageBox.Show("欢迎管理员" + user.Name + "进入", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        a1 = new Window1();
+                        this.Hide();
+                        if (a1.ShowDialog() == true)
+                        {
+                            this.Show();
+                        }
+                        else
+                        {
+                            this.Close();
+                        }
                     }
-                    else
+                    else if(user.Role.Equals("学生"))
                     {
-                        this.Close();
+                        MessageBox.Show("请用管理员账号登录", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                        textbox1.Text = "";
+                        textbox2.Password = "";
                     }
                 }
             }
         }
         public static User user;
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
     }
 }

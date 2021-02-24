@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{39CB5DC8-DD45-44E2-AD68-E109D4F952F3}</ProjectGuid>
+    <ProjectGuid>{70307A1F-A2CF-43C5-9FBD-497848EE4668}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>卡管理</RootNamespace>
     <AssemblyName>卡管理</AssemblyName>

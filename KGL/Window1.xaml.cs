@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Database;
 
 namespace 卡管理
 {
@@ -22,30 +23,57 @@ namespace 卡管理
         public Window1()
         {
             InitializeComponent();
+            initList();
+        }
+        private static string select_sql = "select* from User_table";
+
+        private void initList()
+        {
+            Program p = new Program();
+            p.OpenDB();
+            List<User> U = p.Searchlogin(select_sql);
+            p.CloseDB();
+            listView.ItemsSource = U;
+        }
+        private void Del(object sender, RoutedEventArgs e)
+        {
+            if (listView.SelectedItem == null)
+                MessageBox.Show("请选中一行", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+            else
+            {
+                User u = listView.SelectedItem as User;
+                MessageBoxResult result = MessageBox.Show("确认是否删除账号为 " + u.Id + " 的用户", "警告", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+                if (result == MessageBoxResult.OK)
+                {
+                    string sql = "delete from User_table where Id='" + u.Id + "'";
+                    Program p = new Program();
+                    p.OpenDB();
+                    p.Delete(sql);
+                    p.CloseDB();
+                    initList();
+                }
+            }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Regist(object sender, RoutedEventArgs e)
         {
-            Window2 a = new Window2();
-            this.Hide();
-            a.ShowDialog();
-            this.ShowDialog();
+            Window2 a1 = new Window2();
+            a1.ShowDialog();
+            initList();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Recharge(object sender, RoutedEventArgs e)
         {
-            Window3 a = new Window3();
-            this.Hide();
-            a.ShowDialog();
-            this.ShowDialog();
+            Window2 a1 = new Window2();
+            a1.ShowDialog();
+            initList();
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void Find(object sender, RoutedEventArgs e)
         {
-            Window4 a = new Window4();
-            this.Hide();
-            a.ShowDialog();
-            this.ShowDialog();
+            Window3 a1 = new Window3();
+            a1.ShowDialog();
+            //initList1();
         }
     }
 }

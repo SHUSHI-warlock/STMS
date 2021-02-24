@@ -7,22 +7,21 @@
         mc:Ignorable="d"
         Title="Window3" Height="450" Width="800">
     <Grid>
-        <ListView HorizontalAlignment="Left" Height="420" VerticalAlignment="Top" Width="794" Margin="0,0,-0.4,0">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="  卡号  " DisplayMemberBinding="{Binding Id}" Width="100"/>
-                    <GridViewColumn Header="  姓名  " DisplayMemberBinding="{Binding Name}" Width="auto"/>
-                    <GridViewColumn Header="  性别  " DisplayMemberBinding="{Binding Sex}" Width="auto"/>
-                    <GridViewColumn Header="  消费流水号  " DisplayMemberBinding="{Binding PayId}" Width="150"/>
-                    <GridViewColumn Header="  消费时间  " DisplayMemberBinding="{Binding TimeofPayment}" Width="100"/>
-
-
-
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Label Content="请输入信息" HorizontalAlignment="Left" Height="54" Margin="322,38,0,0" VerticalAlignment="Top" Width="122" FontSize="22"/>
+        <Label Content="账号" HorizontalAlignment="Left" Margin="88,113,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <Label Content="密码" HorizontalAlignment="Left" Margin="88,168,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <Label Content="" HorizontalAlignment="Left" Margin="88,227,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <Label Content="性别" HorizontalAlignment="Left" Margin="88,312,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <Label Content="确认密码" HorizontalAlignment="Left" Margin="88,216,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="0.76,-1.118"/>
+        <ComboBox  x:Name="combobox1" HorizontalAlignment="Left" Margin="216,313,0,0" VerticalAlignment="Top" Width="382" Height="26" >
+            <ComboBoxItem IsSelected="True" Content="男"/>
+            <ComboBoxItem Content="女"/>
+        </ComboBox>
+        <TextBox x:Name="textbox1"  HorizontalAlignment="Left" Height="26" Margin="216,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="382" SpellCheck.IsEnabled="True"/>
+        <PasswordBox x:Name="password1" HorizontalAlignment="Left" Margin="216,168,0,0" VerticalAlignment="Top" Height="26" Width="382"/>
+        <PasswordBox x:Name="password2" HorizontalAlignment="Left" Margin="216,218,0,0" VerticalAlignment="Top" Height="26" Width="382"/>
+        <Label Content="姓名" HorizontalAlignment="Left" Margin="88,263,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox x:Name="textbox2"  HorizontalAlignment="Left" Height="26" Margin="216,267,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="382" SpellCheck.IsEnabled="True"/>
+        <Button x:Name="Button" Content="提交" HorizontalAlignment="Left" Margin="663,358,0,0" VerticalAlignment="Top" Width="75" Height="28" FontSize="18" Click="Button_Click_1"/>
     </Grid>
-
-
 </Window>

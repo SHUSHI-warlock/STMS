@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -76,7 +75,7 @@ namespace Database
                 {
                     u.Role = "管理员";
                 }
-                if (read["Sex"].ToString().Equals("1"))
+                if (read["Sex"].ToString().Equals("男"))
                     u.Sex = "男";
                 else
                     u.Sex = "女";
@@ -99,36 +98,34 @@ namespace Database
         }
     }
     public class User
+{
+    public User()
     {
-        public User()
-        {
-            Name = Id = Password = Role = string.Empty;
-        }
-        public User(User u)
-        {
-            Name = u.Name;
-            Id = u.Id;
-            Password = u.Password;
-            Sex = u.Sex;
-            Role = u.Role;
-            Money = u.Money;
-        }
-        public string Name { set; get; }
-        public string Id { set; get; }
-        public string Password { set; get; }
-        public string Sex { set; get; }
-        public string Role { set; get; }
-        public int Money { set; get; }
-    
+        Name = Id = Password = Role = string.Empty;
     }
- 
-    class Payment
+    public User(User u)
     {
-        public string IdOfPayment { set; get; }
-        public string Id { set; get; }
-        public string Time { set; get; }
-        public string WindowsName { set; get; }
-        public int Pay { set; get; }
+        Name = u.Name;
+        Id = u.Id;
+        Password = u.Password;
+        Sex = u.Sex;
+        Role = u.Role;
+        Money = u.Money;
     }
-}
+    public string Name { set; get; }
+    public string Id { set; get; }
+    public string Password { set; get; }
+    public string Sex { set; get; }
+    public string Role { set; get; }
+    public int Money { set; get; }
 
+}
+   class Payment
+{
+    public string IdOfPayment { set; get; }
+    public string Id { set; get; }
+    public string Time { set; get; }
+    public string WindowsName { set; get; }
+    public int Pay { set; get; }
+}
+}

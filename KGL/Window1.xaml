@@ -7,10 +7,23 @@
         mc:Ignorable="d"
         Title="Window1" Height="450" Width="800">
     <Grid>
-        <Label Content="请选择操作" HorizontalAlignment="Left" Margin="318,87,0,0" VerticalAlignment="Top" Height="55" Width="186" RenderTransformOrigin="0.009,-0.897" FontSize="30" FontWeight="Bold"/>
-        <Button Content="修改信息" HorizontalAlignment="Left" Margin="77,240,0,0" VerticalAlignment="Top" Width="145" Height="41" FontSize="22" Click="Button_Click"/>
-        <Button Content="查看消费记录" HorizontalAlignment="Left" Margin="573,240,0,0" VerticalAlignment="Top" Width="145" Height="41" FontSize="22" Click="Button_Click_1"/>
-        <Button Content="充值" HorizontalAlignment="Left" Margin="332,240,0,0" VerticalAlignment="Top" Width="145" Height="41" FontSize="22" Click="Button_Click_2" IsCancel="True"/>
+        <Button Content="注册用户" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80" Height="25" BorderThickness="0" Background="White" Click="Regist" Margin="10,0,0,0"/>
+        <Button Content="删除用户" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80" Height="25" BorderThickness="0" Background="White" Click="Del" Margin="96,0,0,0"/>
+        <Button Content="修改用户" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80" Height="25" BorderThickness="0" Background="White" Click="Recharge" Margin="190,0,0,0"/>
+        <Button Content="查看记录" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80" Height="25" BorderThickness="0" Background="White" Click="Find" Margin="294,0,0,0"/>
+
+        <ListView Name="listView" HorizontalAlignment="Left" Height="380" Margin="0,30,0,0" VerticalAlignment="Top" Width="784">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header=" 卡号 " DisplayMemberBinding="{Binding Id}" Width="200"/>
+                    <GridViewColumn Header="     姓名    " DisplayMemberBinding="{Binding Name}" Width="100"/>
+                    <GridViewColumn Header=" 性别 " DisplayMemberBinding="{Binding Sex}" Width="80"/>
+                    <GridViewColumn Header=" 身份 " DisplayMemberBinding="{Binding Role}" Width="100"/>
+                    <GridViewColumn Header=" 余额 " DisplayMemberBinding="{Binding Money}" Width="auto"/>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
 
     </Grid>
 </Window>

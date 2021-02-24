@@ -24,5 +24,38 @@ namespace 卡管理
         {
             InitializeComponent();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            int sexnumber;
+            if (combobox1.Text.Equals("男"))
+            {
+                sexnumber = 1;
+            }
+            else
+            {
+                sexnumber = 2;
+            }
+            if (textbox1.Text != string.Empty && password1.Password != string.Empty && password2.Password != string.Empty)
+            {
+                if (password1.Password.Equals(password2.Password))
+                {
+                    string sql1 = "UPDATE User_Table SET Id = '" + textbox1.Text + "',Password='" + password1.Password + "',Name='" + textbox2.Text + "',Sex='" + sexnumber + "'WHERE Id='" + MainWindow.user.Id + "'";
+                    Program p = new Program();
+                    p.OpenDB();
+                    p.Change(sql1);
+                    p.CloseDB();
+                    MessageBox.Show("修改成功", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("两次输入密码不一致", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("还有项目未填", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "卡管理", "卡管理.csproj", "{39CB5DC8-DD45-44E2-AD68-E109D4F952F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "卡管理", "卡管理.csproj", "{70307A1F-A2CF-43C5-9FBD-497848EE4668}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{39CB5DC8-DD45-44E2-AD68-E109D4F952F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{39CB5DC8-DD45-44E2-AD68-E109D4F952F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{39CB5DC8-DD45-44E2-AD68-E109D4F952F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{39CB5DC8-DD45-44E2-AD68-E109D4F952F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70307A1F-A2CF-43C5-9FBD-497848EE4668}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70307A1F-A2CF-43C5-9FBD-497848EE4668}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70307A1F-A2CF-43C5-9FBD-497848EE4668}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70307A1F-A2CF-43C5-9FBD-497848EE4668}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {79C84AAB-0AF2-48AC-8926-5C57CCED8B21}
+		SolutionGuid = {BE63883D-A77A-491D-80CB-C61100EB3193}
 	EndGlobalSection
 EndGlobal

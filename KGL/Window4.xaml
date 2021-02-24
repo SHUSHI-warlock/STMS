@@ -7,9 +7,18 @@
         mc:Ignorable="d"
         Title="Window4" Height="450" Width="800">
     <Grid>
-        <Label Content="请输入需要充值的金额" HorizontalAlignment="Left" Margin="219,65,0,0" VerticalAlignment="Top" Height="56" Width="491" FontSize="36"/>
-        <TextBox Name="textbox1" HorizontalAlignment="Left" Height="40" Margin="132,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537"/>
-        <Button Content="确认充值" HorizontalAlignment="Left" Margin="635,334,0,0" VerticalAlignment="Top" Width="119" Height="52" FontSize="22" Click="Button_Click"/>
+        <ListView HorizontalAlignment="Left" Height="410" VerticalAlignment="Top" Width="794" Margin="0,0,-0.4,0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="  卡号  " DisplayMemberBinding="{Binding Id}" Width="100"/>
+                    <GridViewColumn Header="  姓名  " DisplayMemberBinding="{Binding Name}" Width="auto"/>
+                    <GridViewColumn Header="  性别  " DisplayMemberBinding="{Binding Sex}" Width="auto"/>
+                    <GridViewColumn Header="  消费流水号  " DisplayMemberBinding="{Binding PayId}" Width="200"/>
+                    <GridViewColumn Header="  消费时间  " DisplayMemberBinding="{Binding TimeofPayment}" Width="100"/>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
 
     </Grid>
 </Window>
