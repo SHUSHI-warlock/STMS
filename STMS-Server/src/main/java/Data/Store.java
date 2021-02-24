@@ -9,6 +9,8 @@ public class Store {
     public String pa;   //打卡机密码
     public Boolean isLease;
 
+    public Store(){}
+
     public Store(String id, String loc, String name, String master, int rent, String pa, Boolean isLease) {
         this.id = id;
         this.loc = loc;

@@ -31,7 +31,5 @@ public class Classifier implements Runnable{
         AbstractServerHandle service = factory.getServerHandle(serverType,clientSocket,msr,id);
         //服务进行
         service.ServerHandle();
-
-
     }
 }

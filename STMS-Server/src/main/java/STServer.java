@@ -10,7 +10,6 @@ public class STServer {
     public static void main(String[] args)throws IOException {
         //1.先开启营业额结算服务
 
-
         //在端口号上创建一个服务器套接字
         ServerSocket serverSocket = new ServerSocket(PORT);
 
