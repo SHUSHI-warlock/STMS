@@ -1,0 +1,16 @@
+﻿<Window x:Class="卡管理.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:卡管理"
+        mc:Ignorable="d"
+        Title="Window1" Height="450" Width="800">
+    <Grid>
+        <Label Content="请选择操作" HorizontalAlignment="Left" Margin="318,87,0,0" VerticalAlignment="Top" Height="55" Width="186" RenderTransformOrigin="0.009,-0.897" FontSize="30" FontWeight="Bold"/>
+        <Button Content="修改信息" HorizontalAlignment="Left" Margin="77,240,0,0" VerticalAlignment="Top" Width="145" Height="41" FontSize="22" Click="Button_Click"/>
+        <Button Content="查看消费记录" HorizontalAlignment="Left" Margin="573,240,0,0" VerticalAlignment="Top" Width="145" Height="41" FontSize="22" Click="Button_Click_1"/>
+        <Button Content="充值" HorizontalAlignment="Left" Margin="332,240,0,0" VerticalAlignment="Top" Width="145" Height="41" FontSize="22" Click="Button_Click_2" IsCancel="True"/>
+
+    </Grid>
+</Window>
