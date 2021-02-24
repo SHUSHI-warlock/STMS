@@ -17,7 +17,9 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 public class MsgSendReceiver {
+
     private final Socket socket;
+
     public MsgSendReceiver(Socket s) {
         this.socket = s;
     }
@@ -31,7 +33,11 @@ public class MsgSendReceiver {
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         t.transform(new DOMSource(myMsg.getContent()), new StreamResult(bos));
-        String msgStr = myMsg.getProtocol() + myMsg.getTopService() + myMsg.getLowService() + bos.toString();
+
+        String msgStr = String.format("%-4d" ,myMsg.getProtocol())
+                + String.format("%-4d" ,myMsg.getTopService())
+                + String.format("%-4d" ,myMsg.getLowService())
+                + bos.toString();
 
         dos.write(msgStr.getBytes(StandardCharsets.UTF_8));
         dos.flush();
@@ -40,13 +46,13 @@ public class MsgSendReceiver {
     public Msg ReceiveMsg() throws IOException {
         DataInputStream dis = new DataInputStream(
                 new BufferedInputStream(socket.getInputStream()));
-        byte[] byteHead = new byte[1];
+        byte[] byteHead = new byte[4];
         dis.read(byteHead);
-        String strProtocol= new String(byteHead);
+        String strProtocol= new String(byteHead).trim();
         dis.read(byteHead);
-        String strTopS = new String(byteHead);
+        String strTopS = new String(byteHead).trim();
         dis.read(byteHead);
-        String strLowS = new String(byteHead);
+        String strLowS = new String(byteHead).trim();
 
         byte[] byteBody = new byte[1024];
         dis.read(byteBody);
@@ -69,6 +75,10 @@ public class MsgSendReceiver {
         } catch (ParserConfigurationException | SAXException e) {
             e.printStackTrace();
         }
-        return new Msg(strProtocol,strTopS,strLowS,document);
+        if(document!=null) {
+            return new Msg(Integer.parseInt(strProtocol), Integer.parseInt(strTopS), Integer.parseInt(strLowS), document);
+        }
+        else
+            return null;
     }
 }
