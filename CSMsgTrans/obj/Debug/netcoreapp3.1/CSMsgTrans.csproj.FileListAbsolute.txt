@@ -1,0 +1,11 @@
+C:\Users\19705\Desktop\XMLSocket\obj\Debug\netcoreapp3.1\CSMsgTrans.csprojAssemblyReference.cache
+C:\Users\19705\Desktop\XMLSocket\obj\Debug\netcoreapp3.1\CSMsgTrans.AssemblyInfoInputs.cache
+C:\Users\19705\Desktop\XMLSocket\obj\Debug\netcoreapp3.1\CSMsgTrans.AssemblyInfo.cs
+C:\Users\19705\Desktop\XMLSocket\bin\Debug\netcoreapp3.1\CSMsgTrans.exe
+C:\Users\19705\Desktop\XMLSocket\bin\Debug\netcoreapp3.1\CSMsgTrans.deps.json
+C:\Users\19705\Desktop\XMLSocket\bin\Debug\netcoreapp3.1\CSMsgTrans.runtimeconfig.json
+C:\Users\19705\Desktop\XMLSocket\bin\Debug\netcoreapp3.1\CSMsgTrans.runtimeconfig.dev.json
+C:\Users\19705\Desktop\XMLSocket\bin\Debug\netcoreapp3.1\CSMsgTrans.dll
+C:\Users\19705\Desktop\XMLSocket\bin\Debug\netcoreapp3.1\CSMsgTrans.pdb
+C:\Users\19705\Desktop\XMLSocket\obj\Debug\netcoreapp3.1\CSMsgTrans.dll
+C:\Users\19705\Desktop\XMLSocket\obj\Debug\netcoreapp3.1\CSMsgTrans.pdb
