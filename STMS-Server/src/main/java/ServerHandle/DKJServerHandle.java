@@ -15,21 +15,18 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
 
 public class DKJServerHandle extends AbstractServerHandle {
-    //private DKJMsgParse msgParse;
+
     private String storeId;
     private Bill tempBill;
 
-    public DKJServerHandle(Socket s, MsgSendReceiver m) {
-        clientSocket = s;
+    public DKJServerHandle(MsgSendReceiver m) {
         msr = m;
     }
 
-    public DKJServerHandle(String id, Socket s, MsgSendReceiver m) {
-        clientSocket = s;
+    public DKJServerHandle(String id, MsgSendReceiver m) {
         msr = m;
         storeId = id;
     }
@@ -400,7 +397,7 @@ public class DKJServerHandle extends AbstractServerHandle {
 
     private void CloseSocket() {
         try {
-            clientSocket.close();
+            this.msr.CloseSocket();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

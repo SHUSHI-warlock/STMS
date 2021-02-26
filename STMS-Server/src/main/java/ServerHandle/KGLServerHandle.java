@@ -3,7 +3,6 @@ package ServerHandle;
 import DB.Dao;
 import Data.Bill;
 import Data.Label;
-import Data.Store;
 import MsgTrans.EProtocol;
 import MsgTrans.ETopService;
 import MsgTrans.Msg;
@@ -18,14 +17,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
-import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class KGLServerHandle extends AbstractServerHandle{
-    KGLServerHandle(Socket s, MsgSendReceiver m)
+    KGLServerHandle(MsgSendReceiver m)
     {
-        clientSocket = s;
         msr = m;
     }
 
@@ -504,7 +501,7 @@ public class KGLServerHandle extends AbstractServerHandle{
 
     private void CloseSocket(){
         try {
-            clientSocket.close();
+            this.msr.CloseSocket();
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

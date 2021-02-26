@@ -4,30 +4,24 @@ import MsgTrans.MsgSendReceiver;
 import java.net.Socket;
 
 public class ServerHandleFactory {
-    private static ServerHandleFactory instence;
+    private static ServerHandleFactory instance;
     private ServerHandleFactory(){}
 
-    public static ServerHandleFactory getInstence()
+    public static ServerHandleFactory getInstance()
     {
-        if (instence == null){
-            instence = new ServerHandleFactory();
+        if (instance == null){
+            instance = new ServerHandleFactory();
         }
-        return instence;
+        return instance;
     }
 
     public AbstractServerHandle getServerHandle(ETopService ServerType, Socket s, MsgSendReceiver m, String id)
     {
-        switch (ServerType) {
-            case ET_DKJ:
-                return new DKJServerHandle(id,s,m);
-            case ET_YTJ:
-                return new YTJServerHandle(id,s,m);
-            case ET_KGL:
-                return new KGLServerHandle(s,m);
-            case ET_DGL:
-                return new DGLServerHandle(s,m);
-            default:
-                return null;
-        }
+        return switch (ServerType) {
+            case ET_DKJ -> new DKJServerHandle(id, m);//打卡机 店铺ID登录
+            case ET_YTJ -> new YTJServerHandle(id, m);//一体机 卡ID登录
+            case ET_KGL -> new KGLServerHandle(m);//卡管理 管理员登录
+            case ET_DGL -> new DGLServerHandle(m);//店管理 管理员登录
+        };
     }
 }

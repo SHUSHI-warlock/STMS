@@ -17,15 +17,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
-import java.net.Socket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class DGLServerHandle extends AbstractServerHandle {
 
-    public DGLServerHandle(Socket s, MsgSendReceiver m) {
-        clientSocket = s;
+    public DGLServerHandle(MsgSendReceiver m) {
         msr = m;
     }
 
@@ -998,7 +996,7 @@ public class DGLServerHandle extends AbstractServerHandle {
 
     private void CloseSocket(){
         try {
-            clientSocket.close();
+            this.msr.CloseSocket();
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

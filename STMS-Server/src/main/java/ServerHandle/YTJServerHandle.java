@@ -17,20 +17,17 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
-import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class YTJServerHandle extends AbstractServerHandle{
     public String userid;
-    public YTJServerHandle(Socket s, MsgSendReceiver m)
+    public YTJServerHandle(MsgSendReceiver m)
     {
-        clientSocket = s;
         msr = m;
     }
-    public YTJServerHandle(String Lid, Socket s, MsgSendReceiver m)
+    public YTJServerHandle(String Lid, MsgSendReceiver m)
     {
-        clientSocket = s;
         msr = m;
         userid = Lid;
     }
@@ -433,7 +430,7 @@ public class YTJServerHandle extends AbstractServerHandle{
 
     private void CloseSocket(){
         try {
-            clientSocket.close();
+            this.msr.CloseSocket();
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
