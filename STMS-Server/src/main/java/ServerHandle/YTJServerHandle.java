@@ -128,8 +128,7 @@ public class YTJServerHandle extends AbstractServerHandle{
     }
 
 
-    private void SendLabel(Msg m)
-    {
+    private void SendLabel(Msg m) {
         Document document = null;
         try {
             // 初始化一个XML解析工厂
@@ -144,9 +143,6 @@ public class YTJServerHandle extends AbstractServerHandle{
 
             // 创建根节点
             Element root = document.createElement("result");
-            // 创建状态
-            Element elementState = document.createElement("state");
-            root.appendChild(elementState);
 
             //获取
             Label l = Dao.getLabelById(userid);
@@ -154,21 +150,20 @@ public class YTJServerHandle extends AbstractServerHandle{
             Element Elabel = document.createElement("label");
             Element Eid = document.createElement("id");
             Element Ename = document.createElement("name");
-            Element Elass = document.createElement("lass");
             Element Epa = document.createElement("pa");
+            Element Elass = document.createElement("lass");
 
             Eid.setTextContent(l.id);
             Ename.setTextContent(l.name);
-            Elass.setTextContent(String.valueOf(l.money));
             Epa.setTextContent(l.password);
+            Elass.setTextContent(String.valueOf(l.money));
+
             Elabel.appendChild(Eid);
             Elabel.appendChild(Ename);
-            Elabel.appendChild(Epa);
             Elabel.appendChild(Elass);
+            Elabel.appendChild(Epa);
             root.appendChild(Elabel);       //挂root
 
-            //获取成功
-            elementState.setTextContent("100");
 
             //将根节点添加到下面
             document.appendChild(root);
@@ -195,8 +190,7 @@ public class YTJServerHandle extends AbstractServerHandle{
         }
     }
 
-    private void ChangeLabel(Msg m)
-    {
+    private void ChangeLabel(Msg m) {
         Label l = new Label();
         try {
             Document document = m.getContent();
@@ -296,9 +290,6 @@ public class YTJServerHandle extends AbstractServerHandle{
 
             // 创建根节点
             Element root = document.createElement("result");
-            // 创建状态
-            Element elementState = document.createElement("state");
-            root.appendChild(elementState);
 
             //获取所有bill
             ArrayList<Bill> bs = Dao.findBillOfUser(id);
@@ -325,8 +316,6 @@ public class YTJServerHandle extends AbstractServerHandle{
                     root.appendChild(EBill);       //挂root
                 }
             }
-            //获取成功
-            elementState.setTextContent("100");
 
             //将根节点添加到下面
             document.appendChild(root);

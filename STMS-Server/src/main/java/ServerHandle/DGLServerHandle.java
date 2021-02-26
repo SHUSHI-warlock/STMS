@@ -154,30 +154,27 @@ public class DGLServerHandle extends AbstractServerHandle {
 
             // 创建根节点
             Element root = document.createElement("result");
-            // 创建状态
-            Element elementState = document.createElement("state");
-            root.appendChild(elementState);
 
             //获取所有店铺
             ArrayList<Store> ss = Dao.getAllStore();
             if (ss != null)  //店铺为空
             {
                 for (Store s : ss) {
-                    Element Estore = document.createElement("restaurant");
                     Element Eid = document.createElement("id");
-                    Element Ename = document.createElement("name");
                     Element Eloc = document.createElement("loc");
+                    Element Ename = document.createElement("name");
+                    Element Estore = document.createElement("restaurant");
+
                     Eid.setTextContent(s.id);
-                    Ename.setTextContent(s.name);
                     Eloc.setTextContent(s.loc);
+                    Ename.setTextContent(s.name);
+
                     Estore.appendChild(Eid);        //挂store
-                    Estore.appendChild(Ename);      //挂store
                     Estore.appendChild(Eloc);       //挂store
+                    Estore.appendChild(Ename);      //挂store
                     root.appendChild(Estore);       //挂root
                 }
             }
-            //获取成功
-            elementState.setTextContent("100");
 
             //将根节点添加到下面
             document.appendChild(root);
@@ -492,9 +489,6 @@ public class DGLServerHandle extends AbstractServerHandle {
 
             // 创建根节点
             Element root = document.createElement("result");
-            // 创建状态
-            Element elementState = document.createElement("state");
-            root.appendChild(elementState);
 
             //获取店铺
             Store s = Dao.getStoreById(id);
@@ -505,40 +499,35 @@ public class DGLServerHandle extends AbstractServerHandle {
                 e.printStackTrace();
             }
 
-            Element Estore = document.createElement("restaurant");
             Element Eid = document.createElement("id");
-            Element Ename = document.createElement("name");
             Element Eloc = document.createElement("loc");
+            Element Ename = document.createElement("name");
+            Element Emaster = document.createElement("master");
             Element Erent = document.createElement("rent");
             Element Epa = document.createElement("pa");
             Element EisLease = document.createElement("isLease");
-            Element Emaster = document.createElement("master");
             Element Eturnover = document.createElement("turnover");
 
             Eid.setTextContent(s.id);
-            Ename.setTextContent(s.name);
             Eloc.setTextContent(s.loc);
+            Ename.setTextContent(s.name);
             Emaster.setTextContent(s.master);
-            Epa.setTextContent(s.pa);
             Erent.setTextContent(String.valueOf(s.rent));
-            Eturnover.setTextContent(turnover);
+            Epa.setTextContent(s.pa);
             if(s.isLease==true)
                 EisLease.setTextContent("true");
             else
                 EisLease.setTextContent("false");
+            Eturnover.setTextContent(turnover);
 
-            Estore.appendChild(Eid);        //挂store
-            Estore.appendChild(Ename);      //挂store
-            Estore.appendChild(Eloc);       //挂store
-            Estore.appendChild(Erent);       //挂store
-            Estore.appendChild(Emaster);       //挂store
-            Estore.appendChild(Epa);       //挂store
-            Estore.appendChild(EisLease);       //挂store
-
-            root.appendChild(Estore);       //挂root
-
-            //获取成功
-            elementState.setTextContent("100");
+            root.appendChild(Eid);        //挂store
+            root.appendChild(Eloc);       //挂store
+            root.appendChild(Ename);       //挂store
+            root.appendChild(Emaster);       //挂store
+            root.appendChild(Erent);       //挂store
+            root.appendChild(Epa);       //挂store
+            root.appendChild(EisLease);       //挂store
+            root.appendChild(Eturnover);
 
             //将根节点添加到下面
             document.appendChild(root);
@@ -608,11 +597,12 @@ public class DGLServerHandle extends AbstractServerHandle {
                 for (Food f : fs) {
                     Element Efood = document.createElement("food");
                     Element Eid = document.createElement("id");
+                    Element Eclass = document.createElement("class");
+                    Element Est = document.createElement("st");
                     Element Ename = document.createElement("name");
                     Element Eprice = document.createElement("price");
-                    Element Est = document.createElement("st");
-                    Element Eclass = document.createElement("class");
                     Element Etip = document.createElement("tip");
+
                     Eid.setTextContent(f.id);
                     Ename.setTextContent(f.name);
                     Eprice.setTextContent(String.valueOf(f.price));
@@ -621,10 +611,10 @@ public class DGLServerHandle extends AbstractServerHandle {
                     Est.setTextContent(f.st);
 
                     Efood.appendChild(Eid);
+                    Efood.appendChild(Eclass);
+                    Efood.appendChild(Est);
                     Efood.appendChild(Ename);
                     Efood.appendChild(Eprice);
-                    Efood.appendChild(Est);
-                    Efood.appendChild(Eclass);
                     Efood.appendChild(Etip);
 
                     root.appendChild(Efood);       //挂root
@@ -937,9 +927,6 @@ public class DGLServerHandle extends AbstractServerHandle {
 
             // 创建根节点
             Element root = document.createElement("result");
-            // 创建状态
-            Element elementState = document.createElement("state");
-            root.appendChild(elementState);
 
             //获取所有bill
             ArrayList<Bill> bs = Dao.findBillOfRest(id);
@@ -966,8 +953,6 @@ public class DGLServerHandle extends AbstractServerHandle {
                     root.appendChild(EBill);       //挂root
                 }
             }
-            //获取成功
-            elementState.setTextContent("100");
 
             //将根节点添加到下面
             document.appendChild(root);

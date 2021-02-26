@@ -16,27 +16,38 @@ namespace MsgTransTest
             this.msgSendReceiver = msgSendReceiver;
         }
         /**
+        * 0
         * 登录
-        * 登录成功返回1，登录失败返回0，未知错误返回-1
+        * 参数：id表示Label ID；pwd表示Label 密码
+        * 返回值：登录成功返回1，登录失败返回0，未知错误返回-1
         */
         public int LoginIn(string id, string pwd)
         {
             XmlDocument document = new XmlDocument();
             XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
+            
             document.AppendChild(declaration);//添加至XmlDocument对象中
             XmlElement login = document.CreateElement("login");//CreateElement（节点名称）
+
             XmlElement ID = document.CreateElement("id");
             ID.InnerText = id; //设置其值
             XmlElement PA = document.CreateElement("pa");
             PA.InnerText = pwd; //设置其值
+            
             login.AppendChild(ID);
             login.AppendChild(PA);
+            
             document.AppendChild(login);
+            
             Msg msg = new Msg(EProtocol.EP_Verify, ETopService.ET_YTJ, 0, document);
+            
             this.msgSendReceiver.SendMsg(msg);
+            
             Msg remsg = this.msgSendReceiver.ReceiveMsg();
+            
             XmlDocument reDocument = remsg.GetContent();
             XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
+            
             string state = "";
             foreach (XmlNode node in xmlRoot.ChildNodes)
             {
@@ -57,14 +68,55 @@ namespace MsgTransTest
                 return -1;
             }
         }
-
-        public int ChangeInfo(Label label)
+        /**
+        * 4
+        * 获取Label信息
+        * 参数：无
+        * 返回值：Label对象
+        */
+        public Label GetLabel()
         {
             XmlDocument document = new XmlDocument();
             XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
             document.AppendChild(declaration);//添加至XmlDocument对象中
-            XmlElement changeInfo = document.CreateElement("changeInfo");//CreateElement（节点名称）
-            document.AppendChild(changeInfo);
+
+            XmlElement getlabel = document.CreateElement("getlabel");//CreateElement（节点名称）
+            document.AppendChild(getlabel);
+
+            Msg msg = new Msg(EProtocol.EP_Request, ETopService.ET_YTJ, 4, document);
+          
+            this.msgSendReceiver.SendMsg(msg);
+
+            Msg remsg = this.msgSendReceiver.ReceiveMsg();
+
+            XmlDocument reDocument = remsg.GetContent();
+            XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
+            Label label = null;
+            foreach (XmlNode node in xmlRoot.ChildNodes)
+            {
+                string labelstr = node["label"].InnerText;
+                label = new Label(node["id"].InnerText,
+                    node["name"].InnerText,
+                    node["pa"].InnerText,
+                    int.Parse(node["lass"].InnerText)
+                    );
+            }
+            return label;
+        }
+        /**
+        * 1
+        * 修改Label信息
+        * 参数：修改后的Label对象
+        * 返回值：修改成功返回1；修改失败返回0；未知错误返回-1
+        */
+        public int ChangeLabel(Label label)
+        {
+            XmlDocument document = new XmlDocument();
+            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
+            document.AppendChild(declaration);//添加至XmlDocument对象中
+
+            XmlElement changelabel = document.CreateElement("changelabel");//CreateElement（节点名称）
+            
             XmlElement ID = document.CreateElement("id");
             ID.InnerText = label.GetId(); //设置其值
             XmlElement NM = document.CreateElement("name");
@@ -73,17 +125,23 @@ namespace MsgTransTest
             PA.InnerText = label.GetPassword(); //设置其值
             XmlElement LAS = document.CreateElement("lass");
             LAS.InnerText = label.GetMoney().ToString(); //设置其值
-            changeInfo.AppendChild(ID);
-            changeInfo.AppendChild(NM);
-            changeInfo.AppendChild(PA);
-            changeInfo.AppendChild(LAS);
-            document.AppendChild(changeInfo);
+            
+            changelabel.AppendChild(ID);
+            changelabel.AppendChild(NM);
+            changelabel.AppendChild(PA);
+            changelabel.AppendChild(LAS);
+            document.AppendChild(changelabel);
+            
             Msg msg = new Msg(EProtocol.EP_Put, ETopService.ET_YTJ, 1, document);
+            
             this.msgSendReceiver.SendMsg(msg);
+            
             Msg remsg = this.msgSendReceiver.ReceiveMsg();
+            
             XmlDocument reDocument = remsg.GetContent();
             XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
             string state = "";
+            
             foreach (XmlNode node in xmlRoot.ChildNodes)
             {
                 state = node["state"].InnerText;
@@ -103,13 +161,20 @@ namespace MsgTransTest
                 return -1;
             }
         }
+        /**
+         * 2
+         * 充值
+         * 参数：修改后的Label对象
+         * 返回值：充值成功返回1，充值失败返回0，未知错误返回-1
+         */
         public int ReCharge(Label label)
         {
             XmlDocument document = new XmlDocument();
             XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
             document.AppendChild(declaration);//添加至XmlDocument对象中
+
             XmlElement recharge = document.CreateElement("recharge");//CreateElement（节点名称）
-            document.AppendChild(recharge);
+
             XmlElement ID = document.CreateElement("id");
             ID.InnerText = label.GetId(); //设置其值
             XmlElement NM = document.CreateElement("name");
@@ -118,17 +183,24 @@ namespace MsgTransTest
             PA.InnerText = label.GetPassword(); //设置其值
             XmlElement LAS = document.CreateElement("lass");
             LAS.InnerText = label.GetMoney().ToString(); //设置其值
+            
             recharge.AppendChild(ID);
             recharge.AppendChild(NM);
             recharge.AppendChild(PA);
             recharge.AppendChild(LAS);
             document.AppendChild(recharge);
+            
             Msg msg = new Msg(EProtocol.EP_Put, ETopService.ET_YTJ, 2, document);
+            
             this.msgSendReceiver.SendMsg(msg);
+            
             Msg remsg = this.msgSendReceiver.ReceiveMsg();
+            
             XmlDocument reDocument = remsg.GetContent();
+            
             XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
             string state = "";
+            
             foreach (XmlNode node in xmlRoot.ChildNodes)
             {
                 state = node["state"].InnerText;
@@ -148,18 +220,30 @@ namespace MsgTransTest
                 return -1;
             }
         }
+        /**
+         * 3
+         * 返回账单
+         * 参数：无
+         * 返回值：Bill[]
+         */
         public Bill[] GetBills()
         {
             XmlDocument document = new XmlDocument();
             XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
             document.AppendChild(declaration);//添加至XmlDocument对象中
+            
             XmlElement getbills = document.CreateElement("getbills");//CreateElement（节点名称）
             document.AppendChild(getbills);
+
             Msg msg = new Msg(EProtocol.EP_Request, ETopService.ET_YTJ, 3, document);
+            
             this.msgSendReceiver.SendMsg(msg);
+            
             Msg remsg = this.msgSendReceiver.ReceiveMsg();
+            
             XmlDocument reDocument = remsg.GetContent();
             XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
+            
             List<Bill> list = new List<Bill>();
             foreach (XmlNode node in xmlRoot.ChildNodes)
             {
@@ -167,7 +251,7 @@ namespace MsgTransTest
                     node["labelid"].InnerText,
                     node["storeid"].InnerText,
                     int.Parse(node["cost"].InnerText),
-                    int.Parse(node["time"].InnerText)
+                    node["time"].InnerText
                     );
                 list.Add(temp);
             }
