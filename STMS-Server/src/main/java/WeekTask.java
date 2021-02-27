@@ -10,16 +10,17 @@ public class WeekTask {
 
     public void run(){
         try {
-            //判断当前时间是否为周日
-            //String strDateFormat = "yyyy-MM-dd";
-            //SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
-
+            //判断当前时间是否为周日十点
             Date date = new Date();
             Calendar c = Calendar.getInstance();
             c.setTime(date);
-            int i = c.get(Calendar.DAY_OF_WEEK)-1;//周日时i为0
-            if(i != 0) return;
-            else{
+
+            int day = c.get(Calendar.DAY_OF_WEEK)-1;//周日时day为0
+            int hour  =c.get(Calendar.HOUR_OF_DAY);  //小时
+            int minute=c.get(Calendar.MINUTE);   //分
+            int second=c.get(Calendar.SECOND);  //秒
+            if(day == 0 && hour == 22 && minute == 0 && second == 0)
+            {
                 //对每个店铺结算营业额
                 ArrayList<Store> stores = Dao.getAllStore();
                 Iterator<Store> list = stores.iterator();
@@ -27,6 +28,8 @@ public class WeekTask {
                     Dao.CaculateTurnover(list.next().id);
                 }
             }
+            else return;
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
