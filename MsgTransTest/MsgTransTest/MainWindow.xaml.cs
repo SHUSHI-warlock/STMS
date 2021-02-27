@@ -26,7 +26,13 @@ namespace MsgTransTest
         {
             InitializeComponent();
 
+            DGLtest dGLtest = new DGLtest();
+
+            dGLtest.test();
+
+            /*
             MsgSendReceiver msr = ServerConn.ConnServer();
+
             if (msr == null)
             {
                 Console.Out.WriteLine("连接服务器失败！");
@@ -49,16 +55,17 @@ namespace MsgTransTest
             }
             else
                 Console.Out.WriteLine("其他错误！");
+            */    
         }
 
         private int Login()
         {
             return dgl.LoginIn("u001", "牛逼啊");
         }
-
+        //点击显示店铺详情
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Store store = dgl.GetStoreInfo();
+            Store store = dgl.GetStoreInfo("1S3F3W");
             T_storeid.Text = store.GetId();
             T_storename.Text = store.GetName();
             T_storeaddr.Text = store.GetLoc();

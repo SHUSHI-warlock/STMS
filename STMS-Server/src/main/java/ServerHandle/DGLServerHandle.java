@@ -248,6 +248,8 @@ public class DGLServerHandle extends AbstractServerHandle {
                 //System.out.println("失败");
                 elementState.setTextContent("false");
 
+            document.appendChild(root);
+
             //生成消息
             Msg result = null;
             try {
@@ -321,6 +323,8 @@ public class DGLServerHandle extends AbstractServerHandle {
             else
                 //System.out.println("失败");
                 elementState.setTextContent("false");
+
+            document.appendChild(root);
 
             //生成消息
             Msg result = null;
@@ -443,7 +447,7 @@ public class DGLServerHandle extends AbstractServerHandle {
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder ;
+            DocumentBuilder builder;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -461,13 +465,6 @@ public class DGLServerHandle extends AbstractServerHandle {
             if(s==null)
                 elementState.setTextContent("200");
             else {
-                String turnover = "0";
-                try {
-                    turnover = String.valueOf(Dao.CaculateTurnover(id));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
                 Element Estore = document.createElement("restaurant");
                 Element Eid = document.createElement("id");
                 Element Ename = document.createElement("name");
@@ -478,18 +475,6 @@ public class DGLServerHandle extends AbstractServerHandle {
                 Element Emaster = document.createElement("master");
                 Element Eturnover = document.createElement("turnover");
 
-                Eid.setTextContent(s.id);
-                Ename.setTextContent(s.name);
-                Eloc.setTextContent(s.loc);
-                Emaster.setTextContent(s.master);
-                Epa.setTextContent(s.pa);
-                Erent.setTextContent(String.valueOf(s.rent));
-                Eturnover.setTextContent(turnover);
-                if (s.isLease)
-                    EisLease.setTextContent("true");
-                else
-                    EisLease.setTextContent("false");
-
                 Estore.appendChild(Eid);        //挂store
                 Estore.appendChild(Ename);      //挂store
                 Estore.appendChild(Eloc);       //挂store
@@ -497,11 +482,34 @@ public class DGLServerHandle extends AbstractServerHandle {
                 Estore.appendChild(Emaster);       //挂store
                 Estore.appendChild(Epa);       //挂store
                 Estore.appendChild(EisLease);       //挂store
-
+                Estore.appendChild(Eturnover);
                 root.appendChild(Estore);       //挂root
 
-                //获取成功
-                elementState.setTextContent("100");
+                Eid.setTextContent(s.id);
+                Ename.setTextContent(s.name);
+                Eloc.setTextContent(s.loc);
+                Emaster.setTextContent(s.master);
+                Epa.setTextContent(s.pa);
+                Erent.setTextContent(String.valueOf(s.rent));
+                //计算营业额，先假设为0
+                Eturnover.setTextContent("0");
+                int turnover = 0;
+                if (s.isLease) {
+                    EisLease.setTextContent("true");
+                    turnover = Dao.CaculateTurnover(id);
+                }
+                else
+                    EisLease.setTextContent("false");
+
+                if(turnover>=0) {
+                    Eturnover.setTextContent(String.valueOf(turnover));
+                    //获取成功
+                    elementState.setTextContent("100");
+                }
+                else if(turnover==-1)
+                    elementState.setTextContent("200");
+                else if(turnover==-2)
+                    elementState.setTextContent("300");
             }
 
             //将根节点添加到下面
@@ -636,7 +644,7 @@ public class DGLServerHandle extends AbstractServerHandle {
                 //判断是哪个数据
                 switch (childNode.getNodeName()) {
                     case "sid" -> sid = childNode.getTextContent();
-                    case "id" -> f.setId(childNode.getTextContent());
+                    case "fid" -> f.setId(childNode.getTextContent());
                     case "name" -> f.setName(childNode.getTextContent());
                     case "class" -> f.setFoodClass(childNode.getTextContent());
                     case "st" -> f.setSt(childNode.getTextContent());
@@ -672,6 +680,9 @@ public class DGLServerHandle extends AbstractServerHandle {
             else
                 //System.out.println("失败");
                 elementState.setTextContent("false");
+
+            //将根节点添加到下面
+            document.appendChild(root);
 
             //生成消息
             Msg result = null;
@@ -711,7 +722,7 @@ public class DGLServerHandle extends AbstractServerHandle {
                 //判断是哪个数据
                 switch (childNode.getNodeName()) {
                     case "sid" -> sid = childNode.getTextContent();
-                    case "id" -> f.setId(childNode.getTextContent());
+                    case "fid" -> f.setId(childNode.getTextContent());
                     case "name" -> f.setName(childNode.getTextContent());
                     case "class" -> f.setFoodClass(childNode.getTextContent());
                     case "st" -> f.setSt(childNode.getTextContent());
@@ -747,6 +758,9 @@ public class DGLServerHandle extends AbstractServerHandle {
             else
                 //System.out.println("失败");
                 elementState.setTextContent("false");
+
+            //将根节点添加到下面
+            document.appendChild(root);
 
             //生成消息
             Msg result = null;
@@ -785,7 +799,7 @@ public class DGLServerHandle extends AbstractServerHandle {
                 //判断是哪个数据
                 switch (childNode.getNodeName()) {
                     case "sid"-> sid = childNode.getTextContent();
-                    case "id"-> f.setId(childNode.getTextContent());
+                    case "fid"-> f.setId(childNode.getTextContent());
                     case "name"-> f.setName(childNode.getTextContent());
                     case "class"-> f.setFoodClass(childNode.getTextContent());
                     case "st"-> f.setSt(childNode.getTextContent());
@@ -821,6 +835,9 @@ public class DGLServerHandle extends AbstractServerHandle {
             else
                 //System.out.println("失败");
                 elementState.setTextContent("false");
+
+            //将根节点添加到下面
+            document.appendChild(root);
 
             //生成消息
             Msg result = null;
@@ -872,6 +889,9 @@ public class DGLServerHandle extends AbstractServerHandle {
 
             // 创建根节点
             Element root = document.createElement("result");
+            // 创建状态
+            Element elementState = document.createElement("state");
+            root.appendChild(elementState);
 
             //获取所有bill
             ArrayList<Bill> bs = Dao.findBillOfRest(id);
@@ -897,8 +917,11 @@ public class DGLServerHandle extends AbstractServerHandle {
 
                     root.appendChild(EBill);       //挂root
                 }
+                elementState.setTextContent("true");
             }
-
+            else {
+                    elementState.setTextContent("false");
+            }
             //将根节点添加到下面
             document.appendChild(root);
 

@@ -56,12 +56,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DGLtest.cs" />
+    <Compile Include="DKJtest.cs" />
+    <Compile Include="KGLtest.cs" />
     <Compile Include="ServerConn.cs" />
     <Compile Include="Store.cs" />
     <Compile Include="TransDGL.cs" />
     <Compile Include="TransDKJ.cs" />
     <Compile Include="TransKGL.cs" />
     <Compile Include="TransYTJ.cs" />
+    <Compile Include="YTJtest.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

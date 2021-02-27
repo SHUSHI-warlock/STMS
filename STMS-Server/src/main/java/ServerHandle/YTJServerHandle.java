@@ -96,6 +96,9 @@ public class YTJServerHandle extends AbstractServerHandle{
                 //System.out.println("失败");
                 elementState.setTextContent("false");
 
+            //将根节点添加到下面
+            document.appendChild(root);
+
             //生成消息
             Msg result = null;
             try {
@@ -235,6 +238,9 @@ public class YTJServerHandle extends AbstractServerHandle{
             else
                 //System.out.println("失败");
                 elementState.setTextContent("false");
+
+            //将根节点添加到下面
+            document.appendChild(root);
 
             //生成消息
             Msg result = null;

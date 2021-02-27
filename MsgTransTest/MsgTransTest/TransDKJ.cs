@@ -49,10 +49,6 @@ namespace MsgTransTest
             
             string state = "";
             state = xmlRoot["state"].InnerText;
-            //foreach (XmlNode node in xmlRoot.ChildNodes)
-            //{
-            //    state = node["state"].InnerText;
-            //}
 
             if (state.CompareTo("true") == 0)
             {

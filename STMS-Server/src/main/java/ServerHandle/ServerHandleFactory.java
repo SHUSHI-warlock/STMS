@@ -1,7 +1,7 @@
 package ServerHandle;
 import MsgTrans.ETopService;
 import MsgTrans.MsgSendReceiver;
-import java.net.Socket;
+
 
 public class ServerHandleFactory {
     private static ServerHandleFactory instance;
@@ -15,14 +15,16 @@ public class ServerHandleFactory {
         return instance;
     }
 
-    public AbstractServerHandle getServerHandle(ETopService ServerType, Socket s, MsgSendReceiver m)
+    public AbstractServerHandle getServerHandle(ETopService ServerType, MsgSendReceiver m)
     {
         switch (ServerType) {
-            case ET_DKJ -> { return new DKJServerHandle(s,m); }
-            case ET_YTJ -> { return new YTJServerHandle(s,m); }
-            case ET_KGL -> { return new KGLServerHandle(s,m); }
-            case ET_DGL -> { return new DGLServerHandle(s, m); }
-            default -> { return null; }
+            case ET_DKJ -> { return new DKJServerHandle(m); }
+            case ET_YTJ -> { return new YTJServerHandle(m); }
+            case ET_KGL -> { return new KGLServerHandle(m); }
+            case ET_DGL -> { return new DGLServerHandle(m); }
+            default -> {
+                System.out.println("接收到了奇怪的服务类型？！");
+                return null; }
         }
 
     }

@@ -27,8 +27,6 @@ public class DKJServerHandle extends AbstractServerHandle {
         tempBill = new Bill();
     }
 
-
-
     @Override
     public void ServerHandle() {
         try {
@@ -97,6 +95,9 @@ public class DKJServerHandle extends AbstractServerHandle {
                 //System.out.println("失败");
                 elementState.setTextContent("false");
 
+            //将根节点添加到下面
+            document.appendChild(root);
+
             //生成消息
             Msg result = null;
             try {
@@ -117,10 +118,8 @@ public class DKJServerHandle extends AbstractServerHandle {
         }
     }
 
-
     /**
      * 计算价格
-     *
      *
      */
     private void CaculatePrice(Msg m) {

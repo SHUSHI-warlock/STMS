@@ -24,9 +24,7 @@ namespace MsgTransTest
         public int LoginIn(string id, string pwd)
         {
             XmlDocument document = new XmlDocument();
-            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
-            
-            document.AppendChild(declaration);//添加至XmlDocument对象中
+
             XmlElement login = document.CreateElement("login");//CreateElement（节点名称）
 
             XmlElement ID = document.CreateElement("id");
@@ -50,10 +48,7 @@ namespace MsgTransTest
             
             string state = "";
             state = xmlRoot["state"].InnerText;
-            //foreach (XmlNode node in xmlRoot.ChildNodes)
-            //{
-            //    state = node["state"].InnerText;
-            //}
+
             if (state.CompareTo("true") == 0)
             {
                 Console.WriteLine(state);
@@ -78,8 +73,7 @@ namespace MsgTransTest
         public Label GetLabel()
         {
             XmlDocument document = new XmlDocument();
-            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
-            document.AppendChild(declaration);//添加至XmlDocument对象中
+
 
             XmlElement getlabel = document.CreateElement("getlabel");//CreateElement（节点名称）
             document.AppendChild(getlabel);
@@ -113,8 +107,6 @@ namespace MsgTransTest
         public int ChangeLabel(Label label)
         {
             XmlDocument document = new XmlDocument();
-            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
-            document.AppendChild(declaration);//添加至XmlDocument对象中
 
             XmlElement changelabel = document.CreateElement("changelabel");//CreateElement（节点名称）
             
@@ -142,11 +134,8 @@ namespace MsgTransTest
             XmlDocument reDocument = remsg.GetContent();
             XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
             string state = "";
-            
-            foreach (XmlNode node in xmlRoot.ChildNodes)
-            {
-                state = node["state"].InnerText;
-            }
+
+            state = xmlRoot["state"].InnerText;
             if (state.CompareTo("true") == 0)
             {
                 Console.WriteLine(state);
@@ -171,8 +160,6 @@ namespace MsgTransTest
         public int ReCharge(Label label)
         {
             XmlDocument document = new XmlDocument();
-            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
-            document.AppendChild(declaration);//添加至XmlDocument对象中
 
             XmlElement recharge = document.CreateElement("recharge");//CreateElement（节点名称）
 
@@ -201,11 +188,8 @@ namespace MsgTransTest
             
             XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
             string state = "";
-            
-            foreach (XmlNode node in xmlRoot.ChildNodes)
-            {
-                state = node["state"].InnerText;
-            }
+            state = xmlRoot["state"].InnerText;
+
             if (state.CompareTo("true") == 0)
             {
                 Console.WriteLine(state);
@@ -230,8 +214,6 @@ namespace MsgTransTest
         public Bill[] GetBills()
         {
             XmlDocument document = new XmlDocument();
-            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
-            document.AppendChild(declaration);//添加至XmlDocument对象中
             
             XmlElement getbills = document.CreateElement("getbills");//CreateElement（节点名称）
             document.AppendChild(getbills);

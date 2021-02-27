@@ -50,8 +50,8 @@ public class Classifier implements Runnable{
      */
     private void LoginVerify(Msg m){
 
-        ServerHandleFactory factory = ServerHandleFactory.getInstence();
-        AbstractServerHandle service = factory.getServerHandle(m.getTopService(), clientSocket, msr);
+        ServerHandleFactory factory = ServerHandleFactory.getInstance();
+        AbstractServerHandle service = factory.getServerHandle(m.getTopService(), msr);
 
         //验证
         if(service.ServiceVerify(m)>0){
