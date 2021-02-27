@@ -11,8 +11,9 @@ namespace MsgTransTest
     class ServerConn
     {
         private static Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        private static readonly int PORT = 7000;
-        private static readonly IPAddress ip = IPAddress.Parse("172.0.0.1");
+        private static  int PORT = 7000;
+        private static  IPAddress ip = IPAddress.Parse("127.0.0.1");
+        //private static IPAddress ip = IPAddress.Loopback;
 
         //连接服务器，返回MsgSendReceiver，失败时返回null
         public static MsgSendReceiver ConnServer()

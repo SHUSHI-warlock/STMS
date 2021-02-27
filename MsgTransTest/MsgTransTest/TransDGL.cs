@@ -23,8 +23,8 @@ namespace MsgTransTest
         public int LoginIn(string id, string pwd)
         {
             XmlDocument document = new XmlDocument();
-            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
-            document.AppendChild(declaration);//添加至XmlDocument对象中
+            //XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "utf-8", "");//xml文档的声明部分
+            //document.AppendChild(declaration);//添加至XmlDocument对象中
             XmlElement login = document.CreateElement("login");//CreateElement（节点名称）
             XmlElement ID = document.CreateElement("id");
             ID.InnerText = id; //设置其值
@@ -39,10 +39,11 @@ namespace MsgTransTest
             XmlDocument reDocument = remsg.GetContent();
             XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
             string state = "";
-            foreach (XmlNode node in xmlRoot.ChildNodes)
+            state = xmlRoot["state"].InnerText;
+            /*foreach (XmlNode node in xmlRoot.ChildNodes)
             {
                 state = node["state"].InnerText;
-            }
+            }*/
             if (state.CompareTo("true") == 0)
             {
                 Console.WriteLine(state);
@@ -58,15 +59,12 @@ namespace MsgTransTest
                 return -1;
             }
         }
-        /**
-         * 获取所有店铺基本信息
-         *
-         */
+
+        // 获取所有店铺基本信息
         public Store[] GetStores()
         {
             XmlDocument document = new XmlDocument();
-            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
-            document.AppendChild(declaration);//添加至XmlDocument对象中
+           
             XmlElement getstore = document.CreateElement("getstore");//CreateElement（节点名称）
             document.AppendChild(getstore);
             Msg msg = new Msg(EProtocol.EP_Request, ETopService.ET_DGL, 1, document);
@@ -92,11 +90,11 @@ namespace MsgTransTest
             return stores;
         }
 
+        // 修改店铺
         public int ChangeStore(Store store)
         {
             XmlDocument document = new XmlDocument();
-            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
-            document.AppendChild(declaration);//添加至XmlDocument对象中
+        
             XmlElement changestore = document.CreateElement("changestore");//CreateElement（节点名称）
             document.AppendChild(changestore);
             XmlElement ID = document.CreateElement("id");
@@ -146,11 +144,12 @@ namespace MsgTransTest
                 return -1;
             }
         }
+
+        // 新建店铺
         public int CreateStore(Store store)
         {
             XmlDocument document = new XmlDocument();
-            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
-            document.AppendChild(declaration);//添加至XmlDocument对象中
+          
             XmlElement addstore = document.CreateElement("addstore");//CreateElement（节点名称）
             document.AppendChild(addstore);
             XmlElement ID = document.CreateElement("id");
@@ -200,11 +199,12 @@ namespace MsgTransTest
                 return -1;
             }
         }
+        
+        // 删除店铺
         public int DeleteStore(Store store)
         {
             XmlDocument document = new XmlDocument();
-            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
-            document.AppendChild(declaration);//添加至XmlDocument对象中
+        
             XmlElement deletestore = document.CreateElement("deletestore");//CreateElement（节点名称）
             document.AppendChild(deletestore);
             XmlElement ID = document.CreateElement("id");
@@ -254,11 +254,12 @@ namespace MsgTransTest
                 return -1;
             }
         }
+
+        // 获取菜单
         public Food[] GetFoods()
         {
             XmlDocument document = new XmlDocument();
-            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
-            document.AppendChild(declaration);//添加至XmlDocument对象中
+          
             XmlElement food = document.CreateElement("getfood");//CreateElement（节点名称）
             document.AppendChild(food);
             Msg msg = new Msg(EProtocol.EP_Request, ETopService.ET_DGL, 6, document);
@@ -285,8 +286,7 @@ namespace MsgTransTest
         public int ChangeFood(Food food)
         {
             XmlDocument document = new XmlDocument();
-            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
-            document.AppendChild(declaration);//添加至XmlDocument对象中
+           
             XmlElement changefood = document.CreateElement("changefood");//CreateElement（节点名称）
             document.AppendChild(changefood);
             XmlElement ID = document.CreateElement("id");
@@ -336,8 +336,7 @@ namespace MsgTransTest
         public int AddFood(Food food)
         {
             XmlDocument document = new XmlDocument();
-            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
-            document.AppendChild(declaration);//添加至XmlDocument对象中
+        
             XmlElement addfood = document.CreateElement("addfood");//CreateElement（节点名称）
             document.AppendChild(addfood);
             XmlElement ID = document.CreateElement("id");
@@ -387,8 +386,7 @@ namespace MsgTransTest
         public int DeleteFood(Food food)
         {
             XmlDocument document = new XmlDocument();
-            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
-            document.AppendChild(declaration);//添加至XmlDocument对象中
+      
             XmlElement deletefood = document.CreateElement("deletefood");//CreateElement（节点名称）
             document.AppendChild(deletefood);
             XmlElement ID = document.CreateElement("id");
@@ -438,8 +436,7 @@ namespace MsgTransTest
         public Bill[] GetBills()
         {
             XmlDocument document = new XmlDocument();
-            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
-            document.AppendChild(declaration);//添加至XmlDocument对象中
+           
             XmlElement getbills = document.CreateElement("getbills");//CreateElement（节点名称）
             document.AppendChild(getbills);
             Msg msg = new Msg(EProtocol.EP_Request, ETopService.ET_DGL, 10, document);
@@ -464,8 +461,7 @@ namespace MsgTransTest
         public Store GetStoreInfo()
         {
             XmlDocument document = new XmlDocument();
-            XmlDeclaration declaration = document.CreateXmlDeclaration("1.0", "GB23121", "");//xml文档的声明部分
-            document.AppendChild(declaration);//添加至XmlDocument对象中
+            
             XmlElement getstoreinfo = document.CreateElement("getstoreinfo");//CreateElement（节点名称）
             document.AppendChild(getstoreinfo);
             Msg msg = new Msg(EProtocol.EP_Request, ETopService.ET_DGL, 4, document);

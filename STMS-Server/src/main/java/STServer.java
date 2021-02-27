@@ -12,7 +12,7 @@ public class STServer {
 
         //在端口号上创建一个服务器套接字
         ServerSocket serverSocket = new ServerSocket(PORT);
-
+        System.out.println("服务器开始监听");
         int counter = 1;
         while (true){
             Socket socket = serverSocket.accept();

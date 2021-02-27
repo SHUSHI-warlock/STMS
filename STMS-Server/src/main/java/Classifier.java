@@ -9,8 +9,8 @@ import java.net.Socket;
 ///分类器，根据不同消息创建对应服务
 public class Classifier implements Runnable{
 
-    private Socket clientSocket;
-    private MsgSendReceiver msr;
+    private final Socket clientSocket;
+    private final MsgSendReceiver  msr;
     Classifier(Socket cs)
     {
         clientSocket = cs;
@@ -49,9 +49,9 @@ public class Classifier implements Runnable{
      * 协议类型为登录
      */
     private void LoginVerify(Msg m){
-        String id = null;
+
         ServerHandleFactory factory = ServerHandleFactory.getInstence();
-        AbstractServerHandle service = factory.getServerHandle(m.getTopService(), clientSocket, msr, id);
+        AbstractServerHandle service = factory.getServerHandle(m.getTopService(), clientSocket, msr);
 
         //验证
         if(service.ServiceVerify(m)>0){

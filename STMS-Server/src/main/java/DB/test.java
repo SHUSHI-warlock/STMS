@@ -39,7 +39,7 @@ public class test {
         //dkj();
         //ytj();
         //kgl();
-        //dgl();
+        dgl();
     }
 
     public static void getOrder(){
@@ -395,8 +395,8 @@ public class test {
 
     public static void dgl(){
 
-        String id="111";
-        String pa="111";
+        String id="1S3F3W";
+        String pa="000";
         int a=Dao.dglVerification(id,pa);
         if(a>0)
             System.out.println("成功");

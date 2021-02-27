@@ -28,12 +28,7 @@ public class YTJServerHandle extends AbstractServerHandle{
         clientSocket = s;
         msr = m;
     }
-    public YTJServerHandle(String Lid, Socket s, MsgSendReceiver m)
-    {
-        clientSocket = s;
-        msr = m;
-        userid = Lid;
-    }
+
 
     @Override
     public void ServerHandle() {
@@ -41,15 +36,11 @@ public class YTJServerHandle extends AbstractServerHandle{
             while (true) {
                 Msg msg = msr.ReceiveMsg();
                 switch (msg.getLowService()) {
-                    case 1:
-                        ChangeLabel(msg);
-                    case 2:
-                        Recharge(msg);
-                    case 3:
-                        SendBill(msg);
-                    case 4:
-                        SendLabel(msg);
-                    default: {
+                    case 1-> ChangeLabel(msg);
+                    case 2-> Recharge(msg);
+                    case 3-> SendBill(msg);
+                    case 4-> SendLabel(msg);
+                    default-> {
                         System.out.println("错误服务请求 \n");
                         msg.PrintHead();
                     }
@@ -75,10 +66,8 @@ public class YTJServerHandle extends AbstractServerHandle{
                 childNode = nodeList.item(temp);
                 //判断是哪个数据
                 switch (childNode.getNodeName()) {
-                    case "id":
-                        id = childNode.getTextContent();
-                    case "pass":
-                        pass = childNode.getTextContent();
+                    case "id"-> id = childNode.getTextContent();
+                    case "pa"-> pass = childNode.getTextContent();
                 }
             }
 
@@ -88,7 +77,7 @@ public class YTJServerHandle extends AbstractServerHandle{
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder = null;
+            DocumentBuilder builder ;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -101,9 +90,11 @@ public class YTJServerHandle extends AbstractServerHandle{
             Element elementState = document.createElement("state");
             root.appendChild(elementState);
 
-            if (a > 0)
+            if (a > 0) {
+                 userid = id;
                 //System.out.println("成功");
                 elementState.setTextContent("true");
+            }
             else
                 //System.out.println("失败");
                 elementState.setTextContent("false");
@@ -118,9 +109,7 @@ public class YTJServerHandle extends AbstractServerHandle{
             try {
                 //发送消息
                 msr.SendMsg(result);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (TransformerException e) {
+            } catch (IOException | TransformerException e) {
                 e.printStackTrace();
             }
             return a;
@@ -138,7 +127,7 @@ public class YTJServerHandle extends AbstractServerHandle{
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder = null;
+            DocumentBuilder builder ;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -154,25 +143,30 @@ public class YTJServerHandle extends AbstractServerHandle{
             //获取
             Label l = Dao.getLabelById(userid);
 
-            Element Elabel = document.createElement("label");
-            Element Eid = document.createElement("id");
-            Element Ename = document.createElement("name");
-            Element Elass = document.createElement("lass");
-            Element Epa = document.createElement("pa");
+            if(l==null){
+                elementState.setTextContent("200");
+            }
+            else {
 
-            Eid.setTextContent(l.id);
-            Ename.setTextContent(l.name);
-            Elass.setTextContent(String.valueOf(l.money));
-            Epa.setTextContent(l.password);
-            Elabel.appendChild(Eid);
-            Elabel.appendChild(Ename);
-            Elabel.appendChild(Epa);
-            Elabel.appendChild(Elass);
-            root.appendChild(Elabel);       //挂root
+                Element Elabel = document.createElement("label");
+                Element Eid = document.createElement("id");
+                Element Ename = document.createElement("name");
+                Element Elass = document.createElement("lass");
+                Element Epa = document.createElement("pa");
 
-            //获取成功
-            elementState.setTextContent("100");
+                Eid.setTextContent(l.id);
+                Ename.setTextContent(l.name);
+                Elass.setTextContent(String.valueOf(l.money));
+                Epa.setTextContent(l.password);
+                Elabel.appendChild(Eid);
+                Elabel.appendChild(Ename);
+                Elabel.appendChild(Epa);
+                Elabel.appendChild(Elass);
+                root.appendChild(Elabel);       //挂root
 
+                //获取成功
+                elementState.setTextContent("100");
+            }
             //将根节点添加到下面
             document.appendChild(root);
 
@@ -182,20 +176,18 @@ public class YTJServerHandle extends AbstractServerHandle{
             //elementState.setTextContent("100");
         }
         //生成消息
-        Msg result = null;
         try {
-            result = new Msg(EProtocol.EP_Return, ETopService.ET_YTJ, 4 , document);
+            Msg result = new Msg(EProtocol.EP_Return, ETopService.ET_YTJ, 4 , document);
+            try {
+                //发送消息
+                msr.SendMsg(result);
+            } catch (IOException | TransformerException e) {
+                e.printStackTrace();
+            }
         } catch (TransformerException e) {
             e.printStackTrace();
         }
-        try {
-            //发送消息
-            msr.SendMsg(result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        }
+
     }
 
     private void ChangeLabel(Msg m)
@@ -211,14 +203,11 @@ public class YTJServerHandle extends AbstractServerHandle{
                 childNode = nodeList.item(temp);
                 //判断是哪个数据
                 switch (childNode.getNodeName()) {
-                    case "id":
-                        l.setId(childNode.getTextContent());
-                    case "name":
-                        l.setName(childNode.getTextContent());
-                    case "pa":
-                        l.setPassword(childNode.getTextContent());
-                    case "lass": {
-                        int lass = Integer.valueOf(childNode.getTextContent());
+                    case "id"-> l.setId(childNode.getTextContent());
+                    case "name"-> l.setName(childNode.getTextContent());
+                    case "pa"-> l.setPassword(childNode.getTextContent());
+                    case "lass"-> {
+                        int lass = Integer.parseInt(childNode.getTextContent());
                         l.setMoney(lass);
                     }
                 }
@@ -230,7 +219,7 @@ public class YTJServerHandle extends AbstractServerHandle{
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder = null;
+            DocumentBuilder builder ;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -260,9 +249,7 @@ public class YTJServerHandle extends AbstractServerHandle{
             try {
                 //发送消息
                 msr.SendMsg(result);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (TransformerException e) {
+            } catch (IOException | TransformerException e) {
                 e.printStackTrace();
             }
 
@@ -282,7 +269,7 @@ public class YTJServerHandle extends AbstractServerHandle{
             NodeList nodeList = element.getChildNodes();
             Node childNode = nodeList.item(0);
 
-            if(childNode.getNodeName()=="id")
+            if(childNode.getNodeName().equals("id"))
                 id = childNode.getTextContent();
             else
                 id = null;
@@ -290,7 +277,7 @@ public class YTJServerHandle extends AbstractServerHandle{
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder = null;
+            DocumentBuilder builder ;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -316,7 +303,7 @@ public class YTJServerHandle extends AbstractServerHandle{
                     Elabelid.setTextContent(b.labelid);
                     Estoreid.setTextContent(b.storeid);
                     Ecost.setTextContent(String.valueOf(b.cost));
-                    SimpleDateFormat formater = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+                    SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String dTime = formater.format(b.time);
                     Etime.setTextContent(dTime);
 
@@ -349,9 +336,7 @@ public class YTJServerHandle extends AbstractServerHandle{
         try {
             //发送消息
             msr.SendMsg(result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
+        } catch (IOException | TransformerException e) {
             e.printStackTrace();
         }
     }
@@ -370,14 +355,13 @@ public class YTJServerHandle extends AbstractServerHandle{
                     childNode = nodeList.item(temp);
                     //判断是哪个数据
                     switch (childNode.getNodeName()) {
-                        case "id":
-                            l.setId(childNode.getTextContent());
-                        case "name":
+                        case "id" -> l.setId(childNode.getTextContent());
+                        case "name"->
                             l.setName(childNode.getTextContent());
-                        case "pa":
+                        case "pa"->
                             l.setPassword(childNode.getTextContent());
-                        case "lass": {
-                            int lass = Integer.valueOf(childNode.getTextContent());
+                        case "lass"-> {
+                            int lass = Integer.parseInt(childNode.getTextContent());
                             l.setMoney(lass);
                         }
                     }
@@ -389,7 +373,7 @@ public class YTJServerHandle extends AbstractServerHandle{
                 // 初始化一个XML解析工厂
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
                 // 创建一个DocumentBuilder实例
-                DocumentBuilder builder = null;
+                DocumentBuilder builder ;
                 builder = factory.newDocumentBuilder();
                 // 构建一个Document实例
                 document = builder.newDocument();
@@ -419,9 +403,7 @@ public class YTJServerHandle extends AbstractServerHandle{
                 try {
                     //发送消息
                     msr.SendMsg(result);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (TransformerException e) {
+                } catch (IOException | TransformerException e) {
                     e.printStackTrace();
                 }
 

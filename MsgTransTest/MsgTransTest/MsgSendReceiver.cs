@@ -17,8 +17,8 @@ namespace MsgTransTest
         }
         public void SendMsg(Msg msg)
         {
-            string msgStr = string.Format("{0,-4}", msg.GetProtocol())
-                + string.Format("{0,-4}", msg.GetTopService())
+            string msgStr = string.Format("{0,-4}", (int)msg.GetProtocol())
+                + string.Format("{0,-4}", (int)msg.GetTopService())
                 + string.Format("{0,-4}", msg.GetLowService())
                 + string.Format("{0,-4}", msg.GetLength())
                 + msg.GetContent().InnerXml;
@@ -37,7 +37,7 @@ namespace MsgTransTest
             mySocket.Receive(byteHead);
             string strLen = Encoding.UTF8.GetString(byteHead).Trim();
 
-            byte[] byteBody = new byte[int.Parse(strProtocol)];
+            byte[] byteBody = new byte[int.Parse(strLen)];
             mySocket.Receive(byteBody);
             string strDoc = Encoding.UTF8.GetString(byteBody).Trim();
             strDoc = strDoc.Trim();

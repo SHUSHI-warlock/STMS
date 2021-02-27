@@ -21,18 +21,14 @@ import java.util.ArrayList;
 public class DKJServerHandle extends AbstractServerHandle {
     //private DKJMsgParse msgParse;
     private String storeId;
-    private Bill tempBill;
+    private final Bill tempBill;
 
     public DKJServerHandle(Socket s, MsgSendReceiver m) {
         clientSocket = s;
         msr = m;
+        tempBill = new Bill();
     }
 
-    public DKJServerHandle(String id, Socket s, MsgSendReceiver m) {
-        clientSocket = s;
-        msr = m;
-        storeId = id;
-    }
 
     @Override
     public void ServerHandle() {
@@ -40,13 +36,10 @@ public class DKJServerHandle extends AbstractServerHandle {
             while (true) {
                 Msg msg = msr.ReceiveMsg();
                 switch (msg.getLowService()) {
-                    case 1:
-                        SendOrder(msg);
-                    case 2:
-                        CaculatePrice(msg);
-                    case 3:
-                        Paying(msg);
-                    default: {
+                    case 1-> SendOrder(msg);
+                    case 2-> CaculatePrice(msg);
+                    case 3-> Paying(msg);
+                    default-> {
                         System.out.println("错误服务请求 \n");
                         msg.PrintHead();
                     }
@@ -72,10 +65,8 @@ public class DKJServerHandle extends AbstractServerHandle {
                 childNode = nodeList.item(temp);
                 //判断是哪个数据
                 switch (childNode.getNodeName()) {
-                    case "id":
-                        id = childNode.getTextContent();
-                    case "pass":
-                        pass = childNode.getTextContent();
+                    case "id" -> id = childNode.getTextContent();
+                    case "pa" -> pass = childNode.getTextContent();
                 }
             }
 
@@ -85,7 +76,7 @@ public class DKJServerHandle extends AbstractServerHandle {
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder = null;
+            DocumentBuilder builder ;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -98,9 +89,11 @@ public class DKJServerHandle extends AbstractServerHandle {
             Element elementState = document.createElement("state");
             root.appendChild(elementState);
 
-            if (a > 0)
+            if (a > 0) {
                 //System.out.println("成功");
+                storeId = id;
                 elementState.setTextContent("true");
+            }
             else
                 //System.out.println("失败");
                 elementState.setTextContent("false");
@@ -115,9 +108,7 @@ public class DKJServerHandle extends AbstractServerHandle {
             try {
                 //发送消息
                 msr.SendMsg(result);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (TransformerException e) {
+            } catch (IOException | TransformerException e) {
                 e.printStackTrace();
             }
             return a;
@@ -131,7 +122,7 @@ public class DKJServerHandle extends AbstractServerHandle {
     /**
      * 计算价格
      *
-     * @param m
+     *
      */
     private void CaculatePrice(Msg m) {
         Document document = null;
@@ -146,25 +137,21 @@ public class DKJServerHandle extends AbstractServerHandle {
             for (int temp = 0; temp < nodeList.getLength(); temp++) {
                 childNode = nodeList.item(temp);
                 //判断是否为叶子节点
-                if (childNode.getNodeName() == "food" && childNode.hasChildNodes()) {
+                if (childNode.getNodeName().equals("food") && childNode.hasChildNodes()) {
                     //获取food下的id和num
-                    NodeList food = ((Element) childNode).getChildNodes();
+                    NodeList food = childNode.getChildNodes();
                     Food f = new Food();
 
                     for (int j = 0; j < food.getLength(); j++) {
                         //判断是哪个数据
                         switch (childNode.getNodeName()) {
-                            case "id":
-                                f.setId(childNode.getTextContent());
-                            case "num": {
-                                int num = Integer.valueOf(childNode.getTextContent());
+                            case "id" -> f.setId(childNode.getTextContent());
+                            case "num" -> {
+                                int num = Integer.parseInt(childNode.getTextContent());
                                 f.setFoodNum(num);
                             }
                         }
                     }
-
-                } else {
-                    continue;
                 }
             }
 
@@ -174,7 +161,7 @@ public class DKJServerHandle extends AbstractServerHandle {
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder = null;
+            DocumentBuilder builder ;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -221,9 +208,7 @@ public class DKJServerHandle extends AbstractServerHandle {
         try {
             //发送消息
             msr.SendMsg(result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
+        } catch (IOException | TransformerException e) {
             e.printStackTrace();
         }
     }
@@ -241,7 +226,7 @@ public class DKJServerHandle extends AbstractServerHandle {
             NodeList nodeList = element.getChildNodes();
             Node childNode = nodeList.item(0);
 
-            if (childNode.getNodeName() == "id")
+            if (childNode.getNodeName().equals("id"))
                 Lid = childNode.getTextContent();
             else
                 Lid = null;
@@ -254,7 +239,7 @@ public class DKJServerHandle extends AbstractServerHandle {
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder = null;
+            DocumentBuilder builder ;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -296,9 +281,7 @@ public class DKJServerHandle extends AbstractServerHandle {
         try {
             //发送消息
             msr.SendMsg(result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
+        } catch (IOException | TransformerException e) {
             e.printStackTrace();
         }
     }
@@ -306,7 +289,7 @@ public class DKJServerHandle extends AbstractServerHandle {
     /**
      * 发送该店菜单
      *
-     * @param m
+     *
      */
     private void SendOrder(Msg m) {
         Document document = null;
@@ -328,7 +311,7 @@ public class DKJServerHandle extends AbstractServerHandle {
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder = null;
+            DocumentBuilder builder ;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -391,9 +374,7 @@ public class DKJServerHandle extends AbstractServerHandle {
         try {
             //发送消息
             msr.SendMsg(result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
+        } catch (IOException | TransformerException e) {
             e.printStackTrace();
         }
     }

@@ -20,7 +20,7 @@ namespace MsgTransTest
             topService = ts;
             lowService = ls;
             content = c;
-            length = c.InnerXml.Length;
+            length = Encoding.UTF8.GetBytes(c.InnerXml).Length;
         }
 
         public EProtocol GetProtocol()

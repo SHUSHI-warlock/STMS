@@ -53,7 +53,7 @@ namespace MsgTransTest
 
         private int Login()
         {
-            return dgl.LoginIn("1S3F3W", "000");
+            return dgl.LoginIn("u001", "牛逼啊");
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -64,7 +64,7 @@ namespace MsgTransTest
             T_storeaddr.Text = store.GetLoc();
             T_rent.Text = store.GetRent().ToString();
             T_pass.Text = store.GetPa();
-            T_
+            T_money.Text = store.GetTurnover().ToString();
             T_master.Text = store.GetMaster();
 
         }

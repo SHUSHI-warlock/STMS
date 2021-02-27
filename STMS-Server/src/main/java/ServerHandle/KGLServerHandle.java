@@ -3,7 +3,6 @@ package ServerHandle;
 import DB.Dao;
 import Data.Bill;
 import Data.Label;
-import Data.Store;
 import MsgTrans.EProtocol;
 import MsgTrans.ETopService;
 import MsgTrans.Msg;
@@ -35,17 +34,12 @@ public class KGLServerHandle extends AbstractServerHandle{
             while (true) {
                 Msg msg = msr.ReceiveMsg();
                 switch (msg.getLowService()) {
-                    case 1:
-                        SendLabels(msg);
-                    case 2:
-                        CreateLabel(msg);
-                    case 3:
-                        DeleteLabel(msg);
-                    case 4:
-                        ChangeLabel(msg);
-                    case 5:
-                        SendBill(msg);
-                    default: {
+                    case 1 -> SendLabels(msg);
+                    case 2 -> CreateLabel(msg);
+                    case 3 -> DeleteLabel(msg);
+                    case 4 -> ChangeLabel(msg);
+                    case 5 -> SendBill(msg);
+                    default -> {
                         System.out.println("错误服务请求 \n");
                         msg.PrintHead();
                     }
@@ -71,10 +65,8 @@ public class KGLServerHandle extends AbstractServerHandle{
                 childNode = nodeList.item(temp);
                 //判断是哪个数据
                 switch (childNode.getNodeName()) {
-                    case "id":
-                        id = childNode.getTextContent();
-                    case "pass":
-                        pass = childNode.getTextContent();
+                    case "id" -> id = childNode.getTextContent();
+                    case "pa" -> pass = childNode.getTextContent();
                 }
             }
 
@@ -84,7 +76,7 @@ public class KGLServerHandle extends AbstractServerHandle{
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder = null;
+            DocumentBuilder builder ;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -114,9 +106,7 @@ public class KGLServerHandle extends AbstractServerHandle{
             try {
                 //发送消息
                 msr.SendMsg(result);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (TransformerException e) {
+            } catch (IOException | TransformerException e) {
                 e.printStackTrace();
             }
             return a;
@@ -134,7 +124,7 @@ public class KGLServerHandle extends AbstractServerHandle{
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder = null;
+            DocumentBuilder builder ;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -190,9 +180,7 @@ public class KGLServerHandle extends AbstractServerHandle{
         try {
             //发送消息
             msr.SendMsg(result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
+        } catch (IOException | TransformerException e) {
             e.printStackTrace();
         }
     }
@@ -210,14 +198,11 @@ public class KGLServerHandle extends AbstractServerHandle{
                 childNode = nodeList.item(temp);
                 //判断是哪个数据
                 switch (childNode.getNodeName()) {
-                    case "id":
-                        l.setId(childNode.getTextContent());
-                    case "name":
-                        l.setName(childNode.getTextContent());
-                    case "pa":
-                        l.setPassword(childNode.getTextContent());
-                   case "lass": {
-                        int lass = Integer.valueOf(childNode.getTextContent());
+                    case "id" -> l.setId(childNode.getTextContent());
+                    case "name" -> l.setName(childNode.getTextContent());
+                    case "pa" -> l.setPassword(childNode.getTextContent());
+                   case "lass" -> {
+                        int lass = Integer.parseInt(childNode.getTextContent());
                         l.setMoney(lass);
                     }
                 }
@@ -259,9 +244,7 @@ public class KGLServerHandle extends AbstractServerHandle{
             try {
                 //发送消息
                 msr.SendMsg(result);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (TransformerException e) {
+            } catch (IOException | TransformerException e) {
                 e.printStackTrace();
             }
 
@@ -283,14 +266,11 @@ public class KGLServerHandle extends AbstractServerHandle{
                 childNode = nodeList.item(temp);
                 //判断是哪个数据
                 switch (childNode.getNodeName()) {
-                    case "id":
-                        l.setId(childNode.getTextContent());
-                    case "name":
-                        l.setName(childNode.getTextContent());
-                    case "pa":
-                        l.setPassword(childNode.getTextContent());
-                    case "lass": {
-                        int lass = Integer.valueOf(childNode.getTextContent());
+                    case "id"-> l.setId(childNode.getTextContent());
+                    case "name"-> l.setName(childNode.getTextContent());
+                    case "pa"-> l.setPassword(childNode.getTextContent());
+                    case "lass"-> {
+                        int lass = Integer.parseInt(childNode.getTextContent());
                         l.setMoney(lass);
                     }
                 }
@@ -302,7 +282,7 @@ public class KGLServerHandle extends AbstractServerHandle{
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder = null;
+            DocumentBuilder builder ;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -332,9 +312,7 @@ public class KGLServerHandle extends AbstractServerHandle{
             try {
                 //发送消息
                 msr.SendMsg(result);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (TransformerException e) {
+            } catch (IOException | TransformerException e) {
                 e.printStackTrace();
             }
 
@@ -356,14 +334,11 @@ public class KGLServerHandle extends AbstractServerHandle{
                 childNode = nodeList.item(temp);
                 //判断是哪个数据
                 switch (childNode.getNodeName()) {
-                    case "id":
-                        l.setId(childNode.getTextContent());
-                    case "name":
-                        l.setName(childNode.getTextContent());
-                    case "pa":
-                        l.setPassword(childNode.getTextContent());
-                    case "lass": {
-                        int lass = Integer.valueOf(childNode.getTextContent());
+                    case "id"-> l.setId(childNode.getTextContent());
+                    case "name"-> l.setName(childNode.getTextContent());
+                    case "pa"-> l.setPassword(childNode.getTextContent());
+                    case "lass"-> {
+                        int lass = Integer.parseInt(childNode.getTextContent());
                         l.setMoney(lass);
                     }
                 }
@@ -375,7 +350,7 @@ public class KGLServerHandle extends AbstractServerHandle{
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder = null;
+            DocumentBuilder builder ;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -405,9 +380,7 @@ public class KGLServerHandle extends AbstractServerHandle{
             try {
                 //发送消息
                 msr.SendMsg(result);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (TransformerException e) {
+            } catch (IOException | TransformerException e) {
                 e.printStackTrace();
             }
 
@@ -427,7 +400,7 @@ public class KGLServerHandle extends AbstractServerHandle{
             NodeList nodeList = element.getChildNodes();
             Node childNode = nodeList.item(0);
 
-            if(childNode.getNodeName()=="id")
+            if(childNode.getNodeName().equals("id"))
                 id = childNode.getTextContent();
             else
                 id = null;
@@ -435,7 +408,7 @@ public class KGLServerHandle extends AbstractServerHandle{
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder = null;
+            DocumentBuilder builder ;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -461,7 +434,7 @@ public class KGLServerHandle extends AbstractServerHandle{
                     Elabelid.setTextContent(b.labelid);
                     Estoreid.setTextContent(b.storeid);
                     Ecost.setTextContent(String.valueOf(b.cost));
-                    SimpleDateFormat formater = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+                    SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String dTime = formater.format(b.time);
                     Etime.setTextContent(dTime);
 
@@ -495,9 +468,7 @@ public class KGLServerHandle extends AbstractServerHandle{
         try {
             //发送消息
             msr.SendMsg(result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
+        } catch (IOException | TransformerException e) {
             e.printStackTrace();
         }
     }
