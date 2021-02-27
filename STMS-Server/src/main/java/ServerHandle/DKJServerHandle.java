@@ -4,9 +4,7 @@ import DB.Dao;
 import Data.Bill;
 import Data.Food;
 import Data.FoodOrder;
-import MsgTrans.DKJMsgParse;
-import MsgTrans.Msg;
-import MsgTrans.MsgSendReceiver;
+import MsgTrans.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -17,23 +15,16 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
 
 public class DKJServerHandle extends AbstractServerHandle {
-    //private DKJMsgParse msgParse;
+
     private String storeId;
-    private Bill tempBill;
+    private final Bill tempBill;
 
-    public DKJServerHandle(Socket s, MsgSendReceiver m) {
-        clientSocket = s;
+    public DKJServerHandle(MsgSendReceiver m) {
         msr = m;
-    }
-
-    public DKJServerHandle(String id, Socket s, MsgSendReceiver m) {
-        clientSocket = s;
-        msr = m;
-        storeId = id;
+        tempBill = new Bill();
     }
 
     @Override
@@ -42,13 +33,10 @@ public class DKJServerHandle extends AbstractServerHandle {
             while (true) {
                 Msg msg = msr.ReceiveMsg();
                 switch (msg.getLowService()) {
-                    case "1":
-                        CaculatePrice(msg);
-                    case "2":
-                        Paying(msg);
-                    case "3":
-                        SendOrder(msg);
-                    default: {
+                    case 1-> SendOrder(msg);
+                    case 2-> CaculatePrice(msg);
+                    case 3-> Paying(msg);
+                    default-> {
                         System.out.println("错误服务请求 \n");
                         msg.PrintHead();
                     }
@@ -60,10 +48,79 @@ public class DKJServerHandle extends AbstractServerHandle {
         }
     }
 
+    @Override
+    public int ServiceVerify(Msg m) {
+        String id = null;
+        String pass = null;
+        try {
+            Document document = m.getContent();
+            //获取根
+            Element element = document.getDocumentElement();
+            NodeList nodeList = element.getChildNodes();
+            Node childNode;
+            for (int temp = 0; temp < nodeList.getLength(); temp++) {
+                childNode = nodeList.item(temp);
+                //判断是哪个数据
+                switch (childNode.getNodeName()) {
+                    case "id" -> id = childNode.getTextContent();
+                    case "pa" -> pass = childNode.getTextContent();
+                }
+            }
+
+            //验证
+            int a = Dao.dkjVerification(id, pass);
+
+            // 初始化一个XML解析工厂
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            // 创建一个DocumentBuilder实例
+            DocumentBuilder builder ;
+            builder = factory.newDocumentBuilder();
+            // 构建一个Document实例
+            document = builder.newDocument();
+            document.setXmlStandalone(true);
+            // standalone用来表示该文件是否呼叫其它外部的文件。若值是 ”yes” 表示没有呼叫外部文件
+
+            // 创建根节点
+            Element root = document.createElement("result");
+            // 创建状态
+            Element elementState = document.createElement("state");
+            root.appendChild(elementState);
+
+            if (a > 0) {
+                //System.out.println("成功");
+                storeId = id;
+                elementState.setTextContent("true");
+            }
+            else
+                //System.out.println("失败");
+                elementState.setTextContent("false");
+
+            //将根节点添加到下面
+            document.appendChild(root);
+
+            //生成消息
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 0, document);
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
+            try {
+                //发送消息
+                msr.SendMsg(result);
+            } catch (IOException | TransformerException e) {
+                e.printStackTrace();
+            }
+            return a;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
     /**
      * 计算价格
      *
-     * @param m
      */
     private void CaculatePrice(Msg m) {
         Document document = null;
@@ -78,25 +135,22 @@ public class DKJServerHandle extends AbstractServerHandle {
             for (int temp = 0; temp < nodeList.getLength(); temp++) {
                 childNode = nodeList.item(temp);
                 //判断是否为叶子节点
-                if (childNode.getNodeName() == "food" && childNode.hasChildNodes()) {
+                if (childNode.getNodeName().equals("food") && childNode.hasChildNodes()) {
+
                     //获取food下的id和num
-                    NodeList food = ((Element) childNode).getChildNodes();
+                    NodeList food = childNode.getChildNodes();
                     Food f = new Food();
 
                     for (int j = 0; j < food.getLength(); j++) {
                         //判断是哪个数据
                         switch (childNode.getNodeName()) {
-                            case "id":
-                                f.setId(childNode.getTextContent());
-                            case "num": {
-                                int num = Integer.valueOf(childNode.getTextContent());
+                            case "id" -> f.setId(childNode.getTextContent());
+                            case "num" -> {
+                                int num = Integer.parseInt(childNode.getTextContent());
                                 f.setFoodNum(num);
                             }
                         }
                     }
-
-                } else {
-                    continue;
                 }
             }
 
@@ -106,7 +160,7 @@ public class DKJServerHandle extends AbstractServerHandle {
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder = null;
+            DocumentBuilder builder ;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -131,9 +185,10 @@ public class DKJServerHandle extends AbstractServerHandle {
                 // 创建状态
                 Element elementP = document.createElement("price");
                 elementP.setTextContent(String.valueOf(price));
-                root.appendChild(elementState);
+                root.appendChild(elementP);
             }
 
+            root.appendChild(elementState);
             //将根节点添加到下面
             document.appendChild(root);
 
@@ -143,14 +198,17 @@ public class DKJServerHandle extends AbstractServerHandle {
             //elementState.setTextContent("100");
         }
         //生成消息
-        Msg result = new Msg("3", "0", "2", document);
+        Msg result = null;
+        try {
+            result = new Msg(EProtocol.EP_Return, ETopService.ET_DKJ, 2 , document);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
 
         try {
             //发送消息
             msr.SendMsg(result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
+        } catch (IOException | TransformerException e) {
             e.printStackTrace();
         }
     }
@@ -168,7 +226,7 @@ public class DKJServerHandle extends AbstractServerHandle {
             NodeList nodeList = element.getChildNodes();
             Node childNode = nodeList.item(0);
 
-            if (childNode.getNodeName() == "id")
+            if (childNode.getNodeName().equals("id"))
                 Lid = childNode.getTextContent();
             else
                 Lid = null;
@@ -181,7 +239,7 @@ public class DKJServerHandle extends AbstractServerHandle {
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder = null;
+            DocumentBuilder builder ;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -214,14 +272,16 @@ public class DKJServerHandle extends AbstractServerHandle {
             //elementState.setTextContent("100");
         }
         //生成消息
-        Msg result = new Msg("3", "0", "1", document);
-
+        Msg result = null;
+        try {
+            result = new Msg(EProtocol.EP_Return, ETopService.ET_DKJ, 3 , document);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
         try {
             //发送消息
             msr.SendMsg(result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
+        } catch (IOException | TransformerException e) {
             e.printStackTrace();
         }
     }
@@ -229,7 +289,7 @@ public class DKJServerHandle extends AbstractServerHandle {
     /**
      * 发送该店菜单
      *
-     * @param m
+     *
      */
     private void SendOrder(Msg m) {
         Document document = null;
@@ -251,7 +311,7 @@ public class DKJServerHandle extends AbstractServerHandle {
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder = null;
+            DocumentBuilder builder ;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -260,9 +320,6 @@ public class DKJServerHandle extends AbstractServerHandle {
 
             // 创建根节点
             Element root = document.createElement("result");
-            // 创建状态
-            Element elementState = document.createElement("state");
-            root.appendChild(elementState);
 
             //获取所有菜品
             ArrayList<Food> fs = Dao.getOrderById(storeId);
@@ -271,30 +328,29 @@ public class DKJServerHandle extends AbstractServerHandle {
                 for (Food f : fs) {
                     Element Efood = document.createElement("food");
                     Element Eid = document.createElement("id");
+                    Element Eclass = document.createElement("class");
+                    Element Est = document.createElement("st");
                     Element Ename = document.createElement("name");
                     Element Eprice = document.createElement("price");
-                    Element Est = document.createElement("st");
-                    Element Eclass = document.createElement("class");
                     Element Etip = document.createElement("tip");
+
                     Eid.setTextContent(f.id);
+                    Eclass.setTextContent(f.foodClass);
+                    Est.setTextContent(f.st);
                     Ename.setTextContent(f.name);
                     Eprice.setTextContent(String.valueOf(f.price));
                     Etip.setTextContent(f.foodTip);
-                    Eclass.setTextContent(f.foodClass);
-                    Est.setTextContent(f.st);
 
                     Efood.appendChild(Eid);
+                    Efood.appendChild(Eclass);
+                    Efood.appendChild(Est);
                     Efood.appendChild(Ename);
                     Efood.appendChild(Eprice);
-                    Efood.appendChild(Est);
-                    Efood.appendChild(Eclass);
                     Efood.appendChild(Etip);
 
                     root.appendChild(Efood);       //挂root
                 }
             }
-            //获取成功
-            elementState.setTextContent("100");
 
             //将根节点添加到下面
             document.appendChild(root);
@@ -305,21 +361,23 @@ public class DKJServerHandle extends AbstractServerHandle {
             //elementState.setTextContent("100");
         }
         //生成消息
-        Msg result = new Msg("3", "0", "1", document);
-
+        Msg result = null;
+        try {
+            result = new Msg(EProtocol.EP_Return, ETopService.ET_DKJ, 1 , document);
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
         try {
             //发送消息
             msr.SendMsg(result);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
+        } catch (IOException | TransformerException e) {
             e.printStackTrace();
         }
     }
 
     private void CloseSocket() {
         try {
-            clientSocket.close();
+            this.msr.CloseSocket();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

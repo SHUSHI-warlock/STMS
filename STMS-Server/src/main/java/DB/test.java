@@ -34,12 +34,14 @@ public class test {
         //findBStore();     //ok
         //addBill();        //ok
         //Pay();            //ok
+        //Caculate();       //ok
 
+        //StoreRent();      //ok
 
-        //dkj();
-        //ytj();
-        //kgl();
-        //dgl();
+        //dkj();            //ok
+        //ytj();            //ok
+        //kgl();            //ok
+        //dgl();            //ok
     }
 
     public static void getOrder(){
@@ -348,13 +350,30 @@ public class test {
             System.out.println("余额："+a);
     }
 
-    public static void Caculate() throws ParseException {
+    public static void Caculate()   {
 
         int a=Dao.CaculateTurnover("1S3F3W");
         if(a>0)
-            System.out.println("成功");
-        else
+            System.out.println("成功！当前营业额："+a);
+        else if(a==0)
             System.out.println("失败");
+        else {
+            System.out.println("店铺未出租");
+        }
+    }
+    public static void StoreRent()   {
+
+        int a=Dao.StoreRent("1S3F3W");
+        if(a>0)
+            System.out.println("成功！");
+        else if(a==-1)
+            System.out.println("失败！");
+        else if(a==-2) {
+            System.out.println("店铺未出租！");
+        }
+        else if(a==-3){
+            System.out.println("店主卡余额不足！");
+        }
     }
 
     public static void dkj(){
@@ -395,8 +414,8 @@ public class test {
 
     public static void dgl(){
 
-        String id="111";
-        String pa="111";
+        String id="1S3F3W";
+        String pa="000";
         int a=Dao.dglVerification(id,pa);
         if(a>0)
             System.out.println("成功");

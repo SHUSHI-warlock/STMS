@@ -3,12 +3,17 @@ import Data.Bill;
 import Data.Food;
 import Data.Label;
 import Data.Store;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Dao {
 
@@ -31,6 +36,7 @@ public class Dao {
                 f.st = rs.getString("F_Strategy");
                 f.name = rs.getString("F_Name");
                 f.price = rs.getInt("F_Price");
+                f.foodTip = rs.getString("F_Tip");
                 foods.add(f);
             }
         } catch (Exception e) {
@@ -694,52 +700,121 @@ public class Dao {
 
     }
 
-    public static int CaculateTurnover(String id) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Calendar c = Calendar.getInstance();        //日历类，可以进行时间的计算
-
-        Date now=new Date(0);        //获取当前时间
-        //获取过去七天时间
-        c.setTime(now);
-        c.add(Calendar.DATE, - 7);
-        Date d = (Date) c.getTime();
-        //转化为字符串
-        String dnow = format.format(now);     //现在时间
-        String day = format.format(d);        //七天前的时间
-        //转化为Date型
-        Date dbefore= (Date) format.parse(day);
-        Date dafter= (Date) format.parse(dnow);
-
-        /**
-         * 计算该店一星期内所有营业额
-         */
-        String ana = "select * from T_Bill where S_Id='" + id + "'";
+    /**
+     * 计算店铺一星期内的营业额
+     * @param id
+     * @return 成功返回营业额大于0 失败返回-1 店铺未出租-2
+     * @throws ParseException
+     */
+    public static int CaculateTurnover(String id){
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
         Statement state = null;
         ResultSet rs;
-        int a = 0;
-        int total=0;            //商店收入
-        String master = null;   //店主
-
+        int result = 0;
+        /**
+         * 判断是否出租
+         */
+        String cal = "select S_IsLease from T_Store where S_Id='" + id + "'";
+        boolean isLease = false;        //是否出租
         try {
             state = conn.createStatement();
-            rs = state.executeQuery(ana);
+            rs = state.executeQuery(cal);
             while (rs.next()) {
-                String dt=rs.getString("B_Time");
-                Date date = (Date) format.parse(dt);
-                boolean before = dbefore.before(date);          //消费时间在一周范围内
-                boolean after = dafter.after(date);
-                if(before & after)      //感觉这个after有点没必要了，难道还能超前消费？
-                    total += rs.getInt("B_Cost");
+                isLease = rs.getBoolean("S_IsLease");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            result = -1;
         }
+        //如果未出租不予计算
+        if(isLease==false){
+            result = -2;
+        }
+        else {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Calendar c = Calendar.getInstance();        //日历类，可以进行时间的计算
+
+            Date now = new Date(System.currentTimeMillis());        //获取当前时间
+            //获取过去七天时间
+            c.setTime(now);
+            c.add(Calendar.DATE, -7);
+            Date d = (Date) c.getTime();
+            //转化为字符串
+            String dnow = format.format(now);     //现在时间
+            String day = format.format(d);        //七天前的时间
+            //转化为Date型
+            Date dbefore = null;
+            Date dafter  = null;
+            try {
+                dbefore = (Date) format.parse(day);
+                 dafter = (Date) format.parse(dnow);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                System.out.println("日期转换错误！");
+                result = -1;
+            }
+
+            /**
+             * 计算该店一星期内所有营业额
+             */
+            String ana = "select * from T_Bill where S_Id='" + id + "'";
+            int total=0;            //商店收入
+            try {
+                state = conn.createStatement();
+                rs = state.executeQuery(ana);
+                while (rs.next()) {
+                    String dt = rs.getString("B_Time");
+                    Date date = (Date) format.parse(dt);
+                    boolean before = dbefore.before(date);          //消费时间在一周范围内
+                    boolean after = dafter.after(date);
+                    if (before & after)      //感觉这个after有点没必要了，难道还能超前消费？
+                        total += rs.getInt("B_Cost");
+                }
+
+                //得到结果
+                result = total;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                result = -1;
+            }
+        }
+
+        try {
+            state.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            result = -1;
+        }
+
+        //return a;   //a大于0成功，a等于0失败
+        return result;
+    }
+
+    /**
+     * 结算店铺的营业额和租金
+     * @return 成功返回 1 失败返回-1 店铺未出租返回-2 店主卡余额不够（亏损且卡里没钱）返回 -3
+     */
+    public static int StoreRent(String id){
+        int result = 0;
+        result = CaculateTurnover(id);
+        //失败出错返回
+        if(result<0)
+            return result;
+
+        //创建数据库链接
+        //Connection conn = DBUtil.getConnection();
+        Statement state = null;
+        ResultSet rs;
+
         /**
          * 减去该店租金，并获得店主卡号
          */
-        String cal = "select S_Rent from T_Store where S_Id='" + id + "'";
+        String cal = "select S_Rent,S_Master from T_Store where S_Id='" + id + "'";
+        int total = result;            //商店收入
+        String master = null;   //店主
         try {
             state = conn.createStatement();
             rs = state.executeQuery(cal);
@@ -749,10 +824,10 @@ public class Dao {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return -1;
         }
-        /**
-         * 最后把钱打到店主卡里
-         */
+
+        // 最后把钱打到店主卡里
         String fin = "select L_Lass from T_Label where L_Id='" + master + "'";
         try {
             state = conn.createStatement();
@@ -762,25 +837,23 @@ public class Dao {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return -1;
         }
+
+        //店主卡余额不够（亏损且卡里没钱）返回 -3
+        if(total<0)
+            return -3;
 
         String sql = "update T_Label set L_Lass=" + total + " where L_Id='" + master + "'";
         try {
             state = conn.createStatement();
-            a = state.executeUpdate(sql);
+            result = state.executeUpdate(sql);
         } catch (Exception e) {
             e.printStackTrace();
+            return -1;
         }
-
-        try {
-            state.close();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return a;   //a大于0成功，a等于0失败
-
+        //一切成功返回1
+        return 1;
     }
 
     public static int dkjVerification(String id,String pa){
