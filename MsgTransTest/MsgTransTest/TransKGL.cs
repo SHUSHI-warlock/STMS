@@ -35,7 +35,7 @@ namespace MsgTransTest
             login.AppendChild(PA);
             document.AppendChild(login);
             
-            Msg msg = new Msg(EProtocol.EP_Verify, ETopService.ET_DKJ, 0, document);
+            Msg msg = new Msg(EProtocol.EP_Verify, ETopService.ET_KGL, 0, document);
             
             this.msgSendReceiver.SendMsg(msg);
             
@@ -63,7 +63,7 @@ namespace MsgTransTest
             }
         }
         /**
-         * 1
+         * 1 验证完毕
          * 获取卡信息
          * 参数：无
          * 返回值：Label[]
@@ -103,7 +103,7 @@ namespace MsgTransTest
             return labels;
         }
         /**
-         * 2
+         * 2 验证完毕
          * 添加卡
          * 参数：Label对象
          * 返回值：添加成功返回1；添加失败返回0；未知错误返回-1
@@ -158,19 +158,20 @@ namespace MsgTransTest
             }
         }
         /**
-         * 3
+         * 3 验证完毕
          * 删除卡
-         * 参数：Label对象
+         * 参数：Labelid
          * 返回值：删除成功返回1；删除失败返回0；未知错误返回-1
          */
-        public int DeleteLable(Label label)
+        public int DeleteLable(String labelid)
         {
             XmlDocument document = new XmlDocument();
             
             XmlElement deletelabel = document.CreateElement("deletelabel");//CreateElement（节点名称）
             
             XmlElement ID = document.CreateElement("id");
-            ID.InnerText = label.GetId(); //设置其值
+            ID.InnerText = labelid; //设置其值
+            /*
             XmlElement NM = document.CreateElement("name");
             NM.InnerText = label.GetName(); //设置其值
             XmlElement LAS = document.CreateElement("lass");
@@ -181,7 +182,9 @@ namespace MsgTransTest
             deletelabel.AppendChild(ID);
             deletelabel.AppendChild(NM);
             deletelabel.AppendChild(LAS);
-            deletelabel.AppendChild(PA);
+            deletelabel.AppendChild(PA);*/
+            
+            deletelabel.AppendChild(ID);
             document.AppendChild(deletelabel);
 
             Msg msg = new Msg(EProtocol.EP_Put, ETopService.ET_KGL, 3, document);
@@ -281,34 +284,38 @@ namespace MsgTransTest
 
             XmlElement ID = document.CreateElement("id");
             ID.InnerText = id; //设置其值
-            
+
             getbills.AppendChild(ID);
             document.AppendChild(getbills);
 
             Msg msg = new Msg(EProtocol.EP_Request, ETopService.ET_KGL, 5, document);
-            
+
             this.msgSendReceiver.SendMsg(msg);
-            
+
             Msg remsg = this.msgSendReceiver.ReceiveMsg();
-            
+
             XmlDocument reDocument = remsg.GetContent();
-            
             XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
             XmlNodeList xmlBill = xmlRoot.GetElementsByTagName("bill");
-
-            List<Bill> list = new List<Bill>();
-            foreach (XmlNode node in xmlRoot.ChildNodes)
+            XmlNode state = xmlRoot.GetElementsByTagName("state").Item(0);
+            if (state.InnerText == "true")//返回成功
             {
-                Bill temp = new Bill(
-                    node["labelid"].InnerText,
-                    node["storeid"].InnerText,
-                    int.Parse(node["cost"].InnerText),
-                    node["time"].InnerText
-                    );
-                list.Add(temp);
+                List<Bill> list = new List<Bill>();
+                foreach (XmlNode node in xmlBill)
+                {
+                    Bill temp = new Bill(
+                        node["labelid"].InnerText,
+                        node["storeid"].InnerText,
+                        int.Parse(node["cost"].InnerText),
+                        node["time"].InnerText
+                        );
+                    list.Add(temp);
+                }
+                Bill[] bills = list.ToArray();
+                return bills;
             }
-            Bill[] bills = list.ToArray();
-            return bills;
+            else
+                return null;
         }
     }
 }

@@ -26,10 +26,26 @@ namespace MsgTransTest
         {
             InitializeComponent();
 
+            /* 店管理测试完成
             DGLtest dGLtest = new DGLtest();
-
             dGLtest.test();
+            */
 
+            /* 打卡机测试完成
+            DKJtest dKJtest = new DKJtest();
+            dKJtest.test();
+            */
+
+            /* 卡管理测试完成
+            KGLtest kGLtest = new KGLtest();
+            kGLtest.test();
+            */
+
+            YTJtest yTJtest = new YTJtest();
+            yTJtest.test();
+
+
+            //wpf演示
             /*
             MsgSendReceiver msr = ServerConn.ConnServer();
 
@@ -55,7 +71,7 @@ namespace MsgTransTest
             }
             else
                 Console.Out.WriteLine("其他错误！");
-            */    
+            */
         }
 
         private int Login()

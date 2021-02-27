@@ -206,7 +206,7 @@ public class KGLServerHandle extends AbstractServerHandle{
             }
 
             //调用数据库方法
-            int a = Dao.updateLabel(l);
+            int a = Dao.updateLabelWithoutCost(l);
 
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -276,8 +276,11 @@ public class KGLServerHandle extends AbstractServerHandle{
                 }
             }
 
+            //初始金额为0
+            l.setMoney(0);
+
             //调用数据库方法
-            int a = Dao.updateLabel(l);
+            int a = Dao.addNewLabel(l);
 
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -395,8 +398,7 @@ public class KGLServerHandle extends AbstractServerHandle{
         }
     }
 
-    private void SendBill(Msg m)
-    {
+    private void SendBill(Msg m){
         Document document = null;
         String id;
         try {
@@ -423,6 +425,9 @@ public class KGLServerHandle extends AbstractServerHandle{
 
             // 创建根节点
             Element root = document.createElement("result");
+            // 创建状态
+            Element elementState = document.createElement("state");
+            root.appendChild(elementState);
 
             //获取所有bill
             ArrayList<Bill> bs = Dao.findBillOfUser(id);
@@ -448,8 +453,11 @@ public class KGLServerHandle extends AbstractServerHandle{
 
                     root.appendChild(EBill);       //挂root
                 }
+                elementState.setTextContent("true");
             }
-
+            else {
+                elementState.setTextContent("false");
+            }
             //将根节点添加到下面
             document.appendChild(root);
 
@@ -461,11 +469,10 @@ public class KGLServerHandle extends AbstractServerHandle{
         //生成消息
         Msg result = null;
         try {
-            result = new Msg(EProtocol.EP_Return, ETopService.ET_KGL, 5 , document);
+            result = new Msg(EProtocol.EP_Return, ETopService.ET_KGL, 3 , document);
         } catch (TransformerException e) {
             e.printStackTrace();
         }
-
         try {
             //发送消息
             msr.SendMsg(result);

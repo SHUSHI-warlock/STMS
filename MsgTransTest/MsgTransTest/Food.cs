@@ -10,7 +10,7 @@ namespace MsgTransTest
     {
         public string id;
         public string foodClass;    //菜品类型
-        public string st;           //IPriceStrategy
+        public string st;           //IPriceStrategy 只能是single（单点） 和 weight (称重)
         public string name;
         public int price;
         public string foodTip;

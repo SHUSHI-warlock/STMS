@@ -474,6 +474,35 @@ public class Dao {
 
     }
 
+    //不改余额
+    public static int updateLabelWithoutCost(Label l){
+        //更新消费卡信息
+        String sql = "update T_Label set L_Name='" + l.name + "', L_Pa='" + l.password  + "' where L_Id='" + l.id + "'";
+        //创建数据库链接
+        //Connection conn = DBUtil.getConnection();
+        Statement state = null;
+        int a = 0;
+
+        try {
+            state = conn.createStatement();
+            a = state.executeUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            state.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+        return a; //a等于0失败，a大于0成功
+
+    }
+
+
     public static int deleteLabel(Label l){
         //删除已有的消费卡
         String sql = "delete from T_Label where L_Id='" + l.id + "'";
@@ -654,6 +683,11 @@ public class Dao {
 
     }
 
+    /**
+     * 尝试交易，成功记录交易记录
+     * @param b
+     * @return
+     */
     public static int tryPaying(Bill b){
         //消费付款
         //Connection conn = DBUtil.getConnection();
@@ -680,6 +714,12 @@ public class Dao {
             try {
                 state = conn.createStatement();
                 a = state.executeUpdate(sql);
+
+                if(addNewBill(b)==0){
+                    b.billState = 0;
+                    return 0;
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

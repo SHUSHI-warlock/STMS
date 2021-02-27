@@ -16,7 +16,7 @@ namespace MsgTransTest
             this.msgSendReceiver = msgSendReceiver;
         }
         /**
-        * 0
+        * 0 验证完毕
         * 登录
         * 参数：id表示Label ID；pwd表示Label 密码
         * 返回值：登录成功返回1，登录失败返回0，未知错误返回-1
@@ -65,7 +65,7 @@ namespace MsgTransTest
             }
         }
         /**
-        * 4
+        * 4 验证完毕
         * 获取Label信息
         * 参数：无
         * 返回值：Label对象
@@ -86,20 +86,25 @@ namespace MsgTransTest
 
             XmlDocument reDocument = remsg.GetContent();
             XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
-            Label label = null;
-            foreach (XmlNode node in xmlRoot.ChildNodes)
+            String state = xmlRoot["state"].InnerText;
+            if (state == "true")
             {
-                string labelstr = node["label"].InnerText;
-                label = new Label(node["id"].InnerText,
-                    node["name"].InnerText,
-                    node["pa"].InnerText,
-                    int.Parse(node["lass"].InnerText)
-                    );
+                Label label = null;
+                XmlNode node = xmlRoot["label"];
+                    label = new Label(node["id"].InnerText,
+                        node["name"].InnerText,
+                        node["pa"].InnerText,
+                        int.Parse(node["lass"].InnerText)
+                        );
+                
+                return label;
             }
-            return label;
+            else
+                return null;
         }
+
         /**
-        * 1
+        * 1 验证成功
         * 修改Label信息
         * 参数：修改后的Label对象
         * 返回值：修改成功返回1；修改失败返回0；未知错误返回-1
@@ -151,8 +156,9 @@ namespace MsgTransTest
                 return -1;
             }
         }
+        
         /**
-         * 2
+         * 2 验证完毕
          * 充值
          * 参数：修改后的Label对象
          * 返回值：充值成功返回1，充值失败返回0，未知错误返回-1
@@ -205,8 +211,9 @@ namespace MsgTransTest
                 return -1;
             }
         }
+
         /**
-         * 3
+         * 3 验证完毕
          * 返回账单
          * 参数：无
          * 返回值：Bill[]
@@ -214,32 +221,38 @@ namespace MsgTransTest
         public Bill[] GetBills()
         {
             XmlDocument document = new XmlDocument();
-            
+
             XmlElement getbills = document.CreateElement("getbills");//CreateElement（节点名称）
             document.AppendChild(getbills);
 
             Msg msg = new Msg(EProtocol.EP_Request, ETopService.ET_YTJ, 3, document);
-            
+
             this.msgSendReceiver.SendMsg(msg);
-            
+
             Msg remsg = this.msgSendReceiver.ReceiveMsg();
-            
+
             XmlDocument reDocument = remsg.GetContent();
             XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
-            
-            List<Bill> list = new List<Bill>();
-            foreach (XmlNode node in xmlRoot.ChildNodes)
+            XmlNodeList xmlBill = xmlRoot.GetElementsByTagName("bill");
+            XmlNode state = xmlRoot.GetElementsByTagName("state").Item(0);
+            if (state.InnerText == "true")//返回成功
             {
-                Bill temp = new Bill(
-                    node["labelid"].InnerText,
-                    node["storeid"].InnerText,
-                    int.Parse(node["cost"].InnerText),
-                    node["time"].InnerText
-                    );
-                list.Add(temp);
+                List<Bill> list = new List<Bill>();
+                foreach (XmlNode node in xmlBill)
+                {
+                    Bill temp = new Bill(
+                        node["labelid"].InnerText,
+                        node["storeid"].InnerText,
+                        int.Parse(node["cost"].InnerText),
+                        node["time"].InnerText
+                        );
+                    list.Add(temp);
+                }
+                Bill[] bills = list.ToArray();
+                return bills;
             }
-            Bill[] bills = list.ToArray();
-            return bills;
+            else
+                return null;
         }
     }
 }

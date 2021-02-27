@@ -25,6 +25,7 @@ public class DKJServerHandle extends AbstractServerHandle {
     public DKJServerHandle(MsgSendReceiver m) {
         msr = m;
         tempBill = new Bill();
+        tempBill.billState = -4; //初始状态
     }
 
     @Override
@@ -124,8 +125,10 @@ public class DKJServerHandle extends AbstractServerHandle {
      */
     private void CaculatePrice(Msg m) {
         Document document = null;
+        int a = 1; //判断状态
         //FoodOrder foodOrder = new FoodOrder();
         ArrayList<Food> foods = new ArrayList<>();
+        int price = 0;  //保存价格
         try {
             Document doc = m.getContent();
             //获取根
@@ -138,25 +141,36 @@ public class DKJServerHandle extends AbstractServerHandle {
                 if (childNode.getNodeName().equals("food") && childNode.hasChildNodes()) {
 
                     //获取food下的id和num
-                    NodeList food = childNode.getChildNodes();
-                    Food f = new Food();
-
-                    for (int j = 0; j < food.getLength(); j++) {
+                    NodeList foodNodes = childNode.getChildNodes();
+                    String fid ="";
+                    int foodnum = 0;
+                    Node foodNode;
+                    for (int j = 0; j < foodNodes.getLength(); j++) {
                         //判断是哪个数据
-                        switch (childNode.getNodeName()) {
-                            case "id" -> f.setId(childNode.getTextContent());
+                        foodNode = foodNodes.item(j);
+                        switch (foodNode.getNodeName()) {
+                            case "id" ->  fid = foodNode.getTextContent();
                             case "num" -> {
-                                int num = Integer.parseInt(childNode.getTextContent());
-                                f.setFoodNum(num);
+                                int num = Integer.parseInt(foodNode.getTextContent());
+                                foodnum = num;
                             }
                         }
                     }
+                    //!注意要通过数据库获取一下id
+                    Food f = Dao.getFoodById(storeId,fid);
+                    if(f==null)
+                    {
+                        a = 0;
+                        break;
+                    }
+                    f.setFoodNum(foodnum);
+                    foods.add(f);
                 }
             }
-
-            FoodOrder foodOrder = new FoodOrder(foods);
-            int price = foodOrder.CalculatePrice();
-
+            if(a==1) {
+                FoodOrder foodOrder = new FoodOrder(foods);
+                price = foodOrder.CalculatePrice();
+            }
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
@@ -172,23 +186,33 @@ public class DKJServerHandle extends AbstractServerHandle {
             // 创建状态
             Element elementState = document.createElement("state");
             root.appendChild(elementState);
+            Element elementP = document.createElement("price");
+            elementP.setTextContent("0");
 
-            if (price == -1) {
-                //获取失败
+            //状态判断
+            if(a == 0){
+                //菜单中某菜不存在
                 elementState.setTextContent("200");
-            } else {
-                //记录最近一次提交的菜单价格
-                tempBill.setCost(price);
-
-                //获取成功
-                elementState.setTextContent("100");
-                // 创建状态
-                Element elementP = document.createElement("price");
-                elementP.setTextContent(String.valueOf(price));
-                root.appendChild(elementP);
+            }
+            else {
+                if (price == -1)
+                    //获取失败
+                    elementState.setTextContent("300");
+                else if(price == -2)
+                    //某个菜的st有误（数据库中）
+                    elementState.setTextContent("400");
+                else {
+                    //记录最近一次提交的菜单价格
+                    tempBill.setCost(price);
+                    tempBill.billState = 1;     //最近提交过
+                    //获取成功
+                    elementState.setTextContent("100");
+                    elementP.setTextContent(String.valueOf(price));
+                }
             }
 
             root.appendChild(elementState);
+            root.appendChild(elementP);
             //将根节点添加到下面
             document.appendChild(root);
 
@@ -231,10 +255,13 @@ public class DKJServerHandle extends AbstractServerHandle {
             else
                 Lid = null;
 
-            tempBill.setLabelid(Lid);
-            tempBill.setStoreid(storeId);
-
-            int balance = Dao.tryPaying(tempBill);
+            int balance = 0;
+            if(tempBill.billState==1) {
+                //=4 之前没有计算过菜单，不能进行计算
+                tempBill.setLabelid(Lid);
+                tempBill.setStoreid(storeId);
+                balance = Dao.tryPaying(tempBill);
+            }
 
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -256,12 +283,19 @@ public class DKJServerHandle extends AbstractServerHandle {
             elementP.setTextContent(String.valueOf(balance));
             root.appendChild(elementP);
 
-            if (tempBill.billState > 0)//交易成功
-                elementState.setTextContent("100");
-            else if (tempBill.billState == 0)//交易失败
+            if (tempBill.billState == -4){
                 elementState.setTextContent("400");
-            else
-                elementState.setTextContent("201");
+                System.out.println("当前不能进行交易！");
+            }else if(tempBill.billState>0) {      //交易成功
+                elementState.setTextContent("100");
+                tempBill.billState = -4;    //交易成功后重置
+            }
+            else if (tempBill.billState == 0)   //交易失败
+                elementState.setTextContent("200");
+            else if(tempBill.billState == -1)   //余额不足
+                elementState.setTextContent("300");
+            else                                //未知错误
+                elementState.setTextContent("500");
 
             //将根节点添加到下面
             document.appendChild(root);
@@ -320,6 +354,9 @@ public class DKJServerHandle extends AbstractServerHandle {
 
             // 创建根节点
             Element root = document.createElement("result");
+            // 创建状态
+            Element elementState = document.createElement("state");
+            root.appendChild(elementState);
 
             //获取所有菜品
             ArrayList<Food> fs = Dao.getOrderById(storeId);
@@ -350,8 +387,11 @@ public class DKJServerHandle extends AbstractServerHandle {
 
                     root.appendChild(Efood);       //挂root
                 }
+                elementState.setTextContent("true");
             }
-
+            else{
+                elementState.setTextContent("false");
+            }
             //将根节点添加到下面
             document.appendChild(root);
 

@@ -13,7 +13,7 @@ public class FoodOrder {
 
     /**
      * 计算菜单价格
-     * @return 返回菜单价格，错误的话返回-1
+     * @return 返回菜单价格，错误的话返回-1, 价格策略出错返回-2
      */
     public int CalculatePrice(){
         if(foods==null){
@@ -24,21 +24,13 @@ public class FoodOrder {
         for(Food f : foods)
         {
             temp = f.CalculatePrice();
-            if(temp==-1){
-                return -1;
-            }
+
+            if(temp<0)
+                return temp;
+
             OrderPrice+=temp;
         }
         return OrderPrice;
     }
-
-    /**
-     *  根据店铺名返回菜品列表
-     */
-    public static ArrayList<Food> getOrder(String sid){
-        return Dao.getOrderById(sid);
-    }
-
-
 
 }

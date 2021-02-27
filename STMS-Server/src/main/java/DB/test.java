@@ -241,7 +241,7 @@ public class test {
     public static void addLabel(){
 
         Label l=new Label();
-        l.id="L003";
+        l.id="L001";
         l.name="z";
         l.password="111";
         l.money=11;

@@ -11,7 +11,9 @@ public class Food {
     public int price;
     public String foodTip;
     public int foodNum;
-    public Food() {}
+
+    public Food() {
+    }
 
     public Food(String id, String foodClass, String st, String name, int price, String foodTip) {
         this.id = id;
@@ -25,13 +27,23 @@ public class Food {
     /**
      * 计算菜价
      *
-     * @return 未初始化返回-1，否则返回该菜品价格
+     * @return 未初始化返回-1，价格策略错误-2，否则返回该菜品价格
      */
     public int CalculatePrice() {
-        if (price < 0 || foodNum < 0)
+        try {
+            if (id == "" || foodNum < 0)
+                return -1;
+
+            IPriceStrategy strategy = OrderPriceStrategyFactory.getStrategy(st);
+            if (strategy == null) {
+                return -2;
+            }
+            return strategy.quote(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("价格计算出错！");
             return -1;
-        IPriceStrategy strategy = OrderPriceStrategyFactory.getStrategy(st);
-        return strategy.quote(this);
+        }
     }
 
     public String getId() {

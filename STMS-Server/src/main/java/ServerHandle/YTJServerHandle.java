@@ -142,9 +142,8 @@ public class YTJServerHandle extends AbstractServerHandle{
             //获取
             Label l = Dao.getLabelById(userid);
 
-
             if(l==null){
-                elementState.setTextContent("200");
+                elementState.setTextContent("false");
             }
             else {
 
@@ -165,7 +164,7 @@ public class YTJServerHandle extends AbstractServerHandle{
                 root.appendChild(Elabel);       //挂root
 
                 //获取成功
-                elementState.setTextContent("100");
+                elementState.setTextContent("true");
             }
 
             //将根节点添加到下面
@@ -214,7 +213,7 @@ public class YTJServerHandle extends AbstractServerHandle{
             }
 
             //调用数据库方法
-            int a = Dao.updateLabel(l);
+            int a = Dao.updateLabelWithoutCost(l);
 
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -261,22 +260,10 @@ public class YTJServerHandle extends AbstractServerHandle{
         }
     }
 
-    private void SendBill(Msg m)
-    {
+    private void SendBill(Msg m){
         Document document = null;
-        String id;
+
         try {
-            Document doc = m.getContent();
-            //获取根
-            Element element = doc.getDocumentElement();
-            NodeList nodeList = element.getChildNodes();
-            Node childNode = nodeList.item(0);
-
-            if(childNode.getNodeName().equals("id"))
-                id = childNode.getTextContent();
-            else
-                id = null;
-
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
@@ -289,9 +276,12 @@ public class YTJServerHandle extends AbstractServerHandle{
 
             // 创建根节点
             Element root = document.createElement("result");
+            // 创建状态
+            Element elementState = document.createElement("state");
+            root.appendChild(elementState);
 
             //获取所有bill
-            ArrayList<Bill> bs = Dao.findBillOfUser(id);
+            ArrayList<Bill> bs = Dao.findBillOfUser(userid);
             if (bs != null)  //bill为空
             {
                 for (Bill b : bs) {
@@ -314,8 +304,11 @@ public class YTJServerHandle extends AbstractServerHandle{
 
                     root.appendChild(EBill);       //挂root
                 }
+                elementState.setTextContent("true");
             }
-
+            else {
+                elementState.setTextContent("false");
+            }
             //将根节点添加到下面
             document.appendChild(root);
 
