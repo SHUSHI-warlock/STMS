@@ -15,10 +15,10 @@
         <Label Content="权限" HorizontalAlignment="Left" Margin="93,242,0,0" VerticalAlignment="Top" Width="38"/>
         <Label Content="密码" HorizontalAlignment="Left" Margin="93,126,0,0" VerticalAlignment="Top"/>
         <Label Content="余额" HorizontalAlignment="Left" Margin="93,274,0,0" VerticalAlignment="Top"/>
-        <TextBox  x:Name="Text2"  HorizontalAlignment="Left" Height="21" Margin="153,94,0,0" VerticalAlignment="Top" Width="342"/>
+        <TextBox  Name="Text2"  HorizontalAlignment="Left" Height="21" Margin="153,94,0,0" VerticalAlignment="Top" Width="342"/>
         <PasswordBox PasswordChar="*" x:Name="password1" HorizontalAlignment="Left" Margin="153,129,0,0"   VerticalAlignment="Top" Width="340" Height="21" />
         <PasswordBox PasswordChar="*" x:Name="password2" HorizontalAlignment="Left" Margin="153,165,0,0" VerticalAlignment="Top" Width="342" Height="21"/>
-        <TextBox  x:Name="Text7" HorizontalAlignment="Left" Height="21" Margin="151,280,0,0" VerticalAlignment="Top" Width="344"/>
+        <TextBox  Name="Text7" HorizontalAlignment="Left" Height="21" Margin="151,280,0,0" VerticalAlignment="Top" Width="344"/>
         <Button Content="添加" HorizontalAlignment="Left" Margin="528,317,0,0" VerticalAlignment="Top" Width="119" Click="Button_Click" Height="37"/>
         <ComboBox x:Name="combobox1" Margin="152,199,183,139" >
             <ComboBoxItem IsSelected="True" Content="男"/>
@@ -28,5 +28,6 @@
             <ComboBoxItem IsSelected="True" Content="学生"/>
             <ComboBoxItem Content="管理员"/>
         </ComboBox>
+        <Label Content="请输入信息" HorizontalAlignment="Left" Height="54" Margin="273,9,0,0" VerticalAlignment="Top" Width="122" FontSize="22"/>
     </Grid>
 </Window>

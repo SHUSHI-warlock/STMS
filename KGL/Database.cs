@@ -67,7 +67,7 @@ namespace Database
                 u.Name = read["Name"].ToString();
                 u.Id = read["Id"].ToString();
                 u.Money = int.Parse(read["Money"].ToString());
-                if (read["Role"].ToString().Equals("学生"))
+                if (read["Role"].ToString()=="学生")
                 {
                     u.Role = "学生";
                 }
@@ -75,10 +75,14 @@ namespace Database
                 {
                     u.Role = "管理员";
                 }
-                if (read["Sex"].ToString().Equals("男"))
+                if (read["Sex"].ToString().Equals("1"))
+                {
                     u.Sex = "男";
+                }
                 else
+                {
                     u.Sex = "女";
+                }
                 user.Add(u);
             }
             return user;
