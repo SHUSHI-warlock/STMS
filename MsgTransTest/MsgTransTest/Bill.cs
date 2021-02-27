@@ -8,21 +8,19 @@ namespace MsgTransTest
 {
     public class Bill
     {
-        public string labelid;
-        public string storeid;
-        public DateTime time;
-
-        public int cost;
-        public int billState;
+        private string labelid;
+        private string storeid;
+        private string time;
+        private int cost;
+        private int billState;
         public Bill() { }
 
-        public Bill(string labelid, string storeid, int cost, int billState)
+        public Bill(string labelid, string storeid, int cost, string time)
         {
             this.labelid = labelid;
             this.storeid = storeid;
-            //this.time = new java.sql.Time(new Date().getTime());
             this.cost = cost;
-            this.billState = billState;
+            this.time = time;
         }
 
         public string GetLabelid()
@@ -35,7 +33,7 @@ namespace MsgTransTest
             this.labelid = labelid;
         }
 
-        public string getStoreid()
+        public string GetStoreid()
         {
             return storeid;
         }
@@ -45,12 +43,12 @@ namespace MsgTransTest
             this.storeid = storeid;
         }
 
-        public DateTime GetTime()
+        public string GetTime()
         {
             return time;
         }
 
-        public void SetTime(DateTime time)
+        public void SetTime(string time)
         {
             this.time = time;
         }

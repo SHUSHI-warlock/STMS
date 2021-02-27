@@ -17,14 +17,12 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
-import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class KGLServerHandle extends AbstractServerHandle{
-    KGLServerHandle(Socket s, MsgSendReceiver m)
+    KGLServerHandle(MsgSendReceiver m)
     {
-        clientSocket = s;
         msr = m;
     }
 
@@ -133,9 +131,6 @@ public class KGLServerHandle extends AbstractServerHandle{
 
             // 创建根节点
             Element root = document.createElement("result");
-            // 创建状态
-            Element elementState = document.createElement("state");
-            root.appendChild(elementState);
 
             //获取所有店铺
             ArrayList<Label> ls = Dao.getAllLabel();
@@ -145,13 +140,14 @@ public class KGLServerHandle extends AbstractServerHandle{
                     Element Elabel = document.createElement("label");
                     Element Eid = document.createElement("id");
                     Element Ename = document.createElement("name");
-                    Element Elass = document.createElement("lass");
                     Element Epa = document.createElement("pa");
+                    Element Elass = document.createElement("lass");
 
                     Eid.setTextContent(l.id);
                     Ename.setTextContent(l.name);
-                    Elass.setTextContent(String.valueOf(l.money));
                     Epa.setTextContent(l.password);
+                    Elass.setTextContent(String.valueOf(l.money));
+
                     Elabel.appendChild(Eid);
                     Elabel.appendChild(Ename);
                     Elabel.appendChild(Epa);
@@ -159,8 +155,6 @@ public class KGLServerHandle extends AbstractServerHandle{
                     root.appendChild(Elabel);       //挂root
                 }
             }
-            //获取成功
-            elementState.setTextContent("100");
 
             //将根节点添加到下面
             document.appendChild(root);
@@ -417,9 +411,6 @@ public class KGLServerHandle extends AbstractServerHandle{
 
             // 创建根节点
             Element root = document.createElement("result");
-            // 创建状态
-            Element elementState = document.createElement("state");
-            root.appendChild(elementState);
 
             //获取所有bill
             ArrayList<Bill> bs = Dao.findBillOfUser(id);
@@ -446,8 +437,6 @@ public class KGLServerHandle extends AbstractServerHandle{
                     root.appendChild(EBill);       //挂root
                 }
             }
-            //获取成功
-            elementState.setTextContent("100");
 
             //将根节点添加到下面
             document.appendChild(root);
@@ -475,7 +464,7 @@ public class KGLServerHandle extends AbstractServerHandle{
 
     private void CloseSocket(){
         try {
-            clientSocket.close();
+            this.msr.CloseSocket();
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

@@ -101,4 +101,8 @@ public class MsgSendReceiver {
                 Integer.parseInt(strLowS),
                 document);
     }
+
+    public void CloseSocket() throws IOException {
+        this.socket.close();
+    }
 }

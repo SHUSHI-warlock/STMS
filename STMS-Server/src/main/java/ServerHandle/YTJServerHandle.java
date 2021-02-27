@@ -17,18 +17,15 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
-import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class YTJServerHandle extends AbstractServerHandle{
     public String userid;
-    public YTJServerHandle(Socket s, MsgSendReceiver m)
+    public YTJServerHandle(MsgSendReceiver m)
     {
-        clientSocket = s;
         msr = m;
     }
-
 
     @Override
     public void ServerHandle() {
@@ -120,8 +117,7 @@ public class YTJServerHandle extends AbstractServerHandle{
     }
 
 
-    private void SendLabel(Msg m)
-    {
+    private void SendLabel(Msg m) {
         Document document = null;
         try {
             // 初始化一个XML解析工厂
@@ -142,6 +138,7 @@ public class YTJServerHandle extends AbstractServerHandle{
 
             //获取
             Label l = Dao.getLabelById(userid);
+
 
             if(l==null){
                 elementState.setTextContent("200");
@@ -167,6 +164,7 @@ public class YTJServerHandle extends AbstractServerHandle{
                 //获取成功
                 elementState.setTextContent("100");
             }
+
             //将根节点添加到下面
             document.appendChild(root);
 
@@ -190,8 +188,7 @@ public class YTJServerHandle extends AbstractServerHandle{
 
     }
 
-    private void ChangeLabel(Msg m)
-    {
+    private void ChangeLabel(Msg m) {
         Label l = new Label();
         try {
             Document document = m.getContent();
@@ -286,9 +283,6 @@ public class YTJServerHandle extends AbstractServerHandle{
 
             // 创建根节点
             Element root = document.createElement("result");
-            // 创建状态
-            Element elementState = document.createElement("state");
-            root.appendChild(elementState);
 
             //获取所有bill
             ArrayList<Bill> bs = Dao.findBillOfUser(id);
@@ -315,8 +309,6 @@ public class YTJServerHandle extends AbstractServerHandle{
                     root.appendChild(EBill);       //挂root
                 }
             }
-            //获取成功
-            elementState.setTextContent("100");
 
             //将根节点添加到下面
             document.appendChild(root);
@@ -415,7 +407,7 @@ public class YTJServerHandle extends AbstractServerHandle{
 
     private void CloseSocket(){
         try {
-            clientSocket.close();
+            this.msr.CloseSocket();
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

@@ -15,19 +15,18 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
 
 public class DKJServerHandle extends AbstractServerHandle {
-    //private DKJMsgParse msgParse;
+
     private String storeId;
     private final Bill tempBill;
 
-    public DKJServerHandle(Socket s, MsgSendReceiver m) {
-        clientSocket = s;
+    public DKJServerHandle(MsgSendReceiver m) {
         msr = m;
         tempBill = new Bill();
     }
+
 
 
     @Override
@@ -138,6 +137,7 @@ public class DKJServerHandle extends AbstractServerHandle {
                 childNode = nodeList.item(temp);
                 //判断是否为叶子节点
                 if (childNode.getNodeName().equals("food") && childNode.hasChildNodes()) {
+
                     //获取food下的id和num
                     NodeList food = childNode.getChildNodes();
                     Food f = new Food();
@@ -186,9 +186,10 @@ public class DKJServerHandle extends AbstractServerHandle {
                 // 创建状态
                 Element elementP = document.createElement("price");
                 elementP.setTextContent(String.valueOf(price));
-                root.appendChild(elementState);
+                root.appendChild(elementP);
             }
 
+            root.appendChild(elementState);
             //将根节点添加到下面
             document.appendChild(root);
 
@@ -320,9 +321,6 @@ public class DKJServerHandle extends AbstractServerHandle {
 
             // 创建根节点
             Element root = document.createElement("result");
-            // 创建状态
-            Element elementState = document.createElement("state");
-            root.appendChild(elementState);
 
             //获取所有菜品
             ArrayList<Food> fs = Dao.getOrderById(storeId);
@@ -331,30 +329,29 @@ public class DKJServerHandle extends AbstractServerHandle {
                 for (Food f : fs) {
                     Element Efood = document.createElement("food");
                     Element Eid = document.createElement("id");
+                    Element Eclass = document.createElement("class");
+                    Element Est = document.createElement("st");
                     Element Ename = document.createElement("name");
                     Element Eprice = document.createElement("price");
-                    Element Est = document.createElement("st");
-                    Element Eclass = document.createElement("class");
                     Element Etip = document.createElement("tip");
+
                     Eid.setTextContent(f.id);
+                    Eclass.setTextContent(f.foodClass);
+                    Est.setTextContent(f.st);
                     Ename.setTextContent(f.name);
                     Eprice.setTextContent(String.valueOf(f.price));
                     Etip.setTextContent(f.foodTip);
-                    Eclass.setTextContent(f.foodClass);
-                    Est.setTextContent(f.st);
 
                     Efood.appendChild(Eid);
+                    Efood.appendChild(Eclass);
+                    Efood.appendChild(Est);
                     Efood.appendChild(Ename);
                     Efood.appendChild(Eprice);
-                    Efood.appendChild(Est);
-                    Efood.appendChild(Eclass);
                     Efood.appendChild(Etip);
 
                     root.appendChild(Efood);       //挂root
                 }
             }
-            //获取成功
-            elementState.setTextContent("100");
 
             //将根节点添加到下面
             document.appendChild(root);
@@ -381,7 +378,7 @@ public class DKJServerHandle extends AbstractServerHandle {
 
     private void CloseSocket() {
         try {
-            clientSocket.close();
+            this.msr.CloseSocket();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

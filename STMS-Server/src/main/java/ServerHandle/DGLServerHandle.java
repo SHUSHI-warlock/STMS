@@ -17,15 +17,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
-import java.net.Socket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class DGLServerHandle extends AbstractServerHandle {
 
-    public DGLServerHandle(Socket s, MsgSendReceiver m) {
-        clientSocket = s;
+    public DGLServerHandle(MsgSendReceiver m) {
         msr = m;
     }
 
@@ -150,30 +148,27 @@ public class DGLServerHandle extends AbstractServerHandle {
 
             // 创建根节点
             Element root = document.createElement("result");
-            // 创建状态
-            Element elementState = document.createElement("state");
-            root.appendChild(elementState);
 
             //获取所有店铺
             ArrayList<Store> ss = Dao.getAllStore();
             if (ss != null)  //店铺为空
             {
                 for (Store s : ss) {
-                    Element Estore = document.createElement("restaurant");
                     Element Eid = document.createElement("id");
-                    Element Ename = document.createElement("name");
                     Element Eloc = document.createElement("loc");
+                    Element Ename = document.createElement("name");
+                    Element Estore = document.createElement("restaurant");
+
                     Eid.setTextContent(s.id);
-                    Ename.setTextContent(s.name);
                     Eloc.setTextContent(s.loc);
+                    Ename.setTextContent(s.name);
+
                     Estore.appendChild(Eid);        //挂store
-                    Estore.appendChild(Ename);      //挂store
                     Estore.appendChild(Eloc);       //挂store
+                    Estore.appendChild(Ename);      //挂store
                     root.appendChild(Estore);       //挂root
                 }
             }
-            //获取成功
-            elementState.setTextContent("100");
 
             //将根节点添加到下面
             document.appendChild(root);
@@ -460,7 +455,6 @@ public class DGLServerHandle extends AbstractServerHandle {
             // 创建状态
             Element elementState = document.createElement("state");
             root.appendChild(elementState);
-
             //获取店铺
             Store s = Dao.getStoreById(id);
 
@@ -575,11 +569,12 @@ public class DGLServerHandle extends AbstractServerHandle {
                 for (Food f : fs) {
                     Element Efood = document.createElement("food");
                     Element Eid = document.createElement("id");
+                    Element Eclass = document.createElement("class");
+                    Element Est = document.createElement("st");
                     Element Ename = document.createElement("name");
                     Element Eprice = document.createElement("price");
-                    Element Est = document.createElement("st");
-                    Element Eclass = document.createElement("class");
                     Element Etip = document.createElement("tip");
+
                     Eid.setTextContent(f.id);
                     Ename.setTextContent(f.name);
                     Eprice.setTextContent(String.valueOf(f.price));
@@ -588,10 +583,10 @@ public class DGLServerHandle extends AbstractServerHandle {
                     Est.setTextContent(f.st);
 
                     Efood.appendChild(Eid);
+                    Efood.appendChild(Eclass);
+                    Efood.appendChild(Est);
                     Efood.appendChild(Ename);
                     Efood.appendChild(Eprice);
-                    Efood.appendChild(Est);
-                    Efood.appendChild(Eclass);
                     Efood.appendChild(Etip);
 
                     root.appendChild(Efood);       //挂root
@@ -877,9 +872,6 @@ public class DGLServerHandle extends AbstractServerHandle {
 
             // 创建根节点
             Element root = document.createElement("result");
-            // 创建状态
-            Element elementState = document.createElement("state");
-            root.appendChild(elementState);
 
             //获取所有bill
             ArrayList<Bill> bs = Dao.findBillOfRest(id);
@@ -906,8 +898,6 @@ public class DGLServerHandle extends AbstractServerHandle {
                     root.appendChild(EBill);       //挂root
                 }
             }
-            //获取成功
-            elementState.setTextContent("100");
 
             //将根节点添加到下面
             document.appendChild(root);
@@ -934,7 +924,7 @@ public class DGLServerHandle extends AbstractServerHandle {
 
     private void CloseSocket(){
         try {
-            clientSocket.close();
+            this.msr.CloseSocket();
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

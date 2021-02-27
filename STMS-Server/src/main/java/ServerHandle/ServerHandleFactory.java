@@ -4,15 +4,15 @@ import MsgTrans.MsgSendReceiver;
 import java.net.Socket;
 
 public class ServerHandleFactory {
-    private static ServerHandleFactory instence;
+    private static ServerHandleFactory instance;
     private ServerHandleFactory(){}
 
-    public static ServerHandleFactory getInstence()
+    public static ServerHandleFactory getInstance()
     {
-        if (instence == null){
-            instence = new ServerHandleFactory();
+        if (instance == null){
+            instance = new ServerHandleFactory();
         }
-        return instence;
+        return instance;
     }
 
     public AbstractServerHandle getServerHandle(ETopService ServerType, Socket s, MsgSendReceiver m)
@@ -24,5 +24,6 @@ public class ServerHandleFactory {
             case ET_DGL -> { return new DGLServerHandle(s, m); }
             default -> { return null; }
         }
+
     }
 }
