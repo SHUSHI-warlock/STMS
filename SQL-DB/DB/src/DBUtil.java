@@ -1,3 +1,5 @@
+package DB;
+
 import java.sql.*;
 
 public class DBUtil {
@@ -11,9 +13,9 @@ public class DBUtil {
     public static Connection getConnection(){
 
         JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-        DB_URL = "jdbc:mysql://localhost:3306/MS?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+        DB_URL = "jdbc:mysql://localhost:3306/STMS?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
         Name = "root";
-        Pwd = "root";
+        Pwd = "000000";
 
         try{
             Class.forName(JDBC_DRIVER);
