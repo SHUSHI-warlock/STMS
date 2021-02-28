@@ -16,7 +16,7 @@ namespace MsgTransTest
             if (msr == null)
                 Console.Out.WriteLine("连接服务器失败！");
             else
-                dgl = new TransDGL(msr);
+                dgl = TransDGL.GetInstance();
         }
 
         public void test()

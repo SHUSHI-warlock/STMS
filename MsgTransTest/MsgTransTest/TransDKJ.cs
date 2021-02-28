@@ -11,9 +11,18 @@ namespace MsgTransTest
     class TransDKJ
     {
         private readonly MsgSendReceiver msgSendReceiver;
-        public TransDKJ(MsgSendReceiver msgSendReceiver)
+        private static readonly TransDKJ instance = null;
+        private TransDKJ()
         {
-            this.msgSendReceiver = msgSendReceiver;
+            this.msgSendReceiver = ServerConn.ConnServer();
+            if (this.msgSendReceiver == null)
+                throw new Exception("MsgSendReceiver错误！");
+        }
+        public static TransDKJ GetInstance()
+        {
+            if (instance == null)
+                return new TransDKJ();
+            return null;
         }
         /**
         * 0 验证完毕

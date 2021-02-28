@@ -17,7 +17,7 @@ namespace MsgTransTest
             if (msr == null)
                 Console.Out.WriteLine("连接服务器失败！");
             else
-                dkj = new TransDKJ(msr);
+                dkj = TransDKJ.GetInstance();
         }
 
         public void test()

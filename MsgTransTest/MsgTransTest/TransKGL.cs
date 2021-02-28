@@ -11,9 +11,18 @@ namespace MsgTransTest
     class TransKGL
     {
         private readonly MsgSendReceiver msgSendReceiver;
-        public TransKGL(MsgSendReceiver msgSendReceiver)
+        private static readonly TransKGL instance = null;
+        private TransKGL()
         {
-            this.msgSendReceiver = msgSendReceiver;
+            this.msgSendReceiver = ServerConn.ConnServer();
+            if (this.msgSendReceiver == null)
+                throw new Exception("MsgSendReceiver错误！");
+        }
+        public static TransKGL GetInstance()
+        {
+            if (instance == null)
+                return new TransKGL();
+            return null;
         }
         /**
         * 0

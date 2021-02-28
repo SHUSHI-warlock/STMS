@@ -60,7 +60,6 @@
     <Compile Include="DKJtest.cs" />
     <Compile Include="KGLtest.cs" />
     <Compile Include="ServerConn.cs" />
-    <Compile Include="SingleTrans.cs" />
     <Compile Include="Store.cs" />
     <Compile Include="TransDGL.cs" />
     <Compile Include="TransDKJ.cs" />

@@ -11,9 +11,18 @@ namespace MsgTransTest
     class TransYTJ
     {
         private readonly MsgSendReceiver msgSendReceiver;
-        public TransYTJ(MsgSendReceiver msgSendReceiver)
+        private static readonly TransYTJ instance = null;
+        private TransYTJ()
         {
-            this.msgSendReceiver = msgSendReceiver;
+            this.msgSendReceiver = ServerConn.ConnServer();
+            if (this.msgSendReceiver == null)
+                throw new Exception("MsgSendReceiver错误！");
+        }
+        public static TransYTJ GetInstance()
+        {
+            if (instance == null)
+                return new TransYTJ();
+            return null;
         }
         /**
         * 0 验证完毕

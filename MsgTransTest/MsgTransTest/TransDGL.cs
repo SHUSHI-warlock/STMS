@@ -11,11 +11,20 @@ namespace MsgTransTest
     class TransDGL
     {
         private readonly MsgSendReceiver msgSendReceiver;
-        public TransDGL(MsgSendReceiver msgSendReceiver)
+        private static readonly TransDGL instance = null;
+        private TransDGL()
         {
-            this.msgSendReceiver = msgSendReceiver;
+            this.msgSendReceiver = ServerConn.ConnServer();
+            if (this.msgSendReceiver == null)
+                throw new Exception("MsgSendReceiver错误！");
         }
 
+        public static TransDGL GetInstance()
+        {
+            if (instance == null)
+                return new TransDGL();
+            return null;
+        }
         /**
         * 0 验证完毕
         * 登录

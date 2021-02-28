@@ -41,24 +41,13 @@ namespace MsgTransTest
             kGLtest.test();
             */
 
-            YTJtest yTJtest = new YTJtest();
-            yTJtest.test();
+            /* YTJtest yTJtest = new YTJtest();
+             yTJtest.test();*/
 
 
             //wpf演示
-            /*
-            MsgSendReceiver msr = ServerConn.ConnServer();
+            dgl = TransDGL.GetInstance();
 
-            if (msr == null)
-            {
-                Console.Out.WriteLine("连接服务器失败！");
-                MessageBox.Show("连接服务器失败！");
-                this.Close();
-            }
-            else
-            {
-                dgl = new TransDGL(msr);
-            }
             //登录
             int er = Login();
             if (er == 1)
@@ -71,7 +60,7 @@ namespace MsgTransTest
             }
             else
                 Console.Out.WriteLine("其他错误！");
-            */
+            
         }
 
         private int Login()
