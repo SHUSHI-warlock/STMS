@@ -40,7 +40,7 @@ namespace 卡管理
             {
                 if (password1.Password.Equals(password2.Password))
                 {
-                    string sql1 = "UPDATE User_Table SET Id = '" + textbox1.Text + "',Password='" + password1.Password + "',Name='" + textbox2.Text + "',Sex='" + sexnumber + "'WHERE Id='" + MainWindow.user.Id + "'";
+                    string sql1 = "UPDATE User_Table SET id = '" + textbox1.Text + "',Password='" + password1.Password + "',Name='" + textbox2.Text + "',Sex='" + sexnumber + "'WHERE id='" + MainWindow.user.id + "'";
                     Program p = new Program();
                     p.OpenDB();
                     p.Change(sql1);

@@ -7,23 +7,40 @@
         mc:Ignorable="d"
         Title="Window1" Height="450" Width="800">
     <Grid>
-        <Button Content="注册用户" HorizontalAlignment="Left" Width="80" BorderThickness="0" Background="White" Click="Regist" Margin="10,0,0,395" Height="25" VerticalAlignment="Bottom"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Content="注册用户" HorizontalAlignment="Left" Width="80" BorderThickness="0" Background="White" Click="Regist" Margin="10,0,0,395" RenderTransformOrigin="0.5,0.504"/>
         <Button Content="删除用户" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80" Height="25" BorderThickness="0" Background="White" Click="Del" Margin="96,0,0,0"/>
-        <Button Content="修改用户" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80" Height="25" BorderThickness="0" Background="White" Click="Recharge" Margin="190,0,0,0"/>
-        <Button Content="查看记录" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80" Height="25" BorderThickness="0" Background="White" Click="Find" Margin="294,0,0,0"/>
+        <Button Content="修改用户" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80" Height="25" BorderThickness="0" Background="White" Click="Recharge" Margin="585,2,0,0"/>
+        <Button Content="查看记录" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80" Height="25" BorderThickness="0" Background="White" Click="Find" Margin="198,0,0,0"/>
 
-        <ListView Name="listView" HorizontalAlignment="Left" Height="380" Margin="0,30,0,0" VerticalAlignment="Top" Width="784">
+        <ListView Name="listView" HorizontalAlignment="Left" Height="378" Margin="10,32,0,0" VerticalAlignment="Top" Width="400">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header=" 卡号 " DisplayMemberBinding="{Binding Id}" Width="200"/>
-                    <GridViewColumn Header=" 姓名 " DisplayMemberBinding="{Binding Name}" Width="auto"/>
-                    <GridViewColumn Header=" 性别 " DisplayMemberBinding="{Binding Sex}" Width="auto"/>
-                    <GridViewColumn Header=" 身份 " DisplayMemberBinding="{Binding Role}" Width="auto"/>
-                    <GridViewColumn Header=" 余额 " DisplayMemberBinding="{Binding Money}" Width="auto"/>
+                    <GridViewColumn Header=" 卡号 " DisplayMemberBinding="{Binding id}" Width="200"/>
+                    <GridViewColumn Header=" 姓名 " DisplayMemberBinding="{Binding name}" Width="auto"/>
+                    <GridViewColumn Header=" 性别 " DisplayMemberBinding="{Binding sex}" Width="auto"/>
+                    <GridViewColumn Header=" 身份 " DisplayMemberBinding="{Binding role}" Width="auto"/>
+                    <GridViewColumn Header=" 余额 " DisplayMemberBinding="{Binding money}" Width="auto"/>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
+        <Label Content="账号" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Margin="464,34,0,0"/>
+        <TextBox x:Name="textbox1"  HorizontalAlignment="Left" Height="26" Margin="519,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="229" SpellCheck.IsEnabled="True"/>
+        <Label Content="密码" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Margin="464,66,0,0"/>
+        <PasswordBox Name="password1" HorizontalAlignment="Left" Margin="519,70,0,0" VerticalAlignment="Top" Height="26" Width="229"/>
+        <Label Content="确认密码" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Margin="440,100,0,0"/>
+        <PasswordBox Name="password1_Copy" HorizontalAlignment="Left" Margin="519,102,0,0" VerticalAlignment="Top" Height="26" Width="229"/>
+        <Label HorizontalAlignment="Left" Margin="464,133,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <TextBox Name="textbox2"  HorizontalAlignment="Left" Height="26" Margin="519,135,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="229" SpellCheck.IsEnabled="True"/>
+        <ComboBox  Name="combobox1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="229" Height="26" Margin="519,168,0,0" >
+            <ComboBoxItem IsSelected="True" Content="男"/>
+            <ComboBoxItem Content="女"/>
+        </ComboBox>
+        <Label Content="姓名" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Margin="464,133,0,0"/>
+        <Label Content="性别" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Margin="464,167,0,0"/>
 
     </Grid>
 </Window>

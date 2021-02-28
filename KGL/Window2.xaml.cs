@@ -49,11 +49,11 @@ namespace 卡管理
                         sql += "'0',";
                     if (combobox2.Text.Equals("学生"))
                     {
-                        sql += "'学生')";
+                        sql += "'0')";
                     }
                     else
                     {
-                        sql += "'管理员')";
+                        sql += "'1')";
                     }
                     Program p = new Program();
                     p.OpenDB();

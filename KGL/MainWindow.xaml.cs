@@ -35,7 +35,7 @@ namespace 卡管理
             }
             else
             {
-                string sql = "select* from User_Table where Id='" + textbox1.Text + "' and Password='" + textbox2.Password + "'";
+                string sql = "select* from User_Table where id='" + textbox1.Text + "' and password='" + textbox2.Password + "'";
                 Program p = new Program();
                 p.OpenDB();
                 List<User> U = p.Searchlogin(sql);
@@ -49,10 +49,10 @@ namespace 卡管理
                 else
                 {
                     user = U[0];
-                    if (user.Role.Equals("管理员"))
+                    if (user.role.ToString().Equals("管理员"))
                     {
                         Window a1;
-                        MessageBox.Show("欢迎管理员" + user.Name + "进入", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("欢迎管理员" + user.name + "进入", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                         a1 = new Window1();
                         this.Hide();
                         if (a1.ShowDialog() == true)
@@ -64,7 +64,7 @@ namespace 卡管理
                             this.Close();
                         }
                     }
-                    else if(user.Role.Equals("学生"))
+                    else
                     {
                         MessageBox.Show("请用管理员账号登录", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
                         textbox1.Text = "";

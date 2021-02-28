@@ -64,24 +64,24 @@ namespace Database
             while (read.Read())
             {
                 User u = new User();
-                u.Name = read["Name"].ToString();
-                u.Id = read["Id"].ToString();
-                u.Money = int.Parse(read["Money"].ToString());
-                if (read["Role"].ToString()=="学生")
+                u.name = read["name"].ToString();
+                u.id = read["id"].ToString();
+                u.money = int.Parse(read["money"].ToString());
+                if (read["role"].ToString().Equals("学生"))
                 {
-                    u.Role = "学生";
+                    u.role = "学生";
                 }
                 else
                 {
-                    u.Role = "管理员";
+                    u.role = "管理员";
                 }
-                if (read["Sex"].ToString().Equals("1"))
+                if (read["sex"].ToString() == "男")
                 {
-                    u.Sex = "男";
+                    u.sex = "男";
                 }
                 else
                 {
-                    u.Sex = "女";
+                    u.sex = "女";
                 }
                 user.Add(u);
             }
@@ -105,31 +105,31 @@ namespace Database
 {
     public User()
     {
-        Name = Id = Password = Role = string.Empty;
+        name = id = password = role = string.Empty;
     }
     public User(User u)
     {
-        Name = u.Name;
-        Id = u.Id;
-        Password = u.Password;
-        Sex = u.Sex;
-        Role = u.Role;
-        Money = u.Money;
+        name = u.name;
+        id = u.id;
+        password = u.password;
+        sex = u.sex;
+        role = u.role;
+        money = u.money;
     }
-    public string Name { set; get; }
-    public string Id { set; get; }
-    public string Password { set; get; }
-    public string Sex { set; get; }
-    public string Role { set; get; }
-    public int Money { set; get; }
+    public string name { set; get; }
+    public string id { set; get; }
+    public string password { set; get; }
+    public string sex { set; get; }
+    public string role { set; get; }
+    public int money { set; get; }
 
 }
    class Payment
 {
-    public string IdOfPayment { set; get; }
-    public string Id { set; get; }
+    public string idOfPayment { set; get; }
+    public string id { set; get; }
     public string Time { set; get; }
-    public string WindowsName { set; get; }
+    public string Windowsname { set; get; }
     public int Pay { set; get; }
 }
 }

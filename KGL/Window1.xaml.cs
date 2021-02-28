@@ -25,7 +25,7 @@ namespace 卡管理
             InitializeComponent();
             initList();
         }
-        private static string select_sql = "select* from User_table";
+        private static string select_sql = "select* from User_Table";
 
         private void initList()
         {
@@ -42,10 +42,10 @@ namespace 卡管理
             else
             {
                 User u = listView.SelectedItem as User;
-                MessageBoxResult result = MessageBox.Show("确认是否删除账号为 " + u.Id + " 的用户", "警告", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+                MessageBoxResult result = MessageBox.Show("确认是否删除账号为 " + u.id + " 的用户", "警告", MessageBoxButton.OKCancel, MessageBoxImage.Question);
                 if (result == MessageBoxResult.OK)
                 {
-                    string sql = "delete from User_table where Id='" + u.Id + "'";
+                    string sql = "delete from User_table where id='" + u.id + "'";
                     Program p = new Program();
                     p.OpenDB();
                     p.Delete(sql);
@@ -64,14 +64,34 @@ namespace 卡管理
 
         private void Recharge(object sender, RoutedEventArgs e)
         {
-            Window3 a1 = new Window3();
-            a1.ShowDialog();
-            initList();
+            if (listView.SelectedItem == null)
+                MessageBox.Show("请选中一行", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+            else
+            {
+                User u = listView.SelectedItem as User;
+                MessageBoxResult result = MessageBox.Show("确认是否修改账号为 " + u.id + " 的用户", "警告", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+                if (result == MessageBoxResult.OK&&password1.Password==password1_Copy.Password)
+                {
+                    string sql1 = "UPDATE User_Table SET id = '" + textbox1.Text + "',password='" + password1.Password + "',name='" + textbox2.Text + "',sex='" + combobox1.Text + "'WHERE id='" + u.id + "'";
+                    Program p = new Program();
+                    p.OpenDB();
+                    p.Change(sql1);
+                    p.CloseDB();
+                    initList();
+                }
+                else
+                {
+                    MessageBox.Show("两次输入的密码不一致，请重新输入");
+                }
+                //Window3 a1 = new Window3();
+                //a1.ShowDialog();
+                //initList();
+            }
         }
 
         private void Find(object sender, RoutedEventArgs e)
         {
-            Window3 a1 = new Window3();
+            Window4 a1 = new Window4();
             a1.ShowDialog();
             //initList1();
         }
