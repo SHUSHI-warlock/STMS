@@ -42,20 +42,19 @@ namespace 卡管理
             {
                 if (password1.Password.Equals(password2.Password))
                 {
-                    string sql = "INSERT INTO User_table VALUES ("+Text7.Text+","  + Text1.Text +"," + password1.Password + ",'"+Text2.Text + ",";
+                    string sql = "INSERT INTO User_Table VALUES ('"+Text7.Text+"','"  + Text1.Text +"','" + password1.Password + "','"+Text2.Text + "',";
                     if (combobox1.Text.Equals("男"))
-                        sql += "1,'";
+                        sql += "'1',";
                     else
-                        sql += "0,'";
+                        sql += "'0',";
                     if (combobox2.Text.Equals("学生"))
                     {
-                        sql += "学生'";
+                        sql += "'学生')";
                     }
                     else
                     {
-                        sql += "管理员'";
+                        sql += "'管理员')";
                     }
-                    sql += ")";
                     Program p = new Program();
                     p.OpenDB();
                     p.Insert(sql);

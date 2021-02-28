@@ -64,7 +64,7 @@ namespace 卡管理
 
         private void Recharge(object sender, RoutedEventArgs e)
         {
-            Window2 a1 = new Window2();
+            Window3 a1 = new Window3();
             a1.ShowDialog();
             initList();
         }

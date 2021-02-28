@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Window1" Height="450" Width="800">
     <Grid>
-        <Button Content="注册用户" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80" Height="25" BorderThickness="0" Background="White" Click="Regist" Margin="10,0,0,0"/>
+        <Button Content="注册用户" HorizontalAlignment="Left" Width="80" BorderThickness="0" Background="White" Click="Regist" Margin="10,0,0,395" Height="25" VerticalAlignment="Bottom"/>
         <Button Content="删除用户" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80" Height="25" BorderThickness="0" Background="White" Click="Del" Margin="96,0,0,0"/>
         <Button Content="修改用户" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80" Height="25" BorderThickness="0" Background="White" Click="Recharge" Margin="190,0,0,0"/>
         <Button Content="查看记录" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="80" Height="25" BorderThickness="0" Background="White" Click="Find" Margin="294,0,0,0"/>
@@ -16,9 +16,9 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header=" 卡号 " DisplayMemberBinding="{Binding Id}" Width="200"/>
-                    <GridViewColumn Header="     姓名    " DisplayMemberBinding="{Binding Name}" Width="100"/>
-                    <GridViewColumn Header=" 性别 " DisplayMemberBinding="{Binding Sex}" Width="80"/>
-                    <GridViewColumn Header=" 身份 " DisplayMemberBinding="{Binding Role}" Width="100"/>
+                    <GridViewColumn Header=" 姓名 " DisplayMemberBinding="{Binding Name}" Width="auto"/>
+                    <GridViewColumn Header=" 性别 " DisplayMemberBinding="{Binding Sex}" Width="auto"/>
+                    <GridViewColumn Header=" 身份 " DisplayMemberBinding="{Binding Role}" Width="auto"/>
                     <GridViewColumn Header=" 余额 " DisplayMemberBinding="{Binding Money}" Width="auto"/>
                     <GridViewColumn/>
                 </GridView>
