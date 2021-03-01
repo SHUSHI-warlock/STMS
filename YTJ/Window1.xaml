@@ -17,8 +17,6 @@
                     <GridViewColumn Header="  消费店铺  " DisplayMemberBinding="{Binding storeid}" Width="auto"/>
                     <GridViewColumn Header="  消费金额  " DisplayMemberBinding="{Binding cost}" Width="auto"/>
                     <GridViewColumn Header="  消费时间  " DisplayMemberBinding="{Binding time}" Width="150"/>
-                    <GridViewColumn Header="  消费时间  " DisplayMemberBinding="{Binding TimeofPayment}" Width="100"/>
-
 
 
                     <GridViewColumn/>
