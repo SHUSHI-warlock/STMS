@@ -13,66 +13,46 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 using Database;
+using MsgTransTest;
 
 namespace 卡管理
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
+    /// 
     public partial class MainWindow : Window
     {
+        private TransKGL kgl;
         public MainWindow()
         {
             InitializeComponent();
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (textbox1.Text.Trim().Length == 0 || textbox2.Password.Trim().Length == 0)
+            int er = kgl.LoginIn(textbox1.Text, textbox2.Password);
+            if (er == 1)
             {
-                MessageBox.Show("账号或密码不能为空", "警告", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("欢迎管理员" + textbox1.Text + "进入", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                Window1 a = new Window1();
+                a.ShowDialog();
+
+            }
+            else if (er == 0)
+            {
+                MessageBox.Show("请使用管理员账号登录", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
             else
             {
-                string sql = "select* from User_Table where id='" + textbox1.Text + "' and password='" + textbox2.Password + "'";
-                Program p = new Program();
-                p.OpenDB();
-                List<User> U = p.Searchlogin(sql);
-                p.CloseDB();
-                if (U.Count == 0)
-                {
-                    MessageBox.Show("登录失败，用户不存在或密码错误", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-                    textbox1.Text = "";
-                    textbox2.Password = "";
-                }
-                else
-                {
-                    user = U[0];
-                    if (user.role.ToString().Equals("管理员"))
-                    {
-                        Window a1;
-                        MessageBox.Show("欢迎管理员" + user.name + "进入", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
-                        a1 = new Window1();
-                        this.Hide();
-                        if (a1.ShowDialog() == true)
-                        {
-                            this.Show();
-                        }
-                        else
-                        {
-                            this.Close();
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("请用管理员账号登录", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-                        textbox1.Text = "";
-                        textbox2.Password = "";
-                    }
-                }
+                MessageBox.Show("未知错误", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
-        public static User user;
+        //public static User user;
     }
 }

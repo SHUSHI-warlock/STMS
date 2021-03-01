@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Database;
 
 namespace MsgTransTest
 {
@@ -17,7 +16,9 @@ namespace MsgTransTest
             if (msr == null)
                 Console.Out.WriteLine("连接服务器失败！");
             else
-                kgl = new TransKGL(msr);
+            {
+                kgl = TransKGL.GetInstance();
+            }
         }
 
         public void test()
@@ -36,6 +37,7 @@ namespace MsgTransTest
                 Console.Out.WriteLine("其他错误！");
                 return;
             }
+
             //测试函数
             //getAllLabels();
             //createNewLabel();
