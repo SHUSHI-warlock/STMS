@@ -747,7 +747,7 @@ public class Dao {
     /**
      * 计算店铺一星期内的营业额
      * @param id
-     * @return 回营业成功返额大于0 失败返回-1 店铺未出租-2
+     * @return 成功返回营业额大于0 失败返回-1 店铺未出租-2
      * @throws ParseException
      */
     public static int CaculateTurnover(String id){
