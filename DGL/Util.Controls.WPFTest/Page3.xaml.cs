@@ -23,7 +23,6 @@ namespace Util.Controls.WPFTest
         public Page3(String name)
         {
             InitializeComponent();
-            
             dgl = TransDGL.GetInstance();
 
             //从服务器中得到店铺消费记录

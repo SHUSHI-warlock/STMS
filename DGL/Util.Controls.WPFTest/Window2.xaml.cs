@@ -24,7 +24,7 @@ namespace Util.Controls.WPFTest
             InitializeComponent();
 
             //连接服务器，创建通讯类
-            
+
             dgl = TransDGL.GetInstance();
         }
 

@@ -11,12 +11,19 @@ namespace Util.Controls.WPFTest
     /// </summary>
     public partial class MainWindow : Window
     {
+
         private TransDGL dgl;
         public MainWindow()
         {
             InitializeComponent();
-            dgl = TransDGL.GetInstance();
+
+            MsgSendReceiver msr = ServerConn.ConnServer();
+            if (msr == null)
+                Console.Out.WriteLine("连接服务器失败！");
+            else
+                dgl = TransDGL.GetInstance();
         }
+        
         
         private void button_click1(object sender, RoutedEventArgs e)
         {

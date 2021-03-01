@@ -11,7 +11,7 @@ namespace Util.Controls.WPFTest
     class TransDGL
     {
         private readonly MsgSendReceiver msgSendReceiver;
-        private static  TransDGL instance = null;
+        private static TransDGL instance = null;
         private TransDGL()
         {
             this.msgSendReceiver = ServerConn.ConnServer();
@@ -23,7 +23,7 @@ namespace Util.Controls.WPFTest
         {
             if (instance == null)
                 instance = new TransDGL();
-                return instance;
+            return instance;
         }
         /**
         * 0 验证完毕

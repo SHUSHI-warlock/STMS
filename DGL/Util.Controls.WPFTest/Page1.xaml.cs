@@ -25,7 +25,6 @@ namespace Util.Controls.WPFTest
             InitializeComponent();
 
             //连接服务器，创建通讯类
-            
             dgl = TransDGL.GetInstance();
             //从服务器获取数据
             Store store = dgl.GetStoreInfo(storeNumber);
