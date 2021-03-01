@@ -28,105 +28,95 @@ public class YTJServerHandle extends AbstractServerHandle{
     }
 
     @Override
-    public void ServerHandle() {
-        try {
-            while (true) {
-                Msg msg = msr.ReceiveMsg();
-                switch (msg.getLowService()) {
-                    case 1-> ChangeLabel(msg);
-                    case 2-> Recharge(msg);
-                    case 3-> SendBill(msg);
-                    case 4-> SendLabel(msg);
-                    default-> {
-                        System.out.println("错误服务请求 \n");
-                        msg.PrintHead();
-                    }
+    public void ServerHandle() throws Exception {
+        while (true) {
+            Msg msg = msr.ReceiveMsg();
+            switch (msg.getLowService()) {
+                case 1 -> ChangeLabel(msg);
+                case 2 -> Recharge(msg);
+                case 3 -> SendBill(msg);
+                case 4 -> SendLabel(msg);
+                default -> {
+                    msg.PrintHead();
+                    throw new Exception("未知的服务请求！");
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("连接断开！");
         }
     }
 
+    /**
+     * 一体机登录验证
+     * @param m Msg
+     * @return
+     */
     @Override
-    public int ServiceVerify(Msg m) {
+    public int ServiceVerify(Msg m) throws Exception {
         String id = null;
         String pass = null;
-        try {
-            Document document = m.getContent();
-            //获取根
-            Element element = document.getDocumentElement();
-            NodeList nodeList = element.getChildNodes();
-            Node childNode;
-            for (int temp = 0; temp < nodeList.getLength(); temp++) {
-                childNode = nodeList.item(temp);
-                //判断是哪个数据
-                switch (childNode.getNodeName()) {
-                    case "id"-> id = childNode.getTextContent();
-                    case "pa"-> pass = childNode.getTextContent();
-                }
+        Document document = m.getContent();
+        //获取根
+        Element element = document.getDocumentElement();
+        NodeList nodeList = element.getChildNodes();
+        Node childNode;
+        for (int temp = 0; temp < nodeList.getLength(); temp++) {
+            childNode = nodeList.item(temp);
+            //判断是哪个数据
+            switch (childNode.getNodeName()) {
+                case "id" -> id = childNode.getTextContent();
+                case "pa" -> pass = childNode.getTextContent();
             }
-
-            //验证
-            int a = Dao.ytjVerification(id, pass);
-
-            // 初始化一个XML解析工厂
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            // 创建一个DocumentBuilder实例
-            DocumentBuilder builder ;
-            builder = factory.newDocumentBuilder();
-            // 构建一个Document实例
-            document = builder.newDocument();
-            document.setXmlStandalone(true);
-            // standalone用来表示该文件是否呼叫其它外部的文件。若值是 ”yes” 表示没有呼叫外部文件
-
-            // 创建根节点
-            Element root = document.createElement("result");
-            // 创建状态
-            Element elementState = document.createElement("state");
-            root.appendChild(elementState);
-
-            if (a > 0) {
-                 userid = id;
-                //System.out.println("成功");
-                elementState.setTextContent("true");
-            }
-            else
-                //System.out.println("失败");
-                elementState.setTextContent("false");
-
-            //将根节点添加到下面
-            document.appendChild(root);
-
-            //生成消息
-            Msg result = null;
-            try {
-                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 0, document);
-            } catch (TransformerException e) {
-                e.printStackTrace();
-            }
-            try {
-                //发送消息
-                msr.SendMsg(result);
-            } catch (IOException | TransformerException e) {
-                e.printStackTrace();
-            }
-            return a;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
         }
+
+        //验证
+        int a = Dao.ytjVerification(id, pass);
+
+        // 初始化一个XML解析工厂
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        // 创建一个DocumentBuilder实例
+        DocumentBuilder builder;
+        builder = factory.newDocumentBuilder();
+        // 构建一个Document实例
+        document = builder.newDocument();
+        document.setXmlStandalone(true);
+        // standalone用来表示该文件是否呼叫其它外部的文件。若值是 ”yes” 表示没有呼叫外部文件
+
+        // 创建根节点
+        Element root = document.createElement("result");
+        // 创建状态
+        Element elementState = document.createElement("state");
+        root.appendChild(elementState);
+
+        if (a > 0) {
+            userid = id;
+            //System.out.println("成功");
+            elementState.setTextContent("true");
+        } else
+            //System.out.println("失败");
+            elementState.setTextContent("false");
+
+        //将根节点添加到下面
+        document.appendChild(root);
+
+        //生成消息
+        Msg result = null;
+        try {
+            result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 0, document);
+            //发送消息
+            msr.SendMsg(result);
+        } catch (IOException | TransformerException e) {
+            throw e;
+        }
+        return a;
     }
 
 
-    private void SendLabel(Msg m) {
-        Document document = null;
+    private void SendLabel(Msg m) throws Exception {
         try {
+            Document document = null;
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder ;
+            DocumentBuilder builder;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -142,10 +132,9 @@ public class YTJServerHandle extends AbstractServerHandle{
             //获取
             Label l = Dao.getLabelById(userid);
 
-            if(l==null){
+            if (l == null) {
                 elementState.setTextContent("false");
-            }
-            else {
+            } else {
 
                 Element Elabel = document.createElement("label");
                 Element Eid = document.createElement("id");
@@ -170,29 +159,22 @@ public class YTJServerHandle extends AbstractServerHandle{
             //将根节点添加到下面
             document.appendChild(root);
 
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-            //获取失败
-            //elementState.setTextContent("100");
-        }
-        //生成消息
-        try {
-            Msg result = new Msg(EProtocol.EP_Return, ETopService.ET_YTJ, 4 , document);
+            //生成消息
             try {
+                Msg result = new Msg(EProtocol.EP_Return, ETopService.ET_YTJ, 4, document);
                 //发送消息
                 msr.SendMsg(result);
             } catch (IOException | TransformerException e) {
-                e.printStackTrace();
+                throw e;
             }
-        } catch (TransformerException e) {
-            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            throw e;
         }
-
     }
 
-    private void ChangeLabel(Msg m) {
-        Label l = new Label();
+    private void ChangeLabel(Msg m) throws Exception {
         try {
+            Label l = new Label();
             Document document = m.getContent();
             //获取根
             Element element = document.getDocumentElement();
@@ -202,10 +184,10 @@ public class YTJServerHandle extends AbstractServerHandle{
                 childNode = nodeList.item(temp);
                 //判断是哪个数据
                 switch (childNode.getNodeName()) {
-                    case "id"-> l.setId(childNode.getTextContent());
-                    case "name"-> l.setName(childNode.getTextContent());
-                    case "pa"-> l.setPassword(childNode.getTextContent());
-                    case "lass"-> {
+                    case "id" -> l.setId(childNode.getTextContent());
+                    case "name" -> l.setName(childNode.getTextContent());
+                    case "pa" -> l.setPassword(childNode.getTextContent());
+                    case "lass" -> {
                         int lass = Integer.parseInt(childNode.getTextContent());
                         l.setMoney(lass);
                     }
@@ -218,7 +200,7 @@ public class YTJServerHandle extends AbstractServerHandle{
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder ;
+            DocumentBuilder builder;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -231,7 +213,7 @@ public class YTJServerHandle extends AbstractServerHandle{
             Element elementState = document.createElement("state");
             root.appendChild(elementState);
 
-            if(a>0)
+            if (a > 0)
                 //System.out.println("成功");
                 elementState.setTextContent("true");
             else
@@ -244,11 +226,7 @@ public class YTJServerHandle extends AbstractServerHandle{
             //生成消息
             Msg result = null;
             try {
-                result = new Msg(EProtocol.EP_Return, ETopService.ET_YTJ, 1 , document);
-            } catch (TransformerException e) {
-                e.printStackTrace();
-            }
-            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_YTJ, 1, document);
                 //发送消息
                 msr.SendMsg(result);
             } catch (IOException | TransformerException e) {
@@ -256,18 +234,18 @@ public class YTJServerHandle extends AbstractServerHandle{
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
-    private void SendBill(Msg m){
+    private void SendBill(Msg m) throws Exception {
         Document document = null;
 
         try {
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder ;
+            DocumentBuilder builder;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -305,102 +283,86 @@ public class YTJServerHandle extends AbstractServerHandle{
                     root.appendChild(EBill);       //挂root
                 }
                 elementState.setTextContent("true");
-            }
-            else {
+            } else {
                 elementState.setTextContent("false");
             }
             //将根节点添加到下面
             document.appendChild(root);
 
+            //生成消息
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_YTJ, 3, document);
+                //发送消息
+                msr.SendMsg(result);
+            } catch (IOException | TransformerException e) {
+                throw e;
+            }
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-            //获取失败
-            //elementState.setTextContent("100");
-        }
-        //生成消息
-        Msg result = null;
-        try {
-            result = new Msg(EProtocol.EP_Return, ETopService.ET_YTJ, 3 , document);
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        }
-        try {
-            //发送消息
-            msr.SendMsg(result);
-        } catch (IOException | TransformerException e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
-    private void Recharge(Msg m)
-    {
-        {
+    private void Recharge(Msg m) throws Exception {
+        try {
             Label l = new Label();
-            try {
-                Document document = m.getContent();
-                //获取根
-                Element element = document.getDocumentElement();
-                NodeList nodeList = element.getChildNodes();
-                Node childNode;
-                for (int temp = 0; temp < nodeList.getLength(); temp++) {
-                    childNode = nodeList.item(temp);
-                    //判断是哪个数据
-                    switch (childNode.getNodeName()) {
-                        case "id" -> l.setId(childNode.getTextContent());
-                        case "name"->
-                            l.setName(childNode.getTextContent());
-                        case "pa"->
-                            l.setPassword(childNode.getTextContent());
-                        case "lass"-> {
-                            int lass = Integer.parseInt(childNode.getTextContent());
-                            l.setMoney(lass);
-                        }
+            Document document = m.getContent();
+            //获取根
+            Element element = document.getDocumentElement();
+            NodeList nodeList = element.getChildNodes();
+            Node childNode;
+            for (int temp = 0; temp < nodeList.getLength(); temp++) {
+                childNode = nodeList.item(temp);
+                //判断是哪个数据
+                switch (childNode.getNodeName()) {
+                    case "id" -> l.setId(childNode.getTextContent());
+                    case "name" -> l.setName(childNode.getTextContent());
+                    case "pa" -> l.setPassword(childNode.getTextContent());
+                    case "lass" -> {
+                        int lass = Integer.parseInt(childNode.getTextContent());
+                        l.setMoney(lass);
                     }
                 }
-
-                //调用数据库方法
-                int a = Dao.Recharge(l);
-
-                // 初始化一个XML解析工厂
-                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                // 创建一个DocumentBuilder实例
-                DocumentBuilder builder ;
-                builder = factory.newDocumentBuilder();
-                // 构建一个Document实例
-                document = builder.newDocument();
-                document.setXmlStandalone(true);
-                // standalone用来表示该文件是否呼叫其它外部的文件。若值是 ”yes” 表示没有呼叫外部文件
-
-                // 创建根节点
-                Element root = document.createElement("result");
-                // 创建状态
-                Element elementState = document.createElement("state");
-                root.appendChild(elementState);
-
-                if (a > 0)
-                    //System.out.println("成功");
-                    elementState.setTextContent("true");
-                else
-                    //System.out.println("失败");
-                    elementState.setTextContent("false");
-
-                //生成消息
-                Msg result = null;
-                try {
-                    result = new Msg(EProtocol.EP_Return, ETopService.ET_YTJ, 2 , document);
-                } catch (TransformerException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    //发送消息
-                    msr.SendMsg(result);
-                } catch (IOException | TransformerException e) {
-                    e.printStackTrace();
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+
+            //调用数据库方法
+            int a = Dao.Recharge(l);
+
+            // 初始化一个XML解析工厂
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            // 创建一个DocumentBuilder实例
+            DocumentBuilder builder;
+            builder = factory.newDocumentBuilder();
+            // 构建一个Document实例
+            document = builder.newDocument();
+            document.setXmlStandalone(true);
+            // standalone用来表示该文件是否呼叫其它外部的文件。若值是 ”yes” 表示没有呼叫外部文件
+
+            // 创建根节点
+            Element root = document.createElement("result");
+            // 创建状态
+            Element elementState = document.createElement("state");
+            root.appendChild(elementState);
+
+            if (a > 0)
+                //System.out.println("成功");
+                elementState.setTextContent("true");
+            else
+                //System.out.println("失败");
+                elementState.setTextContent("false");
+
+            //生成消息
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_YTJ, 2, document);
+                //发送消息
+                msr.SendMsg(result);
+            } catch (IOException | TransformerException e) {
+                throw e;
+            }
+
+        } catch (Exception e) {
+            throw e;
         }
     }
 

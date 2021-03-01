@@ -53,8 +53,7 @@ namespace MsgTransTest
             XmlDocument reDocument = remsg.GetContent();
             XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
             
-            string state = "";
-            state = xmlRoot["state"].InnerText;
+            string state = xmlRoot["state"].InnerText;
 
             if (state.CompareTo("true") == 0)
             {
@@ -148,8 +147,7 @@ namespace MsgTransTest
             
             XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
             
-            string state = "";
-            state = xmlRoot["state"].InnerText;
+            string state =  xmlRoot["state"].InnerText;
 
             if (state.CompareTo("true") == 0)
             {
@@ -205,9 +203,7 @@ namespace MsgTransTest
             XmlDocument reDocument = remsg.GetContent();
             XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
             
-            string state = "";
-
-            state = xmlRoot["state"].InnerText;
+            string state = xmlRoot["state"].InnerText;
 
             if (state.CompareTo("true") == 0)
             {
@@ -261,8 +257,7 @@ namespace MsgTransTest
             
             XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
             
-            string state = "";
-            state = xmlRoot["state"].InnerText;
+            string state = xmlRoot["state"].InnerText;
 
             if (state.CompareTo("true") == 0)
             {
