@@ -18,9 +18,17 @@ namespace Util.Controls.WPFTest
     /// </summary>
     public partial class Window2 : Window
     {
+        private TransDGL dgl;
         public Window2()
         {
             InitializeComponent();
+
+            //连接服务器，创建通讯类
+            MsgSendReceiver msr = ServerConn.ConnServer();
+            if (msr == null)
+                Console.Out.WriteLine("连接服务器失败！");
+            else
+                dgl = TransDGL.GetInstance();
         }
 
         private void FButton_Click_Create(object sender, RoutedEventArgs e)
@@ -28,9 +36,10 @@ namespace Util.Controls.WPFTest
             String ShopName = t1.Text;
             String ShopNumber = t2.Text;
             String Location = t3.Text;
+            int Rent = 0;
             try
             {
-                int Rent = t4.Text.ToInt();
+                Rent = t4.Text.ToInt();
             }
             catch
             {
@@ -45,7 +54,23 @@ namespace Util.Controls.WPFTest
                 IsLease = true;
             }
 
-            //将数据输入数据库
+            Store s = new Store(ShopNumber,Location, ShopName, Master, Rent, Password,IsLease);
+            int result = dgl.CreateStore(s);
+            if (result == 1)
+            {
+                MessageBox.Show("创建成功");
+                //Console.WriteLine("创建成功");
+            }
+            else if (result == 0)
+            {
+                MessageBox.Show("创建失败");
+                //Console.WriteLine("创建失败");
+            }
+            else
+            {
+                MessageBox.Show("未知错误");
+                //Console.WriteLine("未知错误");
+            }
         }
 
         private void FButton_Click_Delete(object sender, RoutedEventArgs e)

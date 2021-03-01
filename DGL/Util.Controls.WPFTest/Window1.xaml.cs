@@ -21,31 +21,42 @@ namespace Util.Controls.WPFTest
     {
         private DispatcherTimer ShowTimer;
         int page = 0;
-
+        private TransDGL dgl;
         //从服务器获取店铺信息并在radiobutton上进行初始化
-        String[] shop = new String[112];
+        Store[] stores = new Store[112];
+        //String[] shop = new String[112];
         public Window1()
         {
             
             InitializeComponent();
+
+            MsgSendReceiver msr = ServerConn.ConnServer();
+            if (msr == null)
+                Console.Out.WriteLine("连接服务器失败！");
+            else
+                dgl = TransDGL.GetInstance();
+
             ShowTime();    //在这里窗体加载的时候不执行文本框赋值，窗体上不会及时的把时间显示出来，而是等待了片刻才显示了出来
             ShowTimer = new System.Windows.Threading.DispatcherTimer();
             ShowTimer.Tick += new EventHandler(ShowCurTimer);//起个Timer一直获取当前时间
             ShowTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
             ShowTimer.Start();
 
+            //Store[] ss = dgl.GetStores();
+            stores = dgl.GetStores();
             //测试用
-            for(int j = 0; j < 112; j++)
+            /*
+            for (int j = 0; j < 112; j++)
             {
                 shop[j] = j.ToString();
             }
-
+            */
             //将所有的服务器获取的店铺名字储存进数组中
             //将其中的前十八个进行显示
             RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
             for(int i = 0; i < 19; i++)
             {
-                rads[i].Content = shop[i];
+                rads[i].Content = stores[i].GetName();
             }
             page = 0;
         }
@@ -73,7 +84,28 @@ namespace Util.Controls.WPFTest
                 if (rads[i].IsChecked == true)
                 {
                     String name = rads[i].Content.ToString();
-                    //根据名字进行店铺的删除
+                    foreach (Store s in stores)
+                    {
+                        if (s.GetName() == rads[i].Content.ToString())
+                        {
+                            int result = dgl.DeleteStore(s.GetId());
+                            if (result == 1)
+                            {
+                                MessageBox.Show("删除成功");
+                                //Console.WriteLine("删除成功");
+                            }
+                            else if (result == 0)
+                            {
+                                MessageBox.Show("删除失败");
+                                //Console.WriteLine("删除失败");
+                            }
+                            else
+                            {
+                                MessageBox.Show("未知错误");
+                                //Console.WriteLine("未知错误");
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -94,11 +126,17 @@ namespace Util.Controls.WPFTest
                 if (rads[i].IsChecked == true)
                 {
                     String name = rads[i].Content.ToString();
-                    Window6 win2 = new Window6(name);
-                    win2.getname = name;
-                    win2.Show();
+                    foreach (Store s in stores)
+                    {
+                        if (s.GetName() == rads[i].Content.ToString())
+                        {
+                            int result = dgl.DeleteStore(s.GetId());
+                            Window6 win2 = new Window6(name,s.GetId());
+                            win2.getname = name;
+                            win2.Show();
+                        }
+                    }
                 }
-                
             }
         }
 
@@ -113,7 +151,7 @@ namespace Util.Controls.WPFTest
                 RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
                 for (int i = 0; i < 19; i++)
                 {
-                    rads[i].Content = shop[(page - 1) * 18 + i];
+                    rads[i].Content = stores[(page - 1) * 18 + i].GetName();
 
                 }
                 page--;
@@ -128,7 +166,7 @@ namespace Util.Controls.WPFTest
             {
                 for ( ; i < 19; i++)
                 {
-                    rads[i].Content = shop[page * 18 + i];
+                    rads[i].Content = stores[page * 18 + i].GetName();
                 }
                 page++;
             }

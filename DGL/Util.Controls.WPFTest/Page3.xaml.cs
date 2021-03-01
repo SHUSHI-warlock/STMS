@@ -19,34 +19,35 @@ namespace Util.Controls.WPFTest
     /// </summary>
     public partial class Page3 : Page
     {
-        public Page3()
+        private TransDGL dgl;
+        public Page3(String name)
         {
             InitializeComponent();
+            MsgSendReceiver msr = ServerConn.ConnServer();
+            if (msr == null)
+                Console.Out.WriteLine("连接服务器失败！");
+            else
+                dgl = TransDGL.GetInstance();
 
             //从服务器中得到店铺消费记录
-            List<Record> ds = new List<Record>();
-            int i = 0; //从服务器获取的菜品数
-            for (int j = 0; j < i; j++)
+            List<Bill> ds = new List<Bill>();
+            Bill[] bs = dgl.GetBills(name);
+            if (bs == null)
+                Console.Out.WriteLine("获取失败！");
+            else
             {
-                var d1 = new Record()
+                foreach (Bill b in bs)
                 {
-                    Number = "1",
-                    Name = "a",
+                    var d1 = new Bill();
 
-                    Price = 1,
-                };
-                ds.Add(d1);
+                    d1.SetLabelid(b.GetLabelid());
+                    d1.SetStoreid(b.GetStoreid());
+                    d1.SetTime(b.GetTime());
+                    d1.SetCost(b.GetCost());
+                    ds.Add(d1);
+                }
+                this.gridList.ItemsSource = ds;
             }
-            this.gridList.ItemsSource = ds; //设置列表
-        }
-
-        public class Record
-        {
-            public String Number { get; set; }
-            public String Name { get; set; }
-            public DateTime Time { get; set; }
-            public int Price { get; set; }
-
         }
 
         private void gridList_SelectionChanged(object sender, SelectionChangedEventArgs e)

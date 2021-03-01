@@ -21,16 +21,19 @@ namespace Util.Controls.WPFTest
     {
         private DispatcherTimer ShowTimer;
         public String getname { get; set; }
-        public Window6(String name)
+        public String Number { get; set; }
+        public Window6(String name,String storeNumber)
         {
             InitializeComponent();
+
             ShowTime();    //在这里窗体加载的时候不执行文本框赋值，窗体上不会及时的把时间显示出来，而是等待了片刻才显示了出来
             ShowTimer = new System.Windows.Threading.DispatcherTimer();
             ShowTimer.Tick += new EventHandler(ShowCurTimer);//起个Timer一直获取当前时间
             ShowTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
             ShowTimer.Start();
-            Page1 p = new Page1(name);
+            Page1 p = new Page1(name,storeNumber);
             getname = name;
+            Number = storeNumber;
             Page_Change.Content = new Frame()
             {
                 Content = p
@@ -58,7 +61,7 @@ namespace Util.Controls.WPFTest
 
         private void FButton_Click_Shop(object sender, RoutedEventArgs e)
         {
-            Page1 p = new Page1(getname);
+            Page1 p = new Page1(getname,Number);
             Page_Change.Content = new Frame()
             {
                 Content = p
@@ -67,7 +70,7 @@ namespace Util.Controls.WPFTest
 
         private void FButton_Click_Dish(object sender, RoutedEventArgs e)
         {
-            Page2 p2 = new Page2(getname);
+            Page2 p2 = new Page2(getname,Number);
             Page_Change.Content = new Frame() 
             { 
                 Content=p2
@@ -77,7 +80,7 @@ namespace Util.Controls.WPFTest
 
         private void FButton_Click_Record(object sender, RoutedEventArgs e)
         {
-            Page3 p3 = new Page3();
+            Page3 p3 = new Page3(getname);
             Page_Change.Content = new Frame()
             {
                 Content = p3
