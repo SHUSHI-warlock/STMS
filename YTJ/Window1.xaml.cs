@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MsgTransTest;
+using Label = MsgTransTest.Label;
 
 namespace 卡管理
 {
@@ -23,7 +25,7 @@ namespace 卡管理
         {
             InitializeComponent();
         }
-
+        private TransYTJ ytj;
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Window2 a = new Window2();
@@ -34,10 +36,23 @@ namespace 卡管理
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            Window3 a = new Window3();
-            this.Hide();
-            a.ShowDialog();
-            this.ShowDialog();
+            if (listView.SelectedItem == null)
+                MessageBox.Show("请选中一行", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+            else
+            {
+                Label u = listView.SelectedItem as Label;
+                MessageBoxResult result = MessageBox.Show("确认是否显示账号为 " + u.id + " 的用户的消费记录", "警告", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+                if (result == MessageBoxResult.OK)
+                {
+                    Bill[] bs =ytj.GetBills();
+                    if (bs == null)
+                        Console.Out.WriteLine("获取失败！");
+                    else
+                    {
+                        listView.ItemsSource = bs;
+                    }
+                }
+            }
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)

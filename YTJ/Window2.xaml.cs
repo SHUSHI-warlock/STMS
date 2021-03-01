@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Database;
+using MsgTransTest;
+using Label = MsgTransTest.Label;
 
 namespace 卡管理
 {
@@ -24,7 +26,7 @@ namespace 卡管理
         {
             InitializeComponent();
         }
-
+        private TransYTJ ytj;
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -37,35 +39,22 @@ namespace 卡管理
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            int sexnumber;
-            if (combobox1.Text.Equals("男"))
-            {
-                sexnumber = 1;
-            }
-            else
-            {
-                sexnumber = 2;
-            }
-            if (textbox1.Text != string.Empty && password1.Password != string.Empty && password2.Password != string.Empty)
-            {
-                if (password1.Password.Equals(password2.Password))
-                {
-                    string sql1 = "UPDATE User_Table SET Id = '" + textbox1.Text + "',Password='" + password1.Password + "',Name='" + textbox2.Text + "',Sex='" + sexnumber + "'WHERE Id='" + MainWindow.user.Id + "'";
-                    Program p = new Program();
-                    p.OpenDB();
-                    p.Change(sql1);
-                    p.CloseDB();
-                    MessageBox.Show("修改成功", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Label l = new Label(textbox1.Text, textbox2.Text, password1.Password, MainWindow.label.money);
+                    int result1 = ytj.ChangeLabel(l);
+                    if (result1 == 1)
+                    {
+                        MessageBox.Show("修改成功！", "congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else if (result1 == 0)
+                    {
+                        MessageBox.Show("修改失败！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("未知错误", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("两次输入密码不一致", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+
             }
-            else
-            {
-                MessageBox.Show("还有项目未填", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
     }
 }
