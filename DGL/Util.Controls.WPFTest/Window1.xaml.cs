@@ -49,17 +49,34 @@ namespace Util.Controls.WPFTest
             */
             
             //将所有的服务器获取的店铺名字储存进数组中
-            //将其中的前十八个进行显示
+
             RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
-            for(int i = 0; i < 19; i++)
+            if (stores.Length >= 18)
             {
-                if (stores[i].GetName() != null)
+                for (int i = 0; i < 19; i++)
                 {
-                    rads[i].Content = stores[i].GetName();
+                    if (stores[i].GetName() != null)
+                    {
+                        rads[i].Content = stores[i].GetName();
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
-                else
+            }
+            else
+            {
+                for(int i = 0; i < stores.Length; i++)
                 {
-                    break;
+                    if (stores[i].GetName() != null)
+                    {
+                        rads[i].Content = stores[i].GetName();
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
             page = 0;
@@ -128,6 +145,37 @@ namespace Util.Controls.WPFTest
             Window2 win = new Window2();
             win.Show();
             //刷新店铺信息
+            stores = dgl.GetStores();
+            RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
+            if (stores.Length >= 18)
+            {
+                for (int i = 0; i < 19; i++)
+                {
+                    if (stores[i].GetName() != null)
+                    {
+                        rads[i].Content = stores[i].GetName();
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < stores.Length; i++)
+                {
+                    if (stores[i].GetName() != null)
+                    {
+                        rads[i].Content = stores[i].GetName();
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            page = 0;
         }
 
         private void FButton_Click_Enter(object sender, RoutedEventArgs e)
@@ -152,7 +200,7 @@ namespace Util.Controls.WPFTest
             }
         }
 
-        private void FButton_Click_up(object sender, RoutedEventArgs e)
+        private void FButton_Click_before(object sender, RoutedEventArgs e)
         {
             if (page == 0)
             {
@@ -161,6 +209,7 @@ namespace Util.Controls.WPFTest
             else
             {
                 RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
+
                 for (int i = 0; i < 19; i++)
                 {
                     if(stores[(page - 1) * 18 + i].GetName()!=null)
@@ -175,24 +224,43 @@ namespace Util.Controls.WPFTest
                 page--;
             }
         }
-        private void FButton_Click_down(object sender, RoutedEventArgs e)
+        private void FButton_Click_next(object sender, RoutedEventArgs e)
         {
 
             RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
             int i = 0;
             if (page * 18 + i + 18 <= 112)
             {
-                for ( ; i < 19; i++)
+                if (stores.Length - (page+1) * 18 >= 18)
                 {
-                    if(stores[page * 18 + i].GetName() != null)
+                    for (; i < 19; i++)
                     {
-                        rads[i].Content = stores[page * 18 + i].GetName();
-                    }
-                    else
-                    {
-                        break;
+                        if (stores[page * 18 + i].GetName() != null)
+                        {
+                            rads[i].Content = stores[page * 18 + i].GetName();
+                        }
+                        else
+                        {
+                            break;
+                        }
+
                     }
                 }
+                else
+                {
+                    for (; i < (stores.Length - (page+1) * 18); i++)
+                    {
+                        if (stores[page * 18 + i].GetName() != null)
+                        {
+                            rads[i].Content = stores[page * 18 + i].GetName();
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+
                 page++;
             }
             else
