@@ -23,11 +23,8 @@ namespace Util.Controls.WPFTest
         public Page3(String name)
         {
             InitializeComponent();
-            MsgSendReceiver msr = ServerConn.ConnServer();
-            if (msr == null)
-                Console.Out.WriteLine("连接服务器失败！");
-            else
-                dgl = TransDGL.GetInstance();
+            
+            dgl = TransDGL.GetInstance();
 
             //从服务器中得到店铺消费记录
             List<Bill> ds = new List<Bill>();

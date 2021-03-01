@@ -29,12 +29,7 @@ namespace Util.Controls.WPFTest
         {
             
             InitializeComponent();
-
-            MsgSendReceiver msr = ServerConn.ConnServer();
-            if (msr == null)
-                Console.Out.WriteLine("连接服务器失败！");
-            else
-                dgl = TransDGL.GetInstance();
+            dgl = TransDGL.GetInstance();
 
             ShowTime();    //在这里窗体加载的时候不执行文本框赋值，窗体上不会及时的把时间显示出来，而是等待了片刻才显示了出来
             ShowTimer = new System.Windows.Threading.DispatcherTimer();

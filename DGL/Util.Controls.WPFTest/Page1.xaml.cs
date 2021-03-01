@@ -25,11 +25,8 @@ namespace Util.Controls.WPFTest
             InitializeComponent();
 
             //连接服务器，创建通讯类
-            MsgSendReceiver msr = ServerConn.ConnServer();
-            if (msr == null)
-                Console.Out.WriteLine("连接服务器失败！");
-            else
-                dgl = TransDGL.GetInstance();
+            
+            dgl = TransDGL.GetInstance();
             //从服务器获取数据
             Store store = dgl.GetStoreInfo(storeNumber);
 

@@ -22,11 +22,8 @@ namespace Util.Controls.WPFTest
         public Window4(String name,String storeNumber)
         {
             InitializeComponent();
-            MsgSendReceiver msr = ServerConn.ConnServer();
-            if (msr == null)
-                Console.Out.WriteLine("连接服务器失败！");
-            else
-                dgl = TransDGL.GetInstance();
+            
+            dgl = TransDGL.GetInstance();
 
             t6.Text = name;
             t9.Text = storeNumber;

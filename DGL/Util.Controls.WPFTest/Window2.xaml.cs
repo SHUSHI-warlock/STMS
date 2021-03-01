@@ -24,11 +24,8 @@ namespace Util.Controls.WPFTest
             InitializeComponent();
 
             //连接服务器，创建通讯类
-            MsgSendReceiver msr = ServerConn.ConnServer();
-            if (msr == null)
-                Console.Out.WriteLine("连接服务器失败！");
-            else
-                dgl = TransDGL.GetInstance();
+            
+            dgl = TransDGL.GetInstance();
         }
 
         private void FButton_Click_Create(object sender, RoutedEventArgs e)

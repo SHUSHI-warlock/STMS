@@ -25,11 +25,8 @@ namespace Util.Controls.WPFTest
         {
             InitializeComponent();
             //连接服务器，创建通讯类
-            MsgSendReceiver msr = ServerConn.ConnServer();
-            if (msr == null)
-                Console.Out.WriteLine("连接服务器失败！");
-            else
-                dgl = TransDGL.GetInstance();
+            
+            dgl = TransDGL.GetInstance();
 
             //从数据库获取数据
             //循环进行列表的初始化操作

@@ -9,18 +9,18 @@ public class WeekTask {
     private long weekS;
 
     public void run(){
-        //判断当前时间是否为周日十点
+        //锟叫断碉拷前时锟斤拷锟角凤拷为锟斤拷锟斤拷十锟斤拷
         Date date = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(date);
 
-        int day = c.get(Calendar.DAY_OF_WEEK)-1;//周日时day为0
+        int day = c.get(Calendar.DAY_OF_WEEK)-1;//锟斤拷锟斤拷时day为0
         int hour  =c.get(Calendar.HOUR_OF_DAY);  //小时
-        int minute=c.get(Calendar.MINUTE);   //分
-        int second=c.get(Calendar.SECOND);  //秒
+        int minute=c.get(Calendar.MINUTE);   //锟斤拷
+        int second=c.get(Calendar.SECOND);  //锟斤拷
         if(day == 0 && hour == 22 && minute == 0 && second == 0)
         {
-            //对每个店铺结算营业额
+            //锟斤拷每锟斤拷锟斤拷锟教斤拷锟斤拷营业锟斤拷
             ArrayList<Store> stores = Dao.getAllStore();
             Iterator<Store> list = stores.iterator();
             while(list.hasNext()){
@@ -32,6 +32,7 @@ public class WeekTask {
     }
 
     public void setTime(SimpleDateFormat sdf){
+
     }
 
     public long getWeekS() {
