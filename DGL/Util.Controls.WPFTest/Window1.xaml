@@ -58,11 +58,11 @@
         <RadioButton x:Name="r17" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="548,293,170,112" RenderTransformOrigin="5.619,3.239"></RadioButton>
         <RadioButton x:Name="r18" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="675,293,43,112"></RadioButton>
         <StackPanel Margin="0,25,0,-360">
-            <xly:FButton Width="156" Height="50" FIcon="&#xe64f;" Margin="5,0,0,0" CornerRadius="16,0,0,16" AllowsAnimation="True" Click="FButton_Click_up">上一页</xly:FButton>
+            <xly:FButton Width="156" Height="50" FIcon="&#xe64f;" Margin="5,0,0,0" CornerRadius="16,0,0,16" AllowsAnimation="True" Click="FButton_Click_before">上一页</xly:FButton>
             <xly:FButton Width="155" Height="50" FIcon="&#xe628;" CornerRadius="0" Click="FButton_Click_Add">添加</xly:FButton>
             <xly:FButton Width="157" Height="50" FIcon="&#xe628;" CornerRadius="0" Click="FButton_Click_Enter">进入</xly:FButton>
             <xly:FButton Width="155" Height="50" FIcon="&#xe628;" CornerRadius="0" Click="FButton_Click_Delete">删除</xly:FButton>
-            <xly:FButton Width="156" Height="50" FIcon="&#xE629;" CornerRadius="0,16,16,0" AllowsAnimation="True" Click="FButton_Click_down" Content="下一页" Margin="0,5,0,5"/>
+            <xly:FButton Width="156" Height="50" FIcon="&#xE629;" CornerRadius="0,16,16,0" AllowsAnimation="True" Click="FButton_Click_next" Content="下一页" Margin="0,5,0,5"/>
         </StackPanel>
     </Grid>
 </Window>

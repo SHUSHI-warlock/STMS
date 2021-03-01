@@ -7,27 +7,17 @@
         mc:Ignorable="d"
         Title="Window2" Height="401.878" Width="685.549">
     <Grid Margin="0,0,3.2,8">
-        <Label Content="卡号" HorizontalAlignment="Left" Margin="93,58,0,0" VerticalAlignment="Top"/>
-        <TextBox  Name="Text1" HorizontalAlignment="Left" Height="21" Margin="151,60,0,0" VerticalAlignment="Top" Width="342"/>
-        <Label Content="姓名" HorizontalAlignment="Left" Margin="93,90,0,0" VerticalAlignment="Top"/>
-        <Label Content="确认密码" HorizontalAlignment="Left" Margin="93,164,0,0" VerticalAlignment="Top"/>
-        <Label Content="性别" HorizontalAlignment="Left" Margin="93,201,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.524,1.234"/>
-        <Label Content="权限" HorizontalAlignment="Left" Margin="93,242,0,0" VerticalAlignment="Top" Width="38"/>
-        <Label Content="密码" HorizontalAlignment="Left" Margin="93,126,0,0" VerticalAlignment="Top"/>
-        <Label Content="余额" HorizontalAlignment="Left" Margin="93,274,0,0" VerticalAlignment="Top"/>
-        <TextBox  Name="Text2"  HorizontalAlignment="Left" Height="21" Margin="153,94,0,0" VerticalAlignment="Top" Width="342"/>
-        <PasswordBox PasswordChar="*" x:Name="password1" HorizontalAlignment="Left" Margin="153,129,0,0"   VerticalAlignment="Top" Width="340" Height="21" />
-        <PasswordBox PasswordChar="*" x:Name="password2" HorizontalAlignment="Left" Margin="153,165,0,0" VerticalAlignment="Top" Width="342" Height="21"/>
-        <TextBox  Name="Text7" HorizontalAlignment="Left" Height="21" Margin="151,280,0,0" VerticalAlignment="Top" Width="344"/>
-        <Button Content="添加" HorizontalAlignment="Left" Margin="528,317,0,0" VerticalAlignment="Top" Width="119" Click="Button_Click" Height="37"/>
-        <ComboBox x:Name="combobox1" Margin="152,199,183,139" >
-            <ComboBoxItem IsSelected="True" Content="男"/>
-            <ComboBoxItem Content="女"/>
-        </ComboBox>
-        <ComboBox x:Name="combobox2" Margin="153,241,183,97">
-            <ComboBoxItem IsSelected="True" Content="学生"/>
-            <ComboBoxItem Content="管理员"/>
-        </ComboBox>
-        <Label Content="请输入信息" HorizontalAlignment="Left" Height="54" Margin="273,9,0,0" VerticalAlignment="Top" Width="122" FontSize="22"/>
+        <Label Content="卡号" HorizontalAlignment="Left" Margin="94,98,0,0" VerticalAlignment="Top"/>
+        <TextBox  Name="Text1" HorizontalAlignment="Left" Height="21" Margin="152,100,0,0" VerticalAlignment="Top" Width="364"/>
+        <Label Content="姓名" HorizontalAlignment="Left" Margin="94,130,0,0" VerticalAlignment="Top"/>
+        <Label Content="确认密码" HorizontalAlignment="Left" Margin="94,204,0,0" VerticalAlignment="Top"/>
+        <Label Content="密码" HorizontalAlignment="Left" Margin="94,166,0,0" VerticalAlignment="Top"/>
+        <Label Content="余额" HorizontalAlignment="Left" Margin="94,238,0,0" VerticalAlignment="Top"/>
+        <TextBox  Name="Text2"  HorizontalAlignment="Left" Height="21" Margin="154,134,0,0" VerticalAlignment="Top" Width="362"/>
+        <PasswordBox PasswordChar="*" x:Name="password1" HorizontalAlignment="Left" Margin="154,169,0,0"   VerticalAlignment="Top" Width="362" Height="21" />
+        <PasswordBox PasswordChar="*" x:Name="password2" HorizontalAlignment="Left" Margin="154,205,0,0" VerticalAlignment="Top" Width="362" Height="21"/>
+        <TextBox  Name="Text3" HorizontalAlignment="Left" Height="21" Margin="152,242,0,0" VerticalAlignment="Top" Width="364"/>
+        <Button Content="添加" HorizontalAlignment="Left" Margin="526,295,0,0" VerticalAlignment="Top" Width="119" Click="Button_Click" Height="37"/>
+        <Label Content="请输入信息" HorizontalAlignment="Left" Height="54" Margin="274,49,0,0" VerticalAlignment="Top" Width="122" FontSize="22"/>
     </Grid>
 </Window>

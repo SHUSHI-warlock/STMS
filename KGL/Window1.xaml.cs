@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Database;
+using MsgTransTest;
+using Label = MsgTransTest.Label;
 
 namespace 卡管理
 {
@@ -25,15 +27,14 @@ namespace 卡管理
             InitializeComponent();
             initList();
         }
-        private static string select_sql = "select* from User_Table";
+        private TransKGL kgl;
+
+
 
         private void initList()
         {
-            Program p = new Program();
-            p.OpenDB();
-            List<User> U = p.Searchlogin(select_sql);
-            p.CloseDB();
-            listView.ItemsSource = U;
+            Label[] labels = kgl.GetLabel();
+            listView.ItemsSource = labels;
         }
         private void Del(object sender, RoutedEventArgs e)
         {
@@ -41,16 +42,23 @@ namespace 卡管理
                 MessageBox.Show("请选中一行", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
             else
             {
-                User u = listView.SelectedItem as User;
+                Label u = listView.SelectedItem as Label;
                 MessageBoxResult result = MessageBox.Show("确认是否删除账号为 " + u.id + " 的用户", "警告", MessageBoxButton.OKCancel, MessageBoxImage.Question);
                 if (result == MessageBoxResult.OK)
                 {
-                    string sql = "delete from User_table where id='" + u.id + "'";
-                    Program p = new Program();
-                    p.OpenDB();
-                    p.Delete(sql);
-                    p.CloseDB();
-                    initList();
+                    int result1 = kgl.DeleteLable(u.id);
+                    if (result1 == 1)
+                    {
+                        MessageBox.Show("删除成功！", "congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else if (result1 == 0)
+                    {
+                        MessageBox.Show("删除失败！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("未知错误", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
         }
@@ -68,16 +76,24 @@ namespace 卡管理
                 MessageBox.Show("请选中一行", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
             else
             {
-                User u = listView.SelectedItem as User;
+                Label u = listView.SelectedItem as Label;
                 MessageBoxResult result = MessageBox.Show("确认是否修改账号为 " + u.id + " 的用户", "警告", MessageBoxButton.OKCancel, MessageBoxImage.Question);
-                if (result == MessageBoxResult.OK&&password1.Password==password1_Copy.Password)
+                if (result == MessageBoxResult.OK && password1.Password == password1_Copy.Password)
                 {
-                    string sql1 = "UPDATE User_Table SET id = '" + textbox1.Text + "',password='" + password1.Password + "',name='" + textbox2.Text + "',sex='" + combobox1.Text + "'WHERE id='" + u.id + "'";
-                    Program p = new Program();
-                    p.OpenDB();
-                    p.Change(sql1);
-                    p.CloseDB();
-                    initList();
+                    Label l = new Label(textbox1.Text, textbox2.Text, password1.Password, int.Parse(yue.Text));
+                    int result1 = kgl.ChangeLabel(l);
+                    if (result1 == 1)
+                    {
+                        MessageBox.Show("修改成功！", "congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else if (result1 == 0)
+                    {
+                        MessageBox.Show("修改失败！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("未知错误", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 else
                 {
@@ -91,9 +107,24 @@ namespace 卡管理
 
         private void Find(object sender, RoutedEventArgs e)
         {
-            Window4 a1 = new Window4();
-            a1.ShowDialog();
-            //initList1();
+            if (listView.SelectedItem == null)
+                MessageBox.Show("请选中一行", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+            else
+            {
+                Label u = listView.SelectedItem as Label;
+                MessageBoxResult result = MessageBox.Show("确认是否显示账号为 " + u.id + " 的用户的消费记录", "警告", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+                if (result == MessageBoxResult.OK)
+                {
+                    Bill[] bs = kgl.GetBills(u.id);
+                    if (bs == null)
+                        Console.Out.WriteLine("获取失败！");
+                    else
+                    {
+                        listView2.ItemsSource = bs;
+                    }
+                }
+
+            }
         }
     }
 }

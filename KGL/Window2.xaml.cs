@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 using System.IO;
 using System.IO.Ports;
 using Database;
+using MsgTransTest;
+using Label = MsgTransTest.Label;
 
 namespace 卡管理
 {
@@ -26,11 +28,9 @@ namespace 卡管理
         {
             InitializeComponent();
         }
+        private TransKGL kgl;
 
-        private void combobox2_Copy_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
-        }
         private string date;
         private static int index;
         private DateTime dt = DateTime.Now;
@@ -38,33 +38,24 @@ namespace 卡管理
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (Text1.Text != string.Empty && Text2.Text != string.Empty && password1.Password != string.Empty
-                && password2.Password != string.Empty && combobox1.Text != string.Empty && combobox2.Text != string.Empty && Text7.Text != string.Empty)
+                && password2.Password != string.Empty && Text3.Text != string.Empty)
             {
                 if (password1.Password.Equals(password2.Password))
                 {
-                    string sql = "INSERT INTO User_Table VALUES ('"+Text7.Text+"','"  + Text1.Text +"','" + password1.Password + "','"+Text2.Text + "',";
-                    if (combobox1.Text.Equals("男"))
-                        sql += "'1',";
-                    else
-                        sql += "'0',";
-                    if (combobox2.Text.Equals("学生"))
+                    Label l = new Label(Text1.Text,Text2.Text,password1.Password,int.Parse(Text3.Text));
+                    int result = kgl.AddLable(l);
+                    if (result == 1)
                     {
-                        sql += "'0')";
+                        MessageBox.Show("创建成功！", "congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else if (result == 0)
+                    {
+                        MessageBox.Show("创建失败！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     else
                     {
-                        sql += "'1')";
+                        MessageBox.Show("未知错误", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                    Program p = new Program();
-                    p.OpenDB();
-                    p.Insert(sql);
-                    p.CloseDB();
-                    MessageBox.Show("注册成功！");
-                    index++;
-                    StreamWriter sw = new StreamWriter("date", false, Encoding.GetEncoding("UTF-8"));
-                    sw.WriteLine(DateTime.Now.ToString("yyyyMMdd"));
-                    sw.WriteLine(index.ToString());
-                    sw.Close();
                 }
                 else
                 {
