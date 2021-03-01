@@ -19,26 +19,31 @@ namespace Util.Controls.WPFTest
     /// </summary>
     public partial class Page2 : Page
     {
-        public Page2(String name)
+        private TransDGL dgl;
+        String sNumber { set; get; }
+        public Page2(String name,String storeNumber)
         {
             InitializeComponent();
+            //连接服务器，创建通讯类
+            dgl = TransDGL.GetInstance();
+
             //从数据库获取数据
             //循环进行列表的初始化操作
-            List<Dish> ds = new List<Dish>();
+            List<Food> ds = new List<Food>();
             getname = name;
+            sNumber = storeNumber;
             String shopName = getname;
-            int i = 1; //从服务器获取的菜品数
-            for (int j = 0; j < i; j++)
+
+            Food[] foods = dgl.GetFoods(sNumber);
+            foreach (Food f in foods)
             {
-                var d1 = new Dish()
-                {
-                    Number = "1",
-                    Name = "a",
-                    Price = 1,
-                    Class = "a",
-                    Shop = shopName,
-                    Strategy = "a"
-                };
+                var d1 = new Food();
+                d1.SetFoodNum(f.GetFoodNum());
+                d1.SetName(f.GetName());
+                d1.SetPrice(f.GetPrice());
+                d1.SetId(f.GetId());
+                d1.SetFoodTip(f.GetFoodTip());
+                d1.SetSt(f.GetSt());
                 ds.Add(d1);
             }
             this.gridList.ItemsSource = ds; //设置列表
@@ -46,36 +51,23 @@ namespace Util.Controls.WPFTest
 
         public String getname { get; set; }
 
-        public class Dish
-        {
-            public String Number { get; set; }
-            public String Name { get; set; }
-            public int Price { get; set; }
-            public String Class { get; set; }
-            public String Shop { get; set; }
-            public String Strategy { get; set; }
-        }
 
         private void FButton_Click_Fresh(object sender, RoutedEventArgs e)
         {
             //循环进行列表的初始化操作
-            List<Dish> ds = new List<Dish>();
+            List<Food> ds = new List<Food>();
             String shopName = getname;
 
-            //根据店名重新从服务器中获取菜品列表
-
-            int i = 0; //从服务器获取的菜品数
-            for (int j = 0; j < i; j++)
+            Food[] foods = dgl.GetFoods(sNumber);
+            foreach (Food f in foods)
             {
-                var d1 = new Dish()
-                {
-                    Number = "1",
-                    Name = "a",
-                    Price = 1,
-                    Class = "a",
-                    Shop = shopName,
-                    Strategy = "a"
-                };
+                var d1 = new Food();
+                d1.SetFoodNum(f.GetFoodNum());
+                d1.SetName(f.GetName());
+                d1.SetPrice(f.GetPrice());
+                d1.SetId(f.GetId());
+                d1.SetFoodTip(f.GetFoodTip());
+                d1.SetSt(f.GetSt());
                 ds.Add(d1);
             }
             this.gridList.ItemsSource = ds; //设置列表
@@ -83,19 +75,32 @@ namespace Util.Controls.WPFTest
 
         private void FButton_Click_Add(object sender, RoutedEventArgs e)
         {
-            Window4 win = new Window4(getname);
+            Window4 win = new Window4(getname,sNumber);
             win.Show();
         }
 
         private void FButton_Click_Delete(object sender, RoutedEventArgs e)
         {
             
-            String Number;
-            var item = gridList.SelectedItem as Dish;
+            var item = gridList.SelectedItem as Food;
             if (item != null)
             {
-                Number = item.Number;
                 //根据菜品号Number进行菜品的删除
+                int result = dgl.DeleteFood(item.id, getname);
+                if (result == 1)
+                {
+                    MessageBox.Show("删除成功");
+                }
+                else if (result == 0)
+                {
+                    MessageBox.Show("删除失败！");
+                    //Console.WriteLine("删除失败");
+                }
+                else
+                {
+                    MessageBox.Show("未知错误！");
+                    //Console.WriteLine("未知错误");
+                }
             }
             else
             {
@@ -106,10 +111,10 @@ namespace Util.Controls.WPFTest
 
         private void FButton_Click_Change(object sender, RoutedEventArgs e)
         {
-            var item = gridList.SelectedItem as Dish;
+            var item = gridList.SelectedItem as Food;
             if (item != null)
             {
-                Window3 win2 = new Window3(item.Shop, item.Number, item.Name, item.Class, item.Strategy, item.Price);
+                Window3 win2 = new Window3(getname,sNumber,item.GetId(), item.GetName(), item.GetFoodClass(), item.GetSt(), item.GetPrice());
                 win2.Show();
             }
             else

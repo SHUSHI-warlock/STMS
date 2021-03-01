@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace MsgTransTest
+namespace Util.Controls.WPFTest
 {
     //店管理
     class TransDGL
     {
         private readonly MsgSendReceiver msgSendReceiver;
-        private static  TransDGL instance = null;
+        private static TransDGL instance = null;
         private TransDGL()
         {
             this.msgSendReceiver = ServerConn.ConnServer();
@@ -36,26 +36,26 @@ namespace MsgTransTest
             XmlDocument document = new XmlDocument();
 
             XmlElement login = document.CreateElement("login");//CreateElement（节点名称）
-            
+
             XmlElement ID = document.CreateElement("id");
             ID.InnerText = id; //设置其值
             XmlElement PA = document.CreateElement("pa");
             PA.InnerText = pwd; //设置其值
-            
+
             login.AppendChild(ID);
             login.AppendChild(PA);
             document.AppendChild(login);
-            
+
             Msg msg = new Msg(EProtocol.EP_Verify, ETopService.ET_DGL, 0, document);
-            
+
             this.msgSendReceiver.SendMsg(msg);
-            
+
             Msg remsg = this.msgSendReceiver.ReceiveMsg();
-            
+
             XmlDocument reDocument = remsg.GetContent();
-            
+
             XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
-           
+
             string state = "";
             state = xmlRoot["state"].InnerText;
 
@@ -194,7 +194,7 @@ namespace MsgTransTest
             XmlDocument document = new XmlDocument();
 
             XmlElement deletestore = document.CreateElement("deletestore");//CreateElement（节点名称）
-            
+
             XmlElement ID = document.CreateElement("id");
             ID.InnerText = storeid;
             /*ID.InnerText = store.GetId(); //设置其值
@@ -294,7 +294,7 @@ namespace MsgTransTest
                         );
                 return temp;
             }
-            else if(state == "200")
+            else if (state == "200")
             {
                 return null;
             }
@@ -380,7 +380,7 @@ namespace MsgTransTest
             XmlDocument document = new XmlDocument();
 
             XmlElement getfood = document.CreateElement("getfood");//CreateElement（节点名称）
-            
+
             XmlElement ID = document.CreateElement("id");
             ID.InnerText = id; //设置其值
 
@@ -388,11 +388,11 @@ namespace MsgTransTest
             document.AppendChild(getfood);
 
             Msg msg = new Msg(EProtocol.EP_Request, ETopService.ET_DGL, 6, document);
-            
+
             this.msgSendReceiver.SendMsg(msg);
-            
+
             Msg remsg = this.msgSendReceiver.ReceiveMsg();
-            
+
             XmlDocument reDocument = remsg.GetContent();
             XmlElement xmlRoot = reDocument.DocumentElement; //DocumentElement获取文档的根
             XmlNode state = xmlRoot.GetElementsByTagName("state").Item(0);
@@ -426,7 +426,7 @@ namespace MsgTransTest
        * 参数：Food对象 , 添加至的店铺号
        * 返回值：添加成功返回1；添加失败返回0；未知错误返回-1
        */
-        public int AddFood(Food food,string storeid)
+        public int AddFood(Food food, string storeid)
         {
             XmlDocument document = new XmlDocument();
 
@@ -489,7 +489,7 @@ namespace MsgTransTest
          * 参数：Food对象，所属店铺
          * 返回值：修改成功返回1；修改失败返回0；未知错误返回-1
          */
-        public int ChangeFood(Food food,string storeid)
+        public int ChangeFood(Food food, string storeid)
         {
             XmlDocument document = new XmlDocument();
 
@@ -531,7 +531,7 @@ namespace MsgTransTest
 
             string state = "";
             state = xmlRoot["state"].InnerText;
-           
+
 
             if (state.CompareTo("true") == 0)
             {
@@ -548,14 +548,14 @@ namespace MsgTransTest
                 return -1;
             }
         }
-      
+
         /**
          * 9 验证完毕
          * 删除菜品
          * 参数：Foodid,strid
          * 返回值：删除成功返回1；删除失败返回0；未知错误返回-1
          */
-        public int DeleteFood(string foodid,string storeid)
+        public int DeleteFood(string foodid, string storeid)
         {
             XmlDocument document = new XmlDocument();
 
@@ -600,7 +600,7 @@ namespace MsgTransTest
 
             string state = "";
             state = xmlRoot["state"].InnerText;
-            
+
 
             if (state.CompareTo("true") == 0)
             {
@@ -617,7 +617,7 @@ namespace MsgTransTest
                 return -1;
             }
         }
-        
+
         /**
          * 10 验证完毕
          * 返回账单

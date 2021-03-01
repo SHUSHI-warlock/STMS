@@ -1,4 +1,3 @@
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -6,39 +5,44 @@ import DB.Dao;
 import Data.Store;
 
 public class WeekTask {
-    private long weekS;
+    private long weekS = 0;
 
-    public void run(){
-        //�жϵ�ǰʱ���Ƿ�Ϊ����ʮ��
-        Date date = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
+    public void run(String firstTime, long weekSpan){
+        // 一周的毫秒数
+        //long weekSpan = 7 * 24 * 60 * 60 * 1000;
 
-        int day = c.get(Calendar.DAY_OF_WEEK)-1;//����ʱdayΪ0
-        int hour  =c.get(Calendar.HOUR_OF_DAY);  //Сʱ
-        int minute=c.get(Calendar.MINUTE);   //��
-        int second=c.get(Calendar.SECOND);  //��
-        if(day == 0 && hour == 22 && minute == 0 && second == 0)
-        {
-            //��ÿ�����̽���Ӫҵ��
-            ArrayList<Store> stores = Dao.getAllStore();
-            Iterator<Store> list = stores.iterator();
-            while(list.hasNext()){
-                Dao.CaculateTurnover(list.next().id);
+        try {
+            // 首次运行时间
+            Date startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(firstTime);
+            long start = startTime.getTime();
+            // 如果首次时间的已经过了 首次运行时间就改为一周后
+            if (System.currentTimeMillis() > startTime.getTime()){
+                startTime = new Date(startTime.getTime() + weekSpan);
             }
-        }
-        else return;
+            long end = startTime.getTime();
+            Timer t = new Timer();
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    week = (( end - start ) / weekSpan) + 1 ;
+                    System.out.print("第"+ weekS + "周营业额结算\n");
 
+                    //对每个店铺结算营业额
+                    ArrayList<Store> stores = Dao.getAllStore();
+                    Iterator<Store> list = stores.iterator();
+                    while(list.hasNext()){
+                        Dao.CaculateTurnover(list.next().id);
+                    }
+                }
+            };
+            // 以指定时间间隔执行一次
+            t.schedule(task, startTime, weekSpan);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void setTime(SimpleDateFormat sdf){
     }
 
-    public long getWeekS() {
-        return weekS;
-    }
-
-    public void setWeekS(long weekS) {
-        this.weekS = weekS;
-    }
 }

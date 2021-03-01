@@ -12,25 +12,45 @@ namespace Util.Controls.WPFTest
     public partial class MainWindow : Window
     {
 
-
+        private TransDGL dgl;
         public MainWindow()
         {
             InitializeComponent();
+            dgl = TransDGL.GetInstance();
         }
-
+        
+        
         private void button_click1(object sender, RoutedEventArgs e)
         {
-            if (num.Text == "a" && pass.Text == "a")
-            {
-                Window1 win = new Window1();
-                win.Show();
-                this.Close();
-            }
-            else if (num.Text == "" || pass.Text == "")
+            if (num.Text == "" || pass.Text == "")
             {
                 MessageBox.Show("请正确输入账号密码！");
             }
-
+            else
+            {
+                String id = num.Text;
+                String pwd = pass.Text;
+                int er = dgl.LoginIn(id, pwd);
+                if (er == 1)
+                {
+                    Window1 win = new Window1();
+                    win.Show();
+                    this.Close();
+                }
+                else if (er == 0)
+                {
+                    MessageBox.Show("登录失败");
+                    num.Text = "";
+                    pass.Text = "";
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("其他错误!");
+                    //Console.Out.WriteLine("其他错误！");
+                    return;
+                }
+            }
         }
 
         private void button_click2(object sender, RoutedEventArgs e)

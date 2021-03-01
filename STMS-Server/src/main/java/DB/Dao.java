@@ -190,7 +190,8 @@ public class Dao {
                 store.name = rs.getString("S_Name");
                 store.rent = rs.getInt("S_Rent");
                 store.master = rs.getString("S_Master");
-                store.pa = rs.getString("S_Pa");
+                String pa=rs.getString("S_Pa");
+                store.pa = DESUtils.getDecryptString(pa);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -229,7 +230,8 @@ public class Dao {
                 store.name = rs.getString("S_Name");
                 store.rent = rs.getInt("S_Rent");
                 store.master = rs.getString("S_Master");
-                store.pa = rs.getString("S_Pa");
+                String pa=rs.getString("S_Pa");
+                store.pa = DESUtils.getDecryptString(pa);
                 stores.add(store);
             }
         } catch (Exception e) {
@@ -251,7 +253,7 @@ public class Dao {
 
     public static int addNewStore(Store s){
         //添加新商店
-        String sql = "insert into T_Store(S_Id,S_Loc,S_IsLease,S_Name,S_Rent,S_Master,S_Pa) values('" + s.id + "','" + s.loc + "'," + s.isLease + ",'" + s.name + "'," + s.rent + ",'" + s.master + "','" + s.pa + "')";
+        String sql = "insert into T_Store(S_Id,S_Loc,S_IsLease,S_Name,S_Rent,S_Master,S_Pa) values('" + s.id + "','" + s.loc + "'," + s.isLease + ",'" + s.name + "'," + s.rent + ",'" + s.master + "','" + DESUtils.getEncryptString(s.pa) + "')";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
         Statement state = null;
@@ -277,7 +279,7 @@ public class Dao {
 
     public static int updateStore(Store s){
         //更新现有商店信息
-        String sql = "update T_Store set S_Loc='" + s.loc + "', S_IsLease=" + s.isLease + ", S_Name='" + s.name + "', S_Rent=" + s.rent + ", S_Master='" + s.master + "', S_Pa='" + s.pa + "' where S_Id='" + s.id + "'";
+        String sql = "update T_Store set S_Loc='" + s.loc + "', S_IsLease=" + s.isLease + ", S_Name='" + s.name + "', S_Rent=" + s.rent + ", S_Master='" + s.master + "', S_Pa='" + DESUtils.getEncryptString(s.pa) + "' where S_Id='" + s.id + "'";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
         Statement state = null;
@@ -360,7 +362,8 @@ public class Dao {
             while (rs.next()) {
                 label.id = rs.getString("L_Id");
                 label.name = rs.getString("L_Name");
-                label.password = rs.getString("L_Pa");
+                String pa=rs.getString("L_Pa");
+                label.password = DESUtils.getDecryptString(pa);
                 label.money = rs.getInt("L_Lass");
             }
         } catch (Exception e) {
@@ -397,7 +400,8 @@ public class Dao {
                 Label label = new Label();
                 label.id = rs.getString("L_Id");
                 label.name = rs.getString("L_Name");
-                label.password = rs.getString("L_Pa");
+                String pa=rs.getString("L_Pa");
+                label.password = DESUtils.getDecryptString(pa);
                 label.money = rs.getInt("L_Lass");
                 labels.add(label);
             }
@@ -422,7 +426,7 @@ public class Dao {
 
     public static int addNewLabel(Label l){
         //添加新消费卡
-        String sql = "insert into T_Label(L_Id,L_Name,L_Pa,L_Lass) values('" + l.id + "','" + l.name + "','" + l.password + "'," + l.money + ")";
+        String sql = "insert into T_Label(L_Id,L_Name,L_Pa,L_Lass) values('" + l.id + "','" + l.name + "','" + DESUtils.getEncryptString(l.password) + "'," + l.money + ")";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
         Statement state = null;
@@ -449,7 +453,7 @@ public class Dao {
 
     public static int updateLabel(Label l){
         //更新消费卡信息
-        String sql = "update T_Label set L_Name='" + l.name + "', L_Pa='" + l.password + "', L_Lass=" + l.money + " where L_Id='" + l.id + "'";
+        String sql = "update T_Label set L_Name='" + l.name + "', L_Pa='" + DESUtils.getEncryptString(l.password) + "', L_Lass=" + l.money + " where L_Id='" + l.id + "'";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
         Statement state = null;
@@ -477,7 +481,7 @@ public class Dao {
     //不改余额
     public static int updateLabelWithoutCost(Label l){
         //更新消费卡信息
-        String sql = "update T_Label set L_Name='" + l.name + "', L_Pa='" + l.password  + "' where L_Id='" + l.id + "'";
+        String sql = "update T_Label set L_Name='" + l.name + "', L_Pa='" + DESUtils.getEncryptString(l.password)  + "' where L_Id='" + l.id + "'";
         //创建数据库链接
         //Connection conn = DBUtil.getConnection();
         Statement state = null;
@@ -910,7 +914,7 @@ public class Dao {
             state = conn.createStatement();
             rs = state.executeQuery(ana);
             while (rs.next()) {
-                pass=rs.getString("S_Pa");
+                pass=DESUtils.getDecryptString(rs.getString("S_Pa"));
                 if(pass.equals(pa))
                     a=1;
             }
@@ -943,7 +947,7 @@ public class Dao {
             state = conn.createStatement();
             rs = state.executeQuery(ana);
             while (rs.next()) {
-                pass=rs.getString("L_Pa");
+                pass=DESUtils.getDecryptString(rs.getString("L_Pa"));
                 if(pass.equals(pa))
                     a=1;
             }
@@ -976,7 +980,7 @@ public class Dao {
             state = conn.createStatement();
             rs = state.executeQuery(ana);
             while (rs.next()) {
-                pass=rs.getString("U_Pa");
+                pass=DESUtils.getDecryptString(rs.getString("U_Pa"));
                 if(pass.equals(pa))
                     a=1;
             }
@@ -1008,7 +1012,7 @@ public class Dao {
             state = conn.createStatement();
             rs = state.executeQuery(ana);
             while (rs.next()) {
-                pass=rs.getString("U_Pa");
+                pass=DESUtils.getDecryptString(rs.getString("U_Pa"));
                 if(pass.equals(pa))
                     a=1;
             }

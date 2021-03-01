@@ -14,22 +14,39 @@
             <system:String >是</system:String>
             <system:String>否</system:String>
         </collections:ArrayList>
+        <collections:ArrayList x:Key="items2">
+            <system:String >single</system:String>
+            <system:String>weight</system:String>
+        </collections:ArrayList>
     </Window.Resources>
     <Grid>
-        <TextBox x:Name="t1" Width="200" Margin="115,95,477,308" xly:ControlAttachProperty.Watermark="请输入菜品名" 
+        <TextBox x:Name="t1" Width="200" Margin="115,78,477,325" xly:ControlAttachProperty.Watermark="请输入菜品名" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="菜品名："/>
-        <TextBox x:Name="t2" Width="200" Margin="115,170,477,231" xly:ControlAttachProperty.Watermark="请输入菜品号" 
+        <TextBox x:Name="t2" Width="200" Margin="115,155,477,246" xly:ControlAttachProperty.Watermark="请输入菜品号" 
                          Style="{StaticResource LabelTextBox}"  xly:ControlAttachProperty.Label=" 菜品号："/>
-        <TextBox x:Name="t3" Width="200" Margin="115,250,477,148" xly:ControlAttachProperty.Watermark="请输入菜品类别" 
+        <TextBox x:Name="t3" Width="200" Margin="115,227,477,171" xly:ControlAttachProperty.Watermark="请输入菜品类别" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="类别："/>
-        <TextBox x:Name="t6" Width="200" Margin="438,250,154,148" IsReadOnly="True" xly:ControlAttachProperty.Watermark="" 
+        <TextBox x:Name="t6" Width="200" Margin="438,227,154,171" IsReadOnly="True" xly:ControlAttachProperty.Watermark="" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="店铺："/>
-        <TextBox x:Name="t7" Width="200" Margin="438,95,154,308" xly:ControlAttachProperty.Watermark="请输入计算策略" 
-                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="策略："/>
-        <TextBox x:Name="t5" Width="200" Margin="438,170,154,231" xly:ControlAttachProperty.Watermark="请输入菜品单价" 
+        <ComboBox Name="c1" Margin="439,77,152.6,325.2" ItemsSource="{StaticResource items2}" xly:ControlAttachProperty.Label="策略： " 
+                      Style="{StaticResource LabelComboBox}"  Width="Auto" Height="Auto" />
+        <TextBox x:Name="t5" Width="200" Margin="438,155,154,246" xly:ControlAttachProperty.Watermark="请输入菜品单价" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="单价："/>
-        <xly:FButton Margin="175,344,477,47" Width="140" Height="Auto" Background="#12B512" IsDefault="True" MouseOverBackground="#08EE08" Click="FButton_Click_Create" RenderTransformOrigin="0.007,3.525">创建</xly:FButton>
-        <xly:FButton Margin="438,344,214,47" Width="140" Height="Auto" Background="#FF931E1E" IsDefault="True" MouseOverBackground="#FFC52929" Click="FButton_Click_Delete" RenderTransformOrigin="0.579,0.49">取消</xly:FButton>
+        <TextBox x:Name="t9" Width="200" Margin="438,304,154,97" IsReadOnly="True" xly:ControlAttachProperty.Watermark="" 
+                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="店铺号："/>
+        <TextBox x:Name="t8" Width="Auto" Margin="115,305,474,96" xly:ControlAttachProperty.Watermark="请输入菜品描述" 
+                         Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="描述：" RenderTransformOrigin="0.5,0.5">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="0.162"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="0.458"/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <xly:FButton Margin="175,366,477,25" Width="140" Height="Auto" Background="#12B512" IsDefault="True" MouseOverBackground="#08EE08" Click="FButton_Click_Create" RenderTransformOrigin="0.007,3.525">创建</xly:FButton>
+        <xly:FButton Margin="438,366,214,25" Width="140" Height="Auto" Background="#FF931E1E" IsDefault="True" MouseOverBackground="#FFC52929" Click="FButton_Click_Delete" RenderTransformOrigin="0.579,0.49">取消</xly:FButton>
         <TextBlock HorizontalAlignment="Left" Margin="331,28,0,0" TextWrapping="Wrap" Text="菜品创建" VerticalAlignment="Top" FontSize="24" RenderTransformOrigin="-0.583,0.344"/>
     </Grid>
 </Window>

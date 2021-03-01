@@ -21,31 +21,63 @@ namespace Util.Controls.WPFTest
     {
         private DispatcherTimer ShowTimer;
         int page = 0;
-
+        private TransDGL dgl;
         //从服务器获取店铺信息并在radiobutton上进行初始化
-        String[] shop = new String[112];
+        Store[] stores = new Store[112];
+        //String[] shop = new String[112];
         public Window1()
         {
             
             InitializeComponent();
+
+            dgl = TransDGL.GetInstance();
+
             ShowTime();    //在这里窗体加载的时候不执行文本框赋值，窗体上不会及时的把时间显示出来，而是等待了片刻才显示了出来
             ShowTimer = new System.Windows.Threading.DispatcherTimer();
             ShowTimer.Tick += new EventHandler(ShowCurTimer);//起个Timer一直获取当前时间
             ShowTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
             ShowTimer.Start();
 
+            //Store[] ss = dgl.GetStores();
+            stores = dgl.GetStores();
             //测试用
-            for(int j = 0; j < 112; j++)
+            /*
+            for (int j = 0; j < 112; j++)
             {
                 shop[j] = j.ToString();
             }
-
+            */
+            
             //将所有的服务器获取的店铺名字储存进数组中
-            //将其中的前十八个进行显示
+
             RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
-            for(int i = 0; i < 19; i++)
+            if (stores.Length >= 18)
             {
-                rads[i].Content = shop[i];
+                for (int i = 0; i < 19; i++)
+                {
+                    if (stores[i].GetName() != null)
+                    {
+                        rads[i].Content = stores[i].GetName();
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for(int i = 0; i < stores.Length; i++)
+                {
+                    if (stores[i].GetName() != null)
+                    {
+                        rads[i].Content = stores[i].GetName();
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
             }
             page = 0;
         }
@@ -72,8 +104,37 @@ namespace Util.Controls.WPFTest
             {
                 if (rads[i].IsChecked == true)
                 {
-                    String name = rads[i].Content.ToString();
-                    //根据名字进行店铺的删除
+                    if (rads[i].Content.ToString() != null)
+                    {
+                        String name = rads[i].Content.ToString();
+                        foreach (Store s in stores)
+                        {
+                            if (s.GetName() == rads[i].Content.ToString())
+                            {
+                                int result = dgl.DeleteStore(s.GetId());
+                                if (result == 1)
+                                {
+                                    MessageBox.Show("删除成功");
+                                    //Console.WriteLine("删除成功");
+                                }
+                                else if (result == 0)
+                                {
+                                    MessageBox.Show("删除失败");
+                                    //Console.WriteLine("删除失败");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("未知错误");
+                                    //Console.WriteLine("未知错误");
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("请选择店铺后点击!");
+                    }
+                    
                 }
             }
         }
@@ -84,6 +145,37 @@ namespace Util.Controls.WPFTest
             Window2 win = new Window2();
             win.Show();
             //刷新店铺信息
+            stores = dgl.GetStores();
+            RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
+            if (stores.Length >= 18)
+            {
+                for (int i = 0; i < 19; i++)
+                {
+                    if (stores[i].GetName() != null)
+                    {
+                        rads[i].Content = stores[i].GetName();
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < stores.Length; i++)
+                {
+                    if (stores[i].GetName() != null)
+                    {
+                        rads[i].Content = stores[i].GetName();
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            page = 0;
         }
 
         private void FButton_Click_Enter(object sender, RoutedEventArgs e)
@@ -94,15 +186,21 @@ namespace Util.Controls.WPFTest
                 if (rads[i].IsChecked == true)
                 {
                     String name = rads[i].Content.ToString();
-                    Window6 win2 = new Window6(name);
-                    win2.getname = name;
-                    win2.Show();
+                    foreach (Store s in stores)
+                    {
+                        if (s.GetName() == rads[i].Content.ToString())
+                        {
+                            int result = dgl.DeleteStore(s.GetId());
+                            Window6 win2 = new Window6(name,s.GetId());
+                            win2.getname = name;
+                            win2.Show();
+                        }
+                    }
                 }
-                
             }
         }
 
-        private void FButton_Click_up(object sender, RoutedEventArgs e)
+        private void FButton_Click_before(object sender, RoutedEventArgs e)
         {
             if (page == 0)
             {
@@ -111,25 +209,58 @@ namespace Util.Controls.WPFTest
             else
             {
                 RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
+
                 for (int i = 0; i < 19; i++)
                 {
-                    rads[i].Content = shop[(page - 1) * 18 + i];
-
+                    if(stores[(page - 1) * 18 + i].GetName()!=null)
+                    {
+                        rads[i].Content = stores[(page - 1) * 18 + i].GetName();
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
                 page--;
             }
         }
-        private void FButton_Click_down(object sender, RoutedEventArgs e)
+        private void FButton_Click_next(object sender, RoutedEventArgs e)
         {
 
             RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
             int i = 0;
             if (page * 18 + i + 18 <= 112)
             {
-                for ( ; i < 19; i++)
+                if (stores.Length - (page+1) * 18 >= 18)
                 {
-                    rads[i].Content = shop[page * 18 + i];
+                    for (; i < 19; i++)
+                    {
+                        if (stores[page * 18 + i].GetName() != null)
+                        {
+                            rads[i].Content = stores[page * 18 + i].GetName();
+                        }
+                        else
+                        {
+                            break;
+                        }
+
+                    }
                 }
+                else
+                {
+                    for (; i < (stores.Length - (page+1) * 18); i++)
+                    {
+                        if (stores[page * 18 + i].GetName() != null)
+                        {
+                            rads[i].Content = stores[page * 18 + i].GetName();
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
+
                 page++;
             }
             else
