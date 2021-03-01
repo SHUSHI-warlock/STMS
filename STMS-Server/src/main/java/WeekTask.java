@@ -1,37 +1,37 @@
 import java.text.SimpleDateFormat;
 import java.util.*;
-
 import DB.Dao;
 import Data.Store;
 
 public class WeekTask {
-    private long weekS = 0;
+    private long weekS ;
 
     public void run(String firstTime, long weekSpan){
-        // 一周的毫秒数
-        //long weekSpan = 7 * 24 * 60 * 60 * 1000;
 
         try {
             // 首次运行时间
             Date startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(firstTime);
             long start = startTime.getTime();
-            // 如果首次时间的已经过了 首次运行时间就改为一周后
-            if (System.currentTimeMillis() > startTime.getTime()){
+            // 如果首次时间的已经过了 则修改时间为合理的开始时间
+            while(System.currentTimeMillis() > startTime.getTime()){
                 startTime = new Date(startTime.getTime() + weekSpan);
             }
             long end = startTime.getTime();
+            weekS = (( end - start ) / weekSpan) + 1 ;
             Timer t = new Timer();
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
-                    week = (( end - start ) / weekSpan) + 1 ;
-                    System.out.print("第"+ weekS + "周营业额结算\n");
-
+                    System.out.print("第"+ weekS + "次营业额结算\n");
+                    weekS++;
                     //对每个店铺结算营业额
                     ArrayList<Store> stores = Dao.getAllStore();
                     Iterator<Store> list = stores.iterator();
                     while(list.hasNext()){
-                        Dao.CaculateTurnover(list.next().id);
+                        int rt = Dao.CaculateTurnover(list.next().id);
+                        if(rt > 0) System.out.println("店铺" + list.next().id + "营业额结算成功，营业额为"+ rt +"！\n");
+                        if(rt == -1) System.out.println("店铺" + list.next().id + "营业额结算失败！\n");
+                        if(rt == -2) System.out.println("店铺" + list.next().id + "未出租！\n");
                     }
                 }
             };
@@ -40,9 +40,6 @@ public class WeekTask {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public void setTime(SimpleDateFormat sdf){
     }
 
 }
