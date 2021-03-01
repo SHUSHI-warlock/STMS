@@ -3,6 +3,7 @@ import MsgTrans.MsgSendReceiver;
 import ServerHandle.AbstractServerHandle;
 import ServerHandle.ServerHandleFactory;
 
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -19,28 +20,24 @@ public class Classifier implements Runnable{
 
     @Override
     public void run() {
+        ///获取消息
+        Msg msg = null;
         try {
-            ///获取消息
-            Msg msg = msr.ReceiveMsg();
-            switch (msg.getProtocol())
-            {
+            msg = msr.ReceiveMsg();
+
+            switch (msg.getProtocol()) {
                 case EP_Verify:
                     LoginVerify(msg);
                 case EP_Disconnect:
-                    break;
+                    DisConnect();
                 case EP_Other:
                     System.out.println("其他");
                 default:
                     System.out.println("未知的种类");
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            clientSocket.close();
-        } catch (IOException e) {
+            System.out.println("异常信息如下：");
+            e.getMessage();
             e.printStackTrace();
         }
     }
@@ -48,15 +45,27 @@ public class Classifier implements Runnable{
     /**
      * 协议类型为登录
      */
-    private void LoginVerify(Msg m){
-
+    private void LoginVerify(Msg m) throws Exception{
         ServerHandleFactory factory = ServerHandleFactory.getInstance();
         AbstractServerHandle service = factory.getServerHandle(m.getTopService(), msr);
-
-        //验证
-        if(service.ServiceVerify(m)>0){
-            //服务进行
-            service.ServerHandle();
+        try {
+            //验证
+            if (service.ServiceVerify(m) > 0) {
+                //服务进行
+                service.ServerHandle();
+            }
+        } catch (Exception e) {
+            clientSocket.shutdownInput();
+            clientSocket.shutdownOutput();
+            clientSocket.close();
+            System.out.println("异常信息如下：");
+            e.getMessage();
+            e.printStackTrace();
         }
+    }
+    private void DisConnect() throws Exception {
+        clientSocket.shutdownInput();
+        clientSocket.shutdownOutput();
+        clientSocket.close();
     }
 }

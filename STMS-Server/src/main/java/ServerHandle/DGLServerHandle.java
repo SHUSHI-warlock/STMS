@@ -28,42 +28,39 @@ public class DGLServerHandle extends AbstractServerHandle {
     }
 
     @Override
-    public void ServerHandle() {
-        try {
-            while (true) {
-                Msg msg = msr.ReceiveMsg();
-                switch (msg.getLowService()) {
-                    case 1-> SendStores(msg);
-                    case 2-> CreateStore(msg);
-                    case 3-> DeleteStore(msg);
-                    case 4-> SendStore(msg);
-                    case 5-> ChangeStore(msg);
-                    case 6-> SendOrder(msg);
-                    case 7-> CreateFood(msg);
-                    case 8-> ChangeFood(msg);
-                    case 9-> DeleteFood(msg);
-                    case 10-> SendBill(msg);
-                    default-> {
-                        System.out.println("错误服务请求 \n");
-                        msg.PrintHead();
-                    }
+    public void ServerHandle() throws Exception {
+        while (true) {
+            Msg msg = msr.ReceiveMsg();
+            switch (msg.getLowService()) {
+                case 1 -> SendStores(msg);
+                case 2 -> CreateStore(msg);
+                case 3 -> DeleteStore(msg);
+                case 4 -> SendStore(msg);
+                case 5 -> ChangeStore(msg);
+                case 6 -> SendOrder(msg);
+                case 7 -> CreateFood(msg);
+                case 8 -> ChangeFood(msg);
+                case 9 -> DeleteFood(msg);
+                case 10 -> SendBill(msg);
+                default -> {
+                    msg.PrintHead();
+                    throw new Exception("未知的服务请求！");
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("连接断开！");
         }
+
     }
 
     /**
      * 店管理登录验证
-     *
+     * @param m Msg
+     * @return
      */
     @Override
-    public int ServiceVerify(Msg m) {
-        String id = null;
-        String pa = null;
+    public int ServiceVerify(Msg m) throws Exception {
         try {
+            String id = null;
+            String pa = null;
             Document document = m.getContent();
             //获取根
             Element element = document.getDocumentElement();
@@ -86,7 +83,7 @@ public class DGLServerHandle extends AbstractServerHandle {
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder ;
+            DocumentBuilder builder;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             Document doc = builder.newDocument();
@@ -113,19 +110,14 @@ public class DGLServerHandle extends AbstractServerHandle {
             Msg result = null;
             try {
                 result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 0, doc);
-            } catch (TransformerException e) {
-                e.printStackTrace();
-            }
-            try {
                 //发送消息
                 msr.SendMsg(result);
             } catch (IOException | TransformerException e) {
-                e.printStackTrace();
+                throw e;
             }
             return a;
         } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
+            throw e;
         }
     }
 
@@ -133,13 +125,13 @@ public class DGLServerHandle extends AbstractServerHandle {
      * 根据消息，发送店铺列表
      *
      */
-    private void SendStores(Msg m) {
-        Document document = null;
+    private void SendStores(Msg m) throws Exception {
         try {
+            Document document = null;
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder ;
+            DocumentBuilder builder;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -173,33 +165,26 @@ public class DGLServerHandle extends AbstractServerHandle {
             //将根节点添加到下面
             document.appendChild(root);
 
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-            //获取失败
-            //elementState.setTextContent("100");
-        }
-        //生成消息
-        Msg result = null;
-        try {
-            result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 1 , document);
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            //发送消息
-            msr.SendMsg(result);
-        } catch (IOException | TransformerException e) {
-            e.printStackTrace();
+            //生成消息
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 1, document);
+                //发送消息
+                msr.SendMsg(result);
+            } catch (IOException | TransformerException e) {
+                throw e;
+            }
+        } catch (Exception e) {
+            throw e;
         }
     }
 
     /**
      * 修改店铺
      */
-    private void ChangeStore(Msg m) {
-        Store s = new Store();
+    private void ChangeStore(Msg m) throws Exception {
         try {
+            Store s = new Store();
             Document document = m.getContent();
             //获取根
             Element element = document.getDocumentElement();
@@ -241,7 +226,7 @@ public class DGLServerHandle extends AbstractServerHandle {
             Element elementState = document.createElement("state");
             root.appendChild(elementState);
 
-            if(a>0)
+            if (a > 0)
                 //System.out.println("成功");
                 elementState.setTextContent("true");
             else
@@ -253,28 +238,23 @@ public class DGLServerHandle extends AbstractServerHandle {
             //生成消息
             Msg result = null;
             try {
-                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 5 , document);
-            } catch (TransformerException e) {
-                e.printStackTrace();
-            }
-            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 5, document);
                 //发送消息
                 msr.SendMsg(result);
             } catch (IOException | TransformerException e) {
-                e.printStackTrace();
+                throw e;
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
     /**
      * 新建店铺
      */
-    private void CreateStore(Msg m) {
-        Store s = new Store();
+    private void CreateStore(Msg m) throws Exception{
         try {
+            Store s = new Store();
             Document document = m.getContent();
             //获取根
             Element element = document.getDocumentElement();
@@ -330,18 +310,14 @@ public class DGLServerHandle extends AbstractServerHandle {
             Msg result = null;
             try {
                 result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 2 , document);
-            } catch (TransformerException e) {
-                e.printStackTrace();
-            }
-            try {
                 //发送消息
                 msr.SendMsg(result);
             } catch (IOException | TransformerException e) {
-                e.printStackTrace();
+                throw e;
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         }
 
     }
@@ -351,9 +327,10 @@ public class DGLServerHandle extends AbstractServerHandle {
      *
      *
      */
-    private  void DeleteStore(Msg m){
-        Store s = new Store();
+    private  void DeleteStore(Msg m) throws Exception {
         try {
+            Store s = new Store();
+
             Document document = m.getContent();
             //获取根
             Element element = document.getDocumentElement();
@@ -372,8 +349,7 @@ public class DGLServerHandle extends AbstractServerHandle {
                         int rent = Integer.parseInt(childNode.getTextContent());
                         s.setRent(rent);
                     }
-                    case "lease" ->
-                        s.setLease(childNode.getTextContent().equals("true"));
+                    case "lease" -> s.setLease(childNode.getTextContent().equals("true"));
                 }
             }
             //调用数据库方法
@@ -382,7 +358,7 @@ public class DGLServerHandle extends AbstractServerHandle {
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder ;
+            DocumentBuilder builder;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -395,7 +371,7 @@ public class DGLServerHandle extends AbstractServerHandle {
             Element elementState = document.createElement("state");
             root.appendChild(elementState);
 
-            if(a>0)
+            if (a > 0)
                 //System.out.println("成功");
                 elementState.setTextContent("true");
             else
@@ -408,38 +384,32 @@ public class DGLServerHandle extends AbstractServerHandle {
             //生成消息
             Msg result = null;
             try {
-                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 3 , document);
-            } catch (TransformerException e) {
-                e.printStackTrace();
-            }
-            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 3, document);
                 //发送消息
                 msr.SendMsg(result);
             } catch (IOException | TransformerException e) {
-                e.printStackTrace();
+                throw e;
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         }
-
     }
 
     /**
      * 进入某一个店铺，查看信息
      *
      */
-    private void SendStore(Msg m){
-        Document document = null;
-        String id ;
+    private void SendStore(Msg m) throws Exception {
         try {
+            Document document = null;
+            String id;
             Document doc = m.getContent();
             //获取根
             Element element = doc.getDocumentElement();
             NodeList nodeList = element.getChildNodes();
             Node childNode = nodeList.item(0);
 
-            if(childNode.getNodeName().equals("id"))
+            if (childNode.getNodeName().equals("id"))
                 id = childNode.getTextContent();
             else
                 id = null;
@@ -462,7 +432,7 @@ public class DGLServerHandle extends AbstractServerHandle {
             //获取店铺
             Store s = Dao.getStoreById(id);
 
-            if(s==null)
+            if (s == null)
                 elementState.setTextContent("200");
             else {
                 Element Estore = document.createElement("restaurant");
@@ -497,41 +467,33 @@ public class DGLServerHandle extends AbstractServerHandle {
                 if (s.isLease) {
                     EisLease.setTextContent("true");
                     turnover = Dao.CaculateTurnover(id);
-                }
-                else
+                } else
                     EisLease.setTextContent("false");
 
-                if(turnover>=0) {
+                if (turnover >= 0) {
                     Eturnover.setTextContent(String.valueOf(turnover));
                     //获取成功
                     elementState.setTextContent("100");
-                }
-                else if(turnover==-1)
+                } else if (turnover == -1)
                     elementState.setTextContent("200");
-                else if(turnover==-2)
+                else if (turnover == -2)
                     elementState.setTextContent("300");
             }
 
             //将根节点添加到下面
             document.appendChild(root);
 
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-            //获取失败
-            //elementState.setTextContent("100");
-        }
-        //生成消息
-        Msg result = null;
-        try {
-            result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 4 , document);
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        }
-        try {
-            //发送消息
-            msr.SendMsg(result);
-        } catch (IOException | TransformerException e) {
-            e.printStackTrace();
+
+            //生成消息
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 4, document);
+                msr.SendMsg(result);
+            } catch (IOException | TransformerException e) {
+                throw e;
+            }
+        } catch (Exception e) {
+            throw e;
         }
     }
 
@@ -539,17 +501,17 @@ public class DGLServerHandle extends AbstractServerHandle {
      * 发送某店铺的菜单
      *
      */
-    private void SendOrder(Msg m){
-        Document document = null;
-        String id;
+    private void SendOrder(Msg m) throws Exception {
         try {
+            Document document = null;
+            String id;
             Document doc = m.getContent();
             //获取根
             Element element = doc.getDocumentElement();
             NodeList nodeList = element.getChildNodes();
             Node childNode = nodeList.item(0);
 
-            if(childNode.getNodeName().equals("id"))
+            if (childNode.getNodeName().equals("id"))
                 id = childNode.getTextContent();
             else
                 id = null;
@@ -557,7 +519,7 @@ public class DGLServerHandle extends AbstractServerHandle {
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder ;
+            DocumentBuilder builder;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -606,23 +568,17 @@ public class DGLServerHandle extends AbstractServerHandle {
             //将根节点添加到下面
             document.appendChild(root);
 
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-            //获取失败
-            //elementState.setTextContent("100");
-        }
-        //生成消息
-        Msg result = null;
-        try {
-            result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 6 , document);
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        }
-        try {
-            //发送消息
-            msr.SendMsg(result);
-        } catch (IOException | TransformerException e) {
-            e.printStackTrace();
+
+            //生成消息
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 6, document);
+                msr.SendMsg(result);
+            } catch (IOException | TransformerException e) {
+                throw e;
+            }
+        } catch (Exception e) {
+            throw e;
         }
     }
 
@@ -630,10 +586,10 @@ public class DGLServerHandle extends AbstractServerHandle {
      * 修改菜品
      *
      */
-    private void ChangeFood(Msg m){
-        Food f = new Food();
-        String sid = null;
+    private void ChangeFood(Msg m) throws Exception {
         try {
+            Food f = new Food();
+            String sid = null;
             Document document = m.getContent();
             //获取根
             Element element = document.getDocumentElement();
@@ -656,12 +612,12 @@ public class DGLServerHandle extends AbstractServerHandle {
                 }
             }
             //调用数据库方法
-            int a = Dao.updateFood(sid,f);
+            int a = Dao.updateFood(sid, f);
 
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder ;
+            DocumentBuilder builder;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -674,7 +630,7 @@ public class DGLServerHandle extends AbstractServerHandle {
             Element elementState = document.createElement("state");
             root.appendChild(elementState);
 
-            if(a>0)
+            if (a > 0)
                 //System.out.println("成功");
                 elementState.setTextContent("true");
             else
@@ -687,19 +643,14 @@ public class DGLServerHandle extends AbstractServerHandle {
             //生成消息
             Msg result = null;
             try {
-                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 8 , document);
-            } catch (TransformerException e) {
-                e.printStackTrace();
-            }
-            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 8, document);
                 //发送消息
                 msr.SendMsg(result);
             } catch (IOException | TransformerException e) {
-                e.printStackTrace();
+                throw e;
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -708,10 +659,10 @@ public class DGLServerHandle extends AbstractServerHandle {
      *
      *
      */
-    private void CreateFood(Msg m){
-        Food f = new Food();
-        String sid = null;
+    private void CreateFood(Msg m) throws Exception {
         try {
+            Food f = new Food();
+            String sid = null;
             Document document = m.getContent();
             //获取根
             Element element = document.getDocumentElement();
@@ -734,12 +685,12 @@ public class DGLServerHandle extends AbstractServerHandle {
                 }
             }
             //调用数据库方法
-            int a = Dao.addNewFood(sid,f);
+            int a = Dao.addNewFood(sid, f);
 
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder ;
+            DocumentBuilder builder;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -752,7 +703,7 @@ public class DGLServerHandle extends AbstractServerHandle {
             Element elementState = document.createElement("state");
             root.appendChild(elementState);
 
-            if(a>0)
+            if (a > 0)
                 //System.out.println("成功");
                 elementState.setTextContent("true");
             else
@@ -765,19 +716,14 @@ public class DGLServerHandle extends AbstractServerHandle {
             //生成消息
             Msg result = null;
             try {
-                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 7 , document);
-            } catch (TransformerException e) {
-                e.printStackTrace();
-            }
-            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 7, document);
                 //发送消息
                 msr.SendMsg(result);
             } catch (IOException | TransformerException e) {
-                e.printStackTrace();
+                throw e;
             }
-
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -785,10 +731,10 @@ public class DGLServerHandle extends AbstractServerHandle {
      * 删除菜品
      *
      */
-    private void DeleteFood(Msg m){
-        Food f = new Food();
-        String sid = null;
+    private void DeleteFood(Msg m) throws Exception {
         try {
+            Food f = new Food();
+            String sid = null;
             Document document = m.getContent();
             //获取根
             Element element = document.getDocumentElement();
@@ -798,25 +744,25 @@ public class DGLServerHandle extends AbstractServerHandle {
                 childNode = nodeList.item(temp);
                 //判断是哪个数据
                 switch (childNode.getNodeName()) {
-                    case "sid"-> sid = childNode.getTextContent();
-                    case "fid"-> f.setId(childNode.getTextContent());
-                    case "name"-> f.setName(childNode.getTextContent());
-                    case "class"-> f.setFoodClass(childNode.getTextContent());
-                    case "st"-> f.setSt(childNode.getTextContent());
-                    case "tip"-> f.setFoodTip(childNode.getTextContent());
-                    case "price"-> {
+                    case "sid" -> sid = childNode.getTextContent();
+                    case "fid" -> f.setId(childNode.getTextContent());
+                    case "name" -> f.setName(childNode.getTextContent());
+                    case "class" -> f.setFoodClass(childNode.getTextContent());
+                    case "st" -> f.setSt(childNode.getTextContent());
+                    case "tip" -> f.setFoodTip(childNode.getTextContent());
+                    case "price" -> {
                         int price = Integer.parseInt(childNode.getTextContent());
                         f.setPrice(price);
                     }
                 }
             }
             //调用数据库方法
-            int a = Dao.deleteFood(sid,f);
+            int a = Dao.deleteFood(sid, f);
 
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder ;
+            DocumentBuilder builder;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -829,7 +775,7 @@ public class DGLServerHandle extends AbstractServerHandle {
             Element elementState = document.createElement("state");
             root.appendChild(elementState);
 
-            if(a>0)
+            if (a > 0)
                 //System.out.println("成功");
                 elementState.setTextContent("true");
             else
@@ -842,19 +788,15 @@ public class DGLServerHandle extends AbstractServerHandle {
             //生成消息
             Msg result = null;
             try {
-                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 9 , document);
-            } catch (TransformerException e) {
-                e.printStackTrace();
-            }
-            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 9, document);
                 //发送消息
                 msr.SendMsg(result);
             } catch (IOException | TransformerException e) {
-                e.printStackTrace();
+                throw e;
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
@@ -862,17 +804,17 @@ public class DGLServerHandle extends AbstractServerHandle {
      * 发送某店消费账单
      *
      */
-    private void SendBill(Msg m){
-        Document document = null;
-        String id;
+    private void SendBill(Msg m) throws Exception {
         try {
+            Document document = null;
+            String id;
             Document doc = m.getContent();
             //获取根
             Element element = doc.getDocumentElement();
             NodeList nodeList = element.getChildNodes();
             Node childNode = nodeList.item(0);
 
-            if(childNode.getNodeName().equals("id"))
+            if (childNode.getNodeName().equals("id"))
                 id = childNode.getTextContent();
             else
                 id = null;
@@ -880,7 +822,7 @@ public class DGLServerHandle extends AbstractServerHandle {
             // 初始化一个XML解析工厂
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             // 创建一个DocumentBuilder实例
-            DocumentBuilder builder ;
+            DocumentBuilder builder;
             builder = factory.newDocumentBuilder();
             // 构建一个Document实例
             document = builder.newDocument();
@@ -918,39 +860,23 @@ public class DGLServerHandle extends AbstractServerHandle {
                     root.appendChild(EBill);       //挂root
                 }
                 elementState.setTextContent("true");
-            }
-            else {
-                    elementState.setTextContent("false");
+            } else {
+                elementState.setTextContent("false");
             }
             //将根节点添加到下面
             document.appendChild(root);
 
+            //生成消息
+            Msg result = null;
+            try {
+                result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 10, document);
+                //发送消息
+                msr.SendMsg(result);
+            } catch (IOException | TransformerException e) {
+                throw e;
+            }
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-            //获取失败
-            //elementState.setTextContent("100");
-        }
-        //生成消息
-        Msg result = null;
-        try {
-            result = new Msg(EProtocol.EP_Return, ETopService.ET_DGL, 10 , document);
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        }
-        try {
-            //发送消息
-            msr.SendMsg(result);
-        } catch (IOException | TransformerException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void CloseSocket(){
-        try {
-            this.msr.CloseSocket();
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw e;
         }
     }
 }
