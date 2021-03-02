@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Label Content="欢迎进入卡管理系统" HorizontalAlignment="Left" Height="65" Margin="212,75,0,0" VerticalAlignment="Top" Width="413" FontSize="36"/>
+        <Label Content="欢迎进入一体机系统" HorizontalAlignment="Left" Height="65" Margin="212,75,0,0" VerticalAlignment="Top" Width="413" FontSize="36"/>
         <Label Content="账号" HorizontalAlignment="Left" Margin="149,188,0,0" VerticalAlignment="Top" Height="37" Width="50" FontSize="18"/>
         <Label Content="密码" HorizontalAlignment="Left" Margin="149,241,0,0" VerticalAlignment="Top" Height="37" Width="50" FontSize="18"/>
-        <TextBox Name="textbox1" HorizontalAlignment="Left" Height="29" Margin="212,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="367" TextChanged="TextBox_TextChanged"/>
+        <TextBox Name="textbox1" HorizontalAlignment="Left" Height="29" Margin="212,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="367"/>
         <Button Content="登录" HorizontalAlignment="Left" Margin="627,337,0,0" VerticalAlignment="Top" Width="75" Height="32" IsCancel="True" Click="Button_Click" FontSize="16"/>
         <PasswordBox PasswordChar="*" Name="textbox2"  HorizontalAlignment="Left" Margin="212,243,0,0" VerticalAlignment="Top"  Height="29"  Width="367"/>
 

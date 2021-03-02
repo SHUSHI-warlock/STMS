@@ -12,9 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using MsgTransTest;
 using Database;
-
+using Label = MsgTransTest.Label;
 
 namespace 卡管理
 {
@@ -27,49 +27,29 @@ namespace 卡管理
         {
             InitializeComponent();
         }
+        private TransYTJ ytj;
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (textbox1.Text.Trim().Length == 0 || textbox2.Password.Trim().Length == 0)
+            int er = ytj.LoginIn(textbox1.Text, textbox2.Password);
+            if (er == 1)
             {
-                MessageBox.Show("账号或密码不能为空", "警告", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("欢迎" + textbox1.Text + "进入", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                Window1 a = new Window1();
+                a.ShowDialog();
+
+            }
+            else if (er == 0)
+            {
+                MessageBox.Show("账号或密码输入有误，请重新输入", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
             else
             {
-                string sql = "select* from User_Table where Id='" + textbox1.Text + "' and Password='" + textbox2.Password + "'";
-                Program p = new Program();
-                p.OpenDB();
-                List<User> U = p.Searchlogin(sql);
-                p.CloseDB();
-                if (U.Count == 0)
-                {
-                    MessageBox.Show("登录失败，用户不存在或密码错误", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-                    textbox1.Text = "";
-                    textbox2.Password = "";
-                }
-                else
-                {
-                    user = U[0];
-                    Window a1;
-                    MessageBox.Show("欢迎" + user.Name + "进入", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
-                    a1 = new Window1();
-                    this.Hide();
-                    if (a1.ShowDialog() == true)
-                    {
-                        this.Show();
-                    }
-                    else
-                    {
-                        this.Close();
-                    }
-                }
+                MessageBox.Show("未知错误", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
-        public static User user;
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
+        public static Label label;
     }
 }

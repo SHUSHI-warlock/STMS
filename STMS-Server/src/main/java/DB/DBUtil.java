@@ -16,10 +16,11 @@ public class DBUtil {
         DB_URL = "jdbc:mysql://localhost:3306/STMS?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
         Name = "root";
         Pwd = "000000";
+        String epwd=DESUtils.getDecryptString(Pwd);
 
         try{
             Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(DB_URL, Name, Pwd);
+            conn = DriverManager.getConnection(DB_URL, Name, DESUtils.getEncryptString(epwd));
             System.out.println("连接数据库成功");
         }catch(Exception e){
             e.printStackTrace();

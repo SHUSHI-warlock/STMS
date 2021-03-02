@@ -7,13 +7,13 @@ namespace Util.Controls.WPFTest
 {
     class Food
     {
-        public string id;
-        public string foodClass;    //菜品类型
-        public string st;           //IPriceStrategy 只能是single（单点） 和 weight (称重)
-        public string name;
-        public int price;
-        public string foodTip;
-        public int foodNum;
+        public string id { get; set; }
+        public string foodClass { get; set; }    //菜品类型
+        public string st { get; set; }           //IPriceStrategy 只能是single（单点） 和 weight (称重)
+        public string name { get; set; }
+        public int price { get; set; }
+        public string foodTip { get; set; }
+        public int foodNum { get; set; }
         public Food() { }
 
         public Food(string id, string foodClass, string st, string name, int price, string foodTip)
