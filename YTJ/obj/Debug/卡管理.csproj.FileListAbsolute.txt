@@ -64,3 +64,13 @@ C:\Users\dell\Desktop\STMS\YTJ\obj\Debug\卡管理.g.resources
 C:\Users\dell\Desktop\STMS\YTJ\obj\Debug\卡管理.Properties.Resources.resources
 C:\Users\dell\Desktop\STMS\YTJ\obj\Debug\卡管理.csproj.GenerateResource.cache
 C:\Users\dell\Desktop\STMS\YTJ\obj\Debug\卡管理.csproj.CoreCompileInputs.cache
+F:\My FILS\大三\ZZT\STMS\STMS\YTJ\obj\Debug\卡管理.csprojAssemblyReference.cache
+F:\My FILS\大三\ZZT\STMS\STMS\YTJ\obj\Debug\登录界面.g.cs
+F:\My FILS\大三\ZZT\STMS\STMS\YTJ\obj\Debug\用户管理.g.cs
+F:\My FILS\大三\ZZT\STMS\STMS\YTJ\obj\Debug\修改信息.g.cs
+F:\My FILS\大三\ZZT\STMS\STMS\YTJ\obj\Debug\充值金额.g.cs
+F:\My FILS\大三\ZZT\STMS\STMS\YTJ\obj\Debug\App.g.cs
+F:\My FILS\大三\ZZT\STMS\STMS\YTJ\obj\Debug\卡管理_MarkupCompile.cache
+F:\My FILS\大三\ZZT\STMS\STMS\YTJ\obj\Debug\卡管理_MarkupCompile.lref
+F:\My FILS\大三\ZZT\STMS\STMS\YTJ\obj\Debug\卡管理.exe
+F:\My FILS\大三\ZZT\STMS\STMS\YTJ\obj\Debug\卡管理.pdb

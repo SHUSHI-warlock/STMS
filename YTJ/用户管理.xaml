@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:卡管理"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800">
+        Title="操作界面" Height="450" Width="800">
     <Grid>
         <Button Content="修改信息" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="110" Height="23" FontSize="14" Click="Button_Click"/>
         <Button Content="查看消费记录" HorizontalAlignment="Left" Margin="254,9,0,0" VerticalAlignment="Top" Width="114" Height="23" Click="Button_Click_1"/>

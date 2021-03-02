@@ -73,12 +73,12 @@ namespace 卡管理
         private void Recharge(object sender, RoutedEventArgs e)
         {
             slabel = listView.SelectedItem as Label;
+            int intyue = 0;
             if (slabel == null)
                 MessageBox.Show("请选中一行", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
             else
             {
                 Label u = listView.SelectedItem as Label;
-                int intyue = 0;
                 try
                 {
                     intyue = int.Parse(yue.Text);
