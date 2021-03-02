@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Util.Controls.WPFTest
+namespace MsgTransTest
 {
-    class Bill
+    public class Bill
     {
-        private string labelid { get; set; }
-        private string storeid { get; set; }
-        private string time { get; set; }
-        private int cost { get; set; }
-        private int billState { get; set; }
+        private string labelid;
+        private string storeid;
+        private string time;
+        private int cost;
+        private int billState;
         public Bill() { }
 
         public Bill(string labelid, string storeid, int cost, string time)

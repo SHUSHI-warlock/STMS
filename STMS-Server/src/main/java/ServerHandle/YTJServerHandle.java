@@ -366,12 +366,4 @@ public class YTJServerHandle extends AbstractServerHandle{
         }
     }
 
-    private void CloseSocket(){
-        try {
-            this.msr.CloseSocket();
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
 }

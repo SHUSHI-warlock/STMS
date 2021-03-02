@@ -26,38 +26,32 @@ public class MsgSendReceiver {
     }
 
     public void SendMsg(Msg myMsg) throws IOException, TransformerException {
-        DataOutputStream dos = new DataOutputStream(
-                new BufferedOutputStream(socket.getOutputStream()));
+        if(SocketTest()) {
+            DataOutputStream dos = new DataOutputStream(
+                    new BufferedOutputStream(socket.getOutputStream()));
 
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer t = tf.newTransformer();
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer t = tf.newTransformer();
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-        //设置编码方式
-        //t.setOutputProperty(OutputKeys.ENCODING,"utf-8");
-        //指示是否要在转输出时添加XML声明  no是添加 yes是不添加
-        t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-        t.transform(new DOMSource(myMsg.getContent()), new StreamResult(bos));
-        int length = bos.toByteArray().length;
+            //指示是否要在转输出时添加XML声明  no是添加 yes是不添加
+            t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            t.transform(new DOMSource(myMsg.getContent()), new StreamResult(bos));
+            int length = bos.toByteArray().length;
 
-        /*
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer t = tf.newTransformer();
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        t.setOutputProperty(OutputKeys.ENCODING,"GB23121");
-        t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-        t.transform(new DOMSource(myMsg.getContent()), new StreamResult(bos));
-        */
-        String msgStr = String.format("%-4d" ,myMsg.getProtocol().getIndex())
-                + String.format("%-4d" ,myMsg.getTopService().getIndex())
-                + String.format("%-4d" ,myMsg.getLowService())
-                + String.format("%-4d" , length)
-                + bos.toString();
+            String msgStr = String.format("%-4d", myMsg.getProtocol().getIndex())
+                    + String.format("%-4d", myMsg.getTopService().getIndex())
+                    + String.format("%-4d", myMsg.getLowService())
+                    + String.format("%-4d", length)
+                    + bos.toString();
 
-        System.out.println(msgStr);
+            System.out.println(msgStr);
 
-        dos.write(msgStr.getBytes(StandardCharsets.UTF_8));
-        dos.flush();
+            dos.write(msgStr.getBytes(StandardCharsets.UTF_8));
+            dos.flush();
+        } else {
+            throw new IOException("连接断开！");
+        }
     }
 
     public Msg ReceiveMsg() throws IOException, TransformerException {
@@ -102,7 +96,18 @@ public class MsgSendReceiver {
                 document);
     }
 
-    public void CloseSocket() throws IOException {
+    public Boolean SocketTest() {
+        try {
+            socket.sendUrgentData(0xFF);//发送1个字节的紧急数据，默认情况下，服务器端没有开启紧急数据处理，不影响正常通信
+            return true;
+        } catch (IOException se) {
+            return false;
+        }
+    }
+
+    public void SocketClose() throws IOException {
+        this.socket.shutdownInput();
+        this.socket.shutdownOutput();
         this.socket.close();
     }
 }

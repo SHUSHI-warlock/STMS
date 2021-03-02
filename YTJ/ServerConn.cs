@@ -13,6 +13,7 @@ namespace MsgTransTest
         private static Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         private static int PORT = 7000;
         private static IPAddress IP = IPAddress.Parse("127.0.0.1");
+        private static int TIMEOUT = 5;
         //private static IPAddress ip = IPAddress.Loopback;
 
         //连接服务器，返回MsgSendReceiver，失败时返回null
@@ -45,27 +46,6 @@ namespace MsgTransTest
             }
             return false;
         }
-        public static bool SocketTest()
-        {
-            bool blockingState = socket.Blocking;
-            try
-            {
-                byte[] tmp = new byte[1];
-                socket.Blocking = false;
-                socket.Send(tmp, 0, 0);
-                return true;
-            }
-            catch (SocketException e)
-            {
-                if (e.NativeErrorCode.Equals(10035))
-                    return true;
-                else
-                    return false;
-            }
-            finally
-            {
-                socket.Blocking = blockingState;    // 恢复状态
-            }
-        }
-    }   
+    }
+
 }

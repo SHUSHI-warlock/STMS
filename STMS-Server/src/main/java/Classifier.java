@@ -55,17 +55,13 @@ public class Classifier implements Runnable{
                 service.ServerHandle();
             }
         } catch (Exception e) {
-            clientSocket.shutdownInput();
-            clientSocket.shutdownOutput();
-            clientSocket.close();
+            msr.SocketClose();
             System.out.println("异常信息如下：");
             e.getMessage();
             e.printStackTrace();
         }
     }
     private void DisConnect() throws Exception {
-        clientSocket.shutdownInput();
-        clientSocket.shutdownOutput();
-        clientSocket.close();
+        msr.SocketClose();
     }
 }
