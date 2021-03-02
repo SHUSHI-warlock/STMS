@@ -8,7 +8,7 @@
         Title="Window2" Height="401.878" Width="685.549">
     <Grid Margin="0,0,3.2,8">
         <Label Content="卡号" HorizontalAlignment="Left" Margin="94,98,0,0" VerticalAlignment="Top"/>
-        <TextBox  Name="Text1" HorizontalAlignment="Left" Height="21" Margin="152,100,0,0" VerticalAlignment="Top" Width="364"/>
+        <TextBox  Name="Text1" HorizontalAlignment="Left" Height="21" Margin="152,100,0,0" VerticalAlignment="Top" Width="364" TextChanged="Text1_TextChanged"/>
         <Label Content="姓名" HorizontalAlignment="Left" Margin="94,130,0,0" VerticalAlignment="Top"/>
         <Label Content="确认密码" HorizontalAlignment="Left" Margin="94,204,0,0" VerticalAlignment="Top"/>
         <Label Content="密码" HorizontalAlignment="Left" Margin="94,166,0,0" VerticalAlignment="Top"/>

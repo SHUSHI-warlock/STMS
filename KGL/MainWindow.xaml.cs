@@ -32,6 +32,7 @@ namespace 卡管理
             InitializeComponent();
         }
         public static Label label = new Label();
+        public static List<Label> labels;
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -39,7 +40,7 @@ namespace 卡管理
             if (er == 1)
             {
                 MessageBox.Show("欢迎管理员" + textbox1.Text + "进入", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
-                List < Label > label= kgl.GetLabel();
+                labels= kgl.GetLabel();
                 Window1 a = new Window1();
                 a.ShowDialog();
 

@@ -62,5 +62,17 @@ namespace 卡管理
                 MessageBox.Show("还有项目未填", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void Text1_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            foreach (Label l in MainWindow.labels)
+            {
+                if (l.id.Equals(Text1.Text))
+                {
+                    MessageBox.Show("卡号重复！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Text1.Text = "";
+                }
+            }
+        }
     }
 }

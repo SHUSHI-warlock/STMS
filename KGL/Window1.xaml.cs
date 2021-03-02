@@ -29,6 +29,8 @@ namespace 卡管理
         }
         private TransKGL kgl=TransKGL.GetInstance();
 
+        private static Label slabel;
+
         private void initList()
         {
             List<Label> labels = kgl.GetLabel();
@@ -70,19 +72,46 @@ namespace 卡管理
 
         private void Recharge(object sender, RoutedEventArgs e)
         {
-            if (listView.SelectedItem == null)
+            slabel = listView.SelectedItem as Label;
+            if (slabel == null)
                 MessageBox.Show("请选中一行", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
             else
             {
                 Label u = listView.SelectedItem as Label;
+                int intyue = 0;
+                try
+                {
+                    intyue = int.Parse(yue.Text);
+                    if (intyue < 0)
+                    {
+                        MessageBox.Show("余额不可为负！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                        yue.Text = "";
+                        return;
+                    }
+                }
+                catch (FormatException ex)
+                {
+                    MessageBox.Show("余额不可为非整数！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    yue.Text = "";
+                    return;
+                }
                 MessageBoxResult result = MessageBox.Show("确认是否修改账号为 " + u.id + " 的用户", "警告", MessageBoxButton.OKCancel, MessageBoxImage.Question);
                 if (result == MessageBoxResult.OK && password1.Password == password1_Copy.Password)
                 {
-                    Label l = new Label(textbox1.Text, textbox2.Text, password1.Password, int.Parse(yue.Text));
+                    Label l = new Label(textbox1.Text, textbox2.Text, password1.Password, intyue);
                     int result1 = kgl.ChangeLabel(l);
                     if (result1 == 1)
                     {
                         MessageBox.Show("修改成功！", "congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
+                        List<Label> labels = kgl.GetLabel();
+                        listView.ItemsSource = labels;
+                        textbox1.Text = "";
+                        textbox2.Text = "";
+                        yue.Text = "";
+                        password1.Password = "";
+                        password1_Copy.Password = "";
+
+
                     }
                     else if (result1 == 0)
                     {
@@ -90,7 +119,7 @@ namespace 卡管理
                     }
                     else
                     {
-                        MessageBox.Show("未知错误", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("未知错误！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else
@@ -106,7 +135,7 @@ namespace 卡管理
         private void Find(object sender, RoutedEventArgs e)
         {
             if (listView.SelectedItem == null)
-                MessageBox.Show("请选中一行", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("请选中一行！", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
             else
             {
                 Label u = listView.SelectedItem as Label;
@@ -115,13 +144,31 @@ namespace 卡管理
                 {
                     List<Bill> bs = kgl.GetBills(u.id);
                     if (bs == null)
-                        Console.Out.WriteLine("获取失败！");
+                    {
+                        MessageBox.Show("记录为空！");
+                        List<Label> labels = kgl.GetLabel();
+                        listView.ItemsSource = labels;
+                    }
                     else
                     {
                         listView2.ItemsSource = bs;
                     }
                 }
 
+            }
+        }
+
+        private void textbox1_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (slabel == null)
+                return;
+            foreach (Label l in MainWindow.labels)
+            {
+                if (l.id.Equals(textbox1.Text) && !l.id.Equals(slabel.id))
+                {
+                    MessageBox.Show("卡号重复！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    textbox1.Text = "";
+                }
             }
         }
     }
