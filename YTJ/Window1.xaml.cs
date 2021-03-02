@@ -21,11 +21,13 @@ namespace 卡管理
     /// </summary>
     public partial class Window1 : Window
     {
+        
         public Window1()
         {
             InitializeComponent();
         }
-        private TransYTJ ytj;
+        private TransYTJ ytj = TransYTJ.GetInstance();
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Window2 a = new Window2();
@@ -36,24 +38,17 @@ namespace 卡管理
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if (listView.SelectedItem == null)
-                MessageBox.Show("请选中一行", "提示", MessageBoxButton.OK, MessageBoxImage.Error);
-            else
-            {
                 Label u = listView.SelectedItem as Label;
-                MessageBoxResult result = MessageBox.Show("确认是否显示账号为 " + u.id + " 的用户的消费记录", "警告", MessageBoxButton.OKCancel, MessageBoxImage.Question);
-                if (result == MessageBoxResult.OK)
+                Bill[] bs =ytj.GetBills();
+                if (bs == null)
+                    Console.Out.WriteLine("获取失败！");
+                else
                 {
-                    Bill[] bs =ytj.GetBills();
-                    if (bs == null)
-                        Console.Out.WriteLine("获取失败！");
-                    else
-                    {
-                        listView.ItemsSource = bs;
-                    }
+                    listView.ItemsSource = bs;
                 }
-            }
-        }
+         }
+            
+        
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {

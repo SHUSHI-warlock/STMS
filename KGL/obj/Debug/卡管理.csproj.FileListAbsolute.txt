@@ -43,3 +43,22 @@ F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\卡管理.csproj.GenerateResource.
 F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\卡管理.csproj.CoreCompileInputs.cache
 F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\卡管理.exe
 F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\卡管理.pdb
+C:\Users\dell\Desktop\STMS\KGL\obj\Debug\卡管理.exe
+C:\Users\dell\Desktop\STMS\KGL\obj\Debug\卡管理.pdb
+C:\Users\dell\Desktop\STMS\KGL\bin\Debug\卡管理.exe.config
+C:\Users\dell\Desktop\STMS\KGL\bin\Debug\卡管理.exe
+C:\Users\dell\Desktop\STMS\KGL\bin\Debug\卡管理.pdb
+C:\Users\dell\Desktop\STMS\KGL\obj\Debug\卡管理.csprojAssemblyReference.cache
+C:\Users\dell\Desktop\STMS\KGL\obj\Debug\MainWindow.g.cs
+C:\Users\dell\Desktop\STMS\KGL\obj\Debug\Window1.g.cs
+C:\Users\dell\Desktop\STMS\KGL\obj\Debug\Window2.g.cs
+C:\Users\dell\Desktop\STMS\KGL\obj\Debug\App.g.cs
+C:\Users\dell\Desktop\STMS\KGL\obj\Debug\卡管理_MarkupCompile.cache
+C:\Users\dell\Desktop\STMS\KGL\obj\Debug\卡管理_MarkupCompile.lref
+C:\Users\dell\Desktop\STMS\KGL\obj\Debug\MainWindow.baml
+C:\Users\dell\Desktop\STMS\KGL\obj\Debug\Window1.baml
+C:\Users\dell\Desktop\STMS\KGL\obj\Debug\Window2.baml
+C:\Users\dell\Desktop\STMS\KGL\obj\Debug\卡管理.g.resources
+C:\Users\dell\Desktop\STMS\KGL\obj\Debug\卡管理.Properties.Resources.resources
+C:\Users\dell\Desktop\STMS\KGL\obj\Debug\卡管理.csproj.GenerateResource.cache
+C:\Users\dell\Desktop\STMS\KGL\obj\Debug\卡管理.csproj.CoreCompileInputs.cache

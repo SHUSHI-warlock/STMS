@@ -26,7 +26,8 @@ namespace 卡管理
         {
             InitializeComponent();
         }
-        private TransYTJ ytj;
+        private TransYTJ ytj = TransYTJ.GetInstance();
+
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -34,27 +35,27 @@ namespace 卡管理
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-    
+
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-                    Label l = new Label(textbox1.Text, textbox2.Text, password1.Password, MainWindow.label.money);
-                    int result1 = ytj.ChangeLabel(l);
-                    if (result1 == 1)
-                    {
-                        MessageBox.Show("修改成功！", "congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    else if (result1 == 0)
-                    {
-                        MessageBox.Show("修改失败！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                    else
-                    {
-                        MessageBox.Show("未知错误", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-
+            Label l = new Label(textbox1.Text, textbox2.Text, password1.Password, MainWindow.label.money);
+            int result1 = ytj.ChangeLabel(l);
+            if (result1 == 1)
+            {
+                MessageBox.Show("修改成功！", "congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+            else if (result1 == 0)
+            {
+                MessageBox.Show("修改失败！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                MessageBox.Show("未知错误", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
     }
+
 }

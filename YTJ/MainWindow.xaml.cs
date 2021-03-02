@@ -23,11 +23,12 @@ namespace 卡管理
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static Label label = new Label();
         public MainWindow()
         {
             InitializeComponent();
         }
-        private TransYTJ ytj;
+        private TransYTJ ytj = TransYTJ.GetInstance();
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -35,6 +36,7 @@ namespace 卡管理
             if (er == 1)
             {
                 MessageBox.Show("欢迎" + textbox1.Text + "进入", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                label = ytj.GetLabel();
                 Window1 a = new Window1();
                 a.ShowDialog();
 
@@ -50,6 +52,5 @@ namespace 卡管理
                 return;
             }
         }
-        public static Label label;
     }
 }
