@@ -11,7 +11,7 @@ namespace MsgTransTest
     class TransYTJ
     {
         private readonly MsgSendReceiver msgSendReceiver;
-        private static  TransYTJ instance = null;
+        private static  TransYTJ instance = new TransYTJ();
         private TransYTJ()
         {
             this.msgSendReceiver = ServerConn.ConnServer();
@@ -20,8 +20,6 @@ namespace MsgTransTest
         }
         public static TransYTJ GetInstance()
         {
-            if (instance == null)
-                instance = new TransYTJ();
             return instance;
         }
         /**

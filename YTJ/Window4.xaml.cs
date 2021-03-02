@@ -14,7 +14,6 @@ using System.Windows.Shapes;
 using Database;
 using MsgTransTest;
 using Label = MsgTransTest.Label;
-
 namespace 卡管理
 {
     /// <summary>
@@ -26,9 +25,11 @@ namespace 卡管理
         {
             InitializeComponent();
         }
-        private TransYTJ ytj;
+        private TransYTJ ytj = TransYTJ.GetInstance();
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            Console.WriteLine(MainWindow.label.id);
             Label l = new Label(MainWindow.label.id, MainWindow.label.name, MainWindow.label.password, int.Parse(textbox1.Text));
             int result = ytj.ChangeLabel(l);
             if (result == 1)

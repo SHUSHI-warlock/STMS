@@ -25,7 +25,7 @@ namespace 卡管理
     /// 
     public partial class MainWindow : Window
     {
-        private TransKGL kgl;
+        private TransKGL kgl =TransKGL.GetInstance();
         public MainWindow()
         {
             InitializeComponent();
