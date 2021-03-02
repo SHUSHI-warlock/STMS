@@ -51,17 +51,17 @@ namespace MsgTransTest
         */
         public void getOrder()
         {
-            Food[] foods = dkj.GetFoods();
+            List<Food> foods = dkj.GetFoods();
             if (foods == null)
                 return;
             foreach (Food f in foods)
             {
-                Console.Out.WriteLine("food-id:" + f.GetId());
-                Console.Out.WriteLine("food-name:" + f.GetName());
-                Console.Out.WriteLine("food-class:" + f.GetFoodClass());
-                Console.Out.WriteLine("food-价格:" + f.GetPrice());
-                Console.Out.WriteLine("food-价格策略:" + f.GetSt());
-                Console.Out.WriteLine("food-描述:" + f.GetFoodTip());
+                Console.Out.WriteLine("food-id:" + f.id);
+                Console.Out.WriteLine("food-name:" + f.name);
+                Console.Out.WriteLine("food-class:" + f.foodClass);
+                Console.Out.WriteLine("food-价格:" + f.price);
+                Console.Out.WriteLine("food-价格策略:" + f.st);
+                Console.Out.WriteLine("food-描述:" + f.foodTip);
                 Console.Out.WriteLine("");
             }
         }
@@ -76,12 +76,12 @@ namespace MsgTransTest
         {
             Food[] fd = new Food[2];
             fd[0] = new Food();
-            fd[0].SetId("F002");
+            fd[0].id = "F002";
             //称重，X100
-            fd[0].SetFoodNum(100);
+            fd[0].foodNum = 100;
             fd[1] = new Food();
-            fd[1].SetId("F003");
-            fd[1].SetFoodNum(2);
+            fd[1].id = "F003";
+            fd[1].foodNum = 2;
 
             int price = dkj.CaculatePrice(fd);
             if (price>=0)

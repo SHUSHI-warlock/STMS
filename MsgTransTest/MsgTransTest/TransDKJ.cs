@@ -80,7 +80,7 @@ namespace MsgTransTest
          * 参数：无
          * 返回值：Food[]
          */
-        public Food[] GetFoods()
+        public List<Food> GetFoods()
         {
             XmlDocument document = new XmlDocument();
 
@@ -113,8 +113,7 @@ namespace MsgTransTest
                         );
                     list.Add(temp);
                 }
-                Food[] foods = list.ToArray();
-                return foods;
+                return list;
             }
             else
                 return null;
@@ -137,9 +136,9 @@ namespace MsgTransTest
             {
                 XmlElement Food = document.CreateElement("food");
                 XmlElement ID = document.CreateElement("id");
-                ID.InnerText = f.GetId(); //设置其值
+                ID.InnerText = f.id; //设置其值
                 XmlElement NUM = document.CreateElement("num");
-                NUM.InnerText = f.GetFoodNum().ToString(); //设置其值
+                NUM.InnerText = f.foodNum.ToString(); //设置其值
 
                 Food.AppendChild(ID);
                 Food.AppendChild(NUM);

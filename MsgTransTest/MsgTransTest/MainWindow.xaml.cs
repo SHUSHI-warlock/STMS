@@ -71,13 +71,13 @@ namespace MsgTransTest
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Store store = dgl.GetStoreInfo("1S3F3W");
-            T_storeid.Text = store.GetId();
-            T_storename.Text = store.GetName();
-            T_storeaddr.Text = store.GetLoc();
-            T_rent.Text = store.GetRent().ToString();
-            T_pass.Text = store.GetPa();
-            T_money.Text = store.GetTurnover().ToString();
-            T_master.Text = store.GetMaster();
+            T_storeid.Text = store.id;
+            T_storename.Text = store.name;
+            T_storeaddr.Text = store.loc;
+            T_rent.Text = store.rent.ToString();
+            T_pass.Text = store.pa;
+            T_money.Text = store.turnover.ToString();
+            T_master.Text = store.master;
 
         }
     }

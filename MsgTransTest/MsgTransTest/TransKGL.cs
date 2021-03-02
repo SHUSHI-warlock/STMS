@@ -76,7 +76,7 @@ namespace MsgTransTest
          * 参数：无
          * 返回值：Label[]
          */
-        public Label[] GetLabel()
+        public List<Label> GetLabel()
         {
             XmlDocument document = new XmlDocument();
             
@@ -107,8 +107,7 @@ namespace MsgTransTest
                 list.Add(temp);
             }
 
-            Label[] labels = list.ToArray();
-            return labels;
+            return list;
         }
         /**
          * 2 验证完毕
@@ -123,13 +122,13 @@ namespace MsgTransTest
             XmlElement addlabel = document.CreateElement("addlabel");//CreateElement（节点名称）
 
             XmlElement ID = document.CreateElement("id");
-            ID.InnerText = label.GetId(); //设置其值
+            ID.InnerText = label.id; //设置其值
             XmlElement NM = document.CreateElement("name");
-            NM.InnerText = label.GetName(); //设置其值
+            NM.InnerText = label.name; //设置其值
             XmlElement LAS = document.CreateElement("lass");
-            LAS.InnerText = label.GetMoney().ToString(); //设置其值
+            LAS.InnerText = label.money.ToString(); //设置其值
             XmlElement PA = document.CreateElement("pa");
-            PA.InnerText = label.GetPassword(); //设置其值
+            PA.InnerText = label.password; //设置其值
             
             addlabel.AppendChild(ID);
             addlabel.AppendChild(NM);
@@ -233,13 +232,13 @@ namespace MsgTransTest
             XmlElement changelabel = document.CreateElement("changelabel");//CreateElement（节点名称）
             
             XmlElement ID = document.CreateElement("id");
-            ID.InnerText = label.GetId(); //设置其值
+            ID.InnerText = label.id; //设置其值
             XmlElement NM = document.CreateElement("name");
-            NM.InnerText = label.GetName(); //设置其值
+            NM.InnerText = label.name; //设置其值
             XmlElement LAS = document.CreateElement("lass");
-            LAS.InnerText = label.GetMoney().ToString(); //设置其值
+            LAS.InnerText = label.money.ToString(); //设置其值
             XmlElement PA = document.CreateElement("pa");
-            PA.InnerText = label.GetPassword(); //设置其值
+            PA.InnerText = label.password; //设置其值
             
             changelabel.AppendChild(ID);
             changelabel.AppendChild(NM);
@@ -280,7 +279,7 @@ namespace MsgTransTest
          * 参数：卡ID
          * 返回值：Bill[]
          */
-        public Bill[] GetBills(string id)
+        public List<Bill> GetBills(string id)
         {
             XmlDocument document = new XmlDocument();
 
@@ -315,8 +314,7 @@ namespace MsgTransTest
                         );
                     list.Add(temp);
                 }
-                Bill[] bills = list.ToArray();
-                return bills;
+                return list;
             }
             else
                 return null;

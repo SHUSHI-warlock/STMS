@@ -56,17 +56,17 @@ namespace MsgTransTest
          */
         public void getBill()
         {
-            Bill[] bs = dgl.GetBills("1S3F3W");
+            List<Bill> bs = dgl.GetBills("1S3F3W");
             if(bs == null)
                 Console.Out.WriteLine("获取失败！");
             else
             {
                 foreach (Bill b in bs)
                 {
-                    Console.Out.WriteLine("卡号:" + b.GetLabelid());
-                    Console.Out.WriteLine("消费店:" + b.GetStoreid());
-                    Console.Out.WriteLine("消费时间:" + b.GetTime());
-                    Console.Out.WriteLine("消费金额:" + b.GetCost());
+                    Console.Out.WriteLine("卡号:" + b.labelid);
+                    Console.Out.WriteLine("消费店:" + b.storeid);
+                    Console.Out.WriteLine("消费时间:" + b.time);
+                    Console.Out.WriteLine("消费金额:" + b.cost);
                     Console.Out.WriteLine("");
                 }
             }
@@ -152,15 +152,15 @@ namespace MsgTransTest
       */
         public void getOrder()
         {
-            Food[] foods = dgl.GetFoods("1S3F3W");
+            List<Food> foods = dgl.GetFoods("1S3F3W");
             foreach (Food f in foods)
             {
-                Console.Out.WriteLine("food-id:" + f.GetId());
-                Console.Out.WriteLine("food-name:" + f.GetName());
-                Console.Out.WriteLine("food-class:" + f.GetFoodClass());
-                Console.Out.WriteLine("food-价格:" + f.GetPrice());
-                Console.Out.WriteLine("food-价格策略:" + f.GetSt());
-                Console.Out.WriteLine("food-描述:" + f.GetFoodTip());
+                Console.Out.WriteLine("food-id:" + f.id);
+                Console.Out.WriteLine("food-name:" + f.name);
+                Console.Out.WriteLine("food-class:" + f.foodClass);
+                Console.Out.WriteLine("food-价格:" + f.price);
+                Console.Out.WriteLine("food-价格策略:" + f.st);
+                Console.Out.WriteLine("food-描述:" + f.foodTip);
                 Console.Out.WriteLine("");
 
             }
@@ -199,14 +199,14 @@ namespace MsgTransTest
         public void getStoreInfo()
         {
             Store store = dgl.GetStoreInfo("1S3F3W");
-            Console.Out.WriteLine("店铺id:" + store.GetId());
-            Console.Out.WriteLine("店铺name:" + store.GetName());
-            Console.Out.WriteLine("店铺loc:" + store.GetLoc());
-            Console.Out.WriteLine("店铺租金:" + store.GetRent());
-            Console.Out.WriteLine("店铺店主卡号:" + store.GetMaster());
-            Console.Out.WriteLine("店铺是否出租:" + store.GetLease());
-            Console.Out.WriteLine("店铺打卡机密码:" + store.GetPa());
-            Console.Out.WriteLine("店铺本周营业额:" + store.GetTurnover());
+            Console.Out.WriteLine("店铺id:" + store.id);
+            Console.Out.WriteLine("店铺name:" + store.name);
+            Console.Out.WriteLine("店铺loc:" + store.loc);
+            Console.Out.WriteLine("店铺租金:" + store.rent);
+            Console.Out.WriteLine("店铺店主卡号:" + store.master);
+            Console.Out.WriteLine("店铺是否出租:" + store.isLease);
+            Console.Out.WriteLine("店铺打卡机密码:" + store.pa);
+            Console.Out.WriteLine("店铺本周营业额:" + store.turnover);
 
         }
 
@@ -263,14 +263,14 @@ namespace MsgTransTest
          */
         public void getAllStores()
         {
-            Store[] ss = dgl.GetStores();
+            List<Store> ss = dgl.GetStores();
             int i = 1;
             foreach(Store s in ss)
             {
                 Console.Out.WriteLine("店铺"+ i++);
-                Console.Out.WriteLine("店铺id:" + s.GetId());
-                Console.Out.WriteLine("店铺name:" + s.GetName());
-                Console.Out.WriteLine("店铺loc:" + s.GetLoc());
+                Console.Out.WriteLine("店铺id:" + s.id);
+                Console.Out.WriteLine("店铺name:" + s.name);
+                Console.Out.WriteLine("店铺loc:" + s.loc);
             }
         }
 

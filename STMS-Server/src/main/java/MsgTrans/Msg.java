@@ -17,18 +17,6 @@ public class Msg {
         topService = ts;
         lowService = ls;
         content = c;
-/*      不需要在此计算lengh，收发都由msr计算
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer t = tf.newTransformer();
-        //设置编码方式
-        t.setOutputProperty(OutputKeys.ENCODING,"gb2312");
-
-        //指示是否要在转输出时添加XML声明
-        t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        t.transform(new DOMSource(c), new StreamResult(bos));
-        length = bos.toString().length();
-*/
     }
 
     public EProtocol getProtocol() {
