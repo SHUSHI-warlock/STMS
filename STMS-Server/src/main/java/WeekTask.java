@@ -24,7 +24,7 @@ public class WeekTask {
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
-                    week = (( end - start ) / weekSpan) + 1 ;
+                    weekS = (( end - start ) / weekSpan) + 1 ;
                     System.out.print("第"+ weekS + "周营业额结算\n");
 
                     //对每个店铺结算营业额
