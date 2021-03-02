@@ -54,17 +54,17 @@ namespace MsgTransTest
          */
         public void getBill()
         {
-            Bill[] bs = kgl.GetBills("L001");
+            List<Bill> bs = kgl.GetBills("L001");
             if (bs == null)
                 Console.Out.WriteLine("获取失败！");
             else
             {
                 foreach (Bill b in bs)
                 {
-                    Console.Out.WriteLine("卡号:" + b.GetLabelid());
-                    Console.Out.WriteLine("消费店:" + b.GetStoreid());
-                    Console.Out.WriteLine("消费时间:" + b.GetTime());
-                    Console.Out.WriteLine("消费金额:" + b.GetCost());
+                    Console.Out.WriteLine("卡号:" + b.labelid);
+                    Console.Out.WriteLine("消费店:" + b.storeid);
+                    Console.Out.WriteLine("消费时间:" + b.time);
+                    Console.Out.WriteLine("消费金额:" + b.cost);
                     Console.Out.WriteLine("");
                 }
             }
@@ -151,15 +151,15 @@ namespace MsgTransTest
          */
         public void getAllLabels()
         {
-            Label[] labels = kgl.GetLabel();
+            List<Label> labels = kgl.GetLabel();
             int i = 1;
             foreach (Label l in labels)
             {
                 Console.Out.WriteLine("消费卡" + i++);
-                Console.Out.WriteLine("卡号:" + l.GetId());
-                Console.Out.WriteLine("卡持有者:" + l.GetName());
-                Console.Out.WriteLine("卡密码:" + l.GetPassword());
-                Console.Out.WriteLine("卡余额:" + l.GetMoney());
+                Console.Out.WriteLine("卡号:" + l.id);
+                Console.Out.WriteLine("卡持有者:" + l.name);
+                Console.Out.WriteLine("卡密码:" + l.password);
+                Console.Out.WriteLine("卡余额:" + l.money);
             }
         }
     }

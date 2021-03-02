@@ -28,12 +28,7 @@ namespace 卡管理
         {
             InitializeComponent();
         }
-        private TransKGL kgl;
-
-
-        private string date;
-        private static int index;
-        private DateTime dt = DateTime.Now;
+        private TransKGL kgl=TransKGL.GetInstance();
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

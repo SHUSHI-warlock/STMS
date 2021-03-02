@@ -11,19 +11,14 @@ namespace MsgTransTest
     class ServerConn
     {
         private static Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        private static  int PORT = 7000;
-        private static  IPAddress ip = IPAddress.Parse("127.0.0.1");
+        private static int PORT = 7000;
+        private static IPAddress IP = IPAddress.Parse("127.0.0.1");
         //private static IPAddress ip = IPAddress.Loopback;
 
         //连接服务器，返回MsgSendReceiver，失败时返回null
         public static MsgSendReceiver ConnServer()
         {
-            //连接到的目标IP
-            //IPAddress ip = IPAddress.Loopback;
-            //IPAddress ip = IPAddress.Any;
-
-            //连接到目标IP的哪个应用(端口号！)
-            IPEndPoint server = new IPEndPoint(ip, PORT);
+            IPEndPoint server = new IPEndPoint(IP, PORT);
             try
             {
                 socket.Connect(server);
@@ -40,17 +35,37 @@ namespace MsgTransTest
         {
             try
             {
-                socket.Disconnect(true);
+                socket.Shutdown(SocketShutdown.Both);//保证所有数据传输完毕
+                socket.Close();//关闭socket
                 return true;
             }
             catch(Exception e)
             {
                 Console.Out.WriteLine(e.Message);
-
             }
             return false;
         }
-
-    }
-
+        public static bool SocketTest()
+        {
+            bool blockingState = socket.Blocking;
+            try
+            {
+                byte[] tmp = new byte[1];
+                socket.Blocking = false;
+                socket.Send(tmp, 0, 0);
+                return true;
+            }
+            catch (SocketException e)
+            {
+                if (e.NativeErrorCode.Equals(10035))
+                    return true;
+                else
+                    return false;
+            }
+            finally
+            {
+                socket.Blocking = blockingState;    // 恢复状态
+            }
+        }
+    }   
 }

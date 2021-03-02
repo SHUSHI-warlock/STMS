@@ -27,13 +27,11 @@ namespace 卡管理
             InitializeComponent();
             initList();
         }
-        private TransKGL kgl;
-
-
+        private TransKGL kgl=TransKGL.GetInstance();
 
         private void initList()
         {
-            Label[] labels = kgl.GetLabel();
+            List<Label> labels = kgl.GetLabel();
             listView.ItemsSource = labels;
         }
         private void Del(object sender, RoutedEventArgs e)
@@ -115,7 +113,7 @@ namespace 卡管理
                 MessageBoxResult result = MessageBox.Show("确认是否显示账号为 " + u.id + " 的用户的消费记录", "警告", MessageBoxButton.OKCancel, MessageBoxImage.Question);
                 if (result == MessageBoxResult.OK)
                 {
-                    Bill[] bs = kgl.GetBills(u.id);
+                    List<Bill> bs = kgl.GetBills(u.id);
                     if (bs == null)
                         Console.Out.WriteLine("获取失败！");
                     else

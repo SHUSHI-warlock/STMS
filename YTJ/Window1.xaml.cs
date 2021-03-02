@@ -39,7 +39,7 @@ namespace 卡管理
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
                 Label u = listView.SelectedItem as Label;
-                Bill[] bs =ytj.GetBills();
+                List<Bill> bs =ytj.GetBills();
                 if (bs == null)
                     Console.Out.WriteLine("获取失败！");
                 else

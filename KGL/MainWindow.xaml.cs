@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 
 using Database;
 using MsgTransTest;
+using Label = MsgTransTest.Label;
 
 namespace 卡管理
 {
@@ -29,8 +30,8 @@ namespace 卡管理
         public MainWindow()
         {
             InitializeComponent();
-
         }
+        public static Label label = new Label();
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -38,6 +39,7 @@ namespace 卡管理
             if (er == 1)
             {
                 MessageBox.Show("欢迎管理员" + textbox1.Text + "进入", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                List < Label > label= kgl.GetLabel();
                 Window1 a = new Window1();
                 a.ShowDialog();
 
