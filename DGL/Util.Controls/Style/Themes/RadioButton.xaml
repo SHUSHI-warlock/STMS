@@ -54,7 +54,11 @@
                     <Grid x:Name="grid" VerticalAlignment="Center">
                         <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"  Height="{TemplateBinding Height}" HorizontalAlignment="Center"
                                 Background="{TemplateBinding Background}" Width="{TemplateBinding Width}">
-                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            <StackPanel  Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button},AncestorLevel=1},Path=ActualWidth}">
+                                <Label Content="{Binding id}" HorizontalAlignment="Left" FontSize="8" Height="25"/>
+                                <Label Content="{Binding name}" FontSize="16" HorizontalAlignment="Center" Height="25"/>
+                                <Label Content="{Binding loc}" HorizontalAlignment="Right" FontSize="8" Height="25"/>
+                            </StackPanel>
                         </Border>
                         <!--选中的状态标识-->
                         <TextBlock Text="&#xe606;" x:Name="checkState" Style="{StaticResource FIcon}" VerticalAlignment="Bottom" Visibility="Collapsed"

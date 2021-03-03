@@ -7,14 +7,18 @@
       mc:Ignorable="d" Background="{StaticResource WindowBackground}"
       d:DesignHeight="348" d:DesignWidth="709"
       Title="Page3">
-
+    <!--资源-->
+    <Page.Resources>
+        <!--价格数据的转换类-->
+        <local:PriceConverter x:Key="priceConverter"/>
+    </Page.Resources>
     <Grid>
         <DataGrid x:Name="gridList" Margin="0,0,0,6" GridLinesVisibility="None" SelectionUnit="FullRow" BorderThickness="0" SelectionChanged="gridList_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="100" Header="卡号" Binding="{Binding Number}"></DataGridTextColumn>
-                <DataGridTextColumn Width="100" Header="商店ID" Binding="{Binding Name}"></DataGridTextColumn>
-                <DataGridTextColumn Width="100" Header="消费时间" Binding="{Binding Time}"></DataGridTextColumn>
-                <DataGridTextColumn Header="消费金额" Binding="{Binding Price}"></DataGridTextColumn>
+                <DataGridTextColumn Width="100" Header="卡号" Binding="{Binding labelid}"></DataGridTextColumn>
+                <DataGridTextColumn Width="100" Header="商店ID" Binding="{Binding storeid}"></DataGridTextColumn>
+                <DataGridTextColumn Width="100" Header="消费时间" Binding="{Binding time}"></DataGridTextColumn>
+                <DataGridTextColumn Header="消费金额" Binding="{Binding cost,Converter={StaticResource priceConverter}}"></DataGridTextColumn>
 
             </DataGrid.Columns>
         </DataGrid>

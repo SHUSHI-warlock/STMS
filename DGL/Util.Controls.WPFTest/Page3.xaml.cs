@@ -20,18 +20,20 @@ namespace Util.Controls.WPFTest
     public partial class Page3 : Page
     {
         private TransDGL dgl;
-        public Page3(String name)
+        public Page3(String id)
         {
             InitializeComponent();
             dgl = TransDGL.GetInstance();
 
             //从服务器中得到店铺消费记录
             List<Bill> ds = new List<Bill>();
-            Bill[] bs = dgl.GetBills(name);
-            if (bs == null)
+            //Bill[] bs = dgl.GetBills(id);
+            ds = dgl.GetBills(id);
+            if (ds == null)
                 Console.Out.WriteLine("获取失败！");
             else
             {
+                /*
                 foreach (Bill b in bs)
                 {
                     var d1 = new Bill();
@@ -42,6 +44,7 @@ namespace Util.Controls.WPFTest
                     d1.SetCost(b.GetCost());
                     ds.Add(d1);
                 }
+                */
                 this.gridList.ItemsSource = ds;
             }
         }

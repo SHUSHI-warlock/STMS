@@ -20,10 +20,13 @@ namespace Util.Controls.WPFTest
     public partial class Window6 : Window
     {
         private DispatcherTimer ShowTimer;
-        public String getname { get; set; }
+        
+        public String getname { get; set;}
         public String Number { get; set; }
         public Window6(String name,String storeNumber)
         {
+            
+
             InitializeComponent();
 
             ShowTime();    //在这里窗体加载的时候不执行文本框赋值，窗体上不会及时的把时间显示出来，而是等待了片刻才显示了出来
@@ -52,8 +55,6 @@ namespace Util.Controls.WPFTest
             this.tbTimeText.Text = DateTime.Now.ToString("HH:mm:ss");
         }
 
-
-
         private void FButton_Click_Exit(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -80,7 +81,7 @@ namespace Util.Controls.WPFTest
 
         private void FButton_Click_Record(object sender, RoutedEventArgs e)
         {
-            Page3 p3 = new Page3(getname);
+            Page3 p3 = new Page3(Number);
             Page_Change.Content = new Frame()
             {
                 Content = p3

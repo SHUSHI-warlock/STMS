@@ -27,6 +27,8 @@ namespace Util.Controls.WPFTest
             //连接服务器，创建通讯类
             dgl = TransDGL.GetInstance();
 
+           
+
             //从数据库获取数据
             //循环进行列表的初始化操作
             List<Food> ds = new List<Food>();
@@ -34,7 +36,9 @@ namespace Util.Controls.WPFTest
             sNumber = storeNumber;
             String shopName = getname;
 
-            Food[] foods = dgl.GetFoods(sNumber);
+            //Food[] foods = dgl.GetFoods(sNumber);
+            ds = dgl.GetFoods(sNumber);
+            /*
             foreach (Food f in foods)
             {
                 var d1 = new Food();
@@ -42,12 +46,16 @@ namespace Util.Controls.WPFTest
                 d1.SetName(f.GetName());
                 d1.SetPrice(f.GetPrice());
                 d1.SetId(f.GetId());
+                d1.SetFoodClass(f.GetFoodClass());
                 d1.SetFoodTip(f.GetFoodTip());
                 d1.SetSt(f.GetSt());
                 ds.Add(d1);
             }
+            */
             this.gridList.ItemsSource = ds; //设置列表
         }
+
+        
 
         public String getname { get; set; }
 
@@ -58,7 +66,9 @@ namespace Util.Controls.WPFTest
             List<Food> ds = new List<Food>();
             String shopName = getname;
 
-            Food[] foods = dgl.GetFoods(sNumber);
+            //Food[] foods = dgl.GetFoods(sNumber);
+            ds = dgl.GetFoods(sNumber);
+            /*
             foreach (Food f in foods)
             {
                 var d1 = new Food();
@@ -70,13 +80,17 @@ namespace Util.Controls.WPFTest
                 d1.SetSt(f.GetSt());
                 ds.Add(d1);
             }
+            */
             this.gridList.ItemsSource = ds; //设置列表
         }
 
         private void FButton_Click_Add(object sender, RoutedEventArgs e)
         {
+            this.IsEnabled = false;
             Window4 win = new Window4(getname,sNumber);
             win.Show();
+            FButton_Click_Fresh(this, e);
+            this.IsEnabled = true;
         }
 
         private void FButton_Click_Delete(object sender, RoutedEventArgs e)
@@ -86,10 +100,11 @@ namespace Util.Controls.WPFTest
             if (item != null)
             {
                 //根据菜品号Number进行菜品的删除
-                int result = dgl.DeleteFood(item.id, getname);
+                int result = dgl.DeleteFood(item.id, sNumber);
                 if (result == 1)
                 {
                     MessageBox.Show("删除成功");
+                    FButton_Click_Fresh(this, e);
                 }
                 else if (result == 0)
                 {
@@ -114,8 +129,11 @@ namespace Util.Controls.WPFTest
             var item = gridList.SelectedItem as Food;
             if (item != null)
             {
+                this.IsEnabled = false;
                 Window3 win2 = new Window3(getname,sNumber,item.GetId(), item.GetName(), item.GetFoodClass(), item.GetSt(), item.GetPrice());
                 win2.Show();
+                FButton_Click_Fresh(this, e);
+                this.IsEnabled = true;
             }
             else
             {

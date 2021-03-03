@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Util.Controls.WPFTest
 {
-    class Store
+    public class Store
     {
-        private string id;
-        private string loc;
-        private string name;
-        private string master;
-        private int rent;
-        private string pa;   //打卡机密码
-        private bool isLease;
-        private int turnover;   //营业额
+        public string id { get; set; }
+        public string loc { get; set; }
+        public string name { get; set; }
+        public string master { get; set; }
+        public int rent { get; set; }
+        public string pa { get; set; }   //打卡机密码
+        public bool isLease { get; set; }
+        public int turnover { get; set; }   //营业额
 
         public Store() { }
 

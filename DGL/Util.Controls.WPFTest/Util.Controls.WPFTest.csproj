@@ -95,6 +95,7 @@
     </ApplicationDefinition>
     <Compile Include="Bill.cs" />
     <Compile Include="Food.cs" />
+    <Compile Include="PriceConvertor.cs" />
     <Compile Include="Store.cs" />
     <Compile Include="TransDGL.cs" />
     <Compile Include="Msg.cs" />

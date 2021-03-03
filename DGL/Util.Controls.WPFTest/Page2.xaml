@@ -9,12 +9,19 @@
       d:DesignHeight="348" d:DesignWidth="709"
       Title="Page2">
 
+    <!--资源-->
+    <Page.Resources>
+        <!--价格数据的转换类-->
+        <local:PriceConverter x:Key="priceConverter"/>
+    </Page.Resources>
+
+
     <Grid>
         <DataGrid x:Name="gridList" Margin="0,0,256,6" GridLinesVisibility="None" BorderThickness="0" SelectionChanged="gridList_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="70" Header="菜品号" Binding="{Binding id}"></DataGridTextColumn>
+                <DataGridTextColumn Width="70" Header="菜品号" Binding="{Binding id }"></DataGridTextColumn>
                 <DataGridTextColumn Width="70" Header="菜品名" Binding="{Binding name}"></DataGridTextColumn>
-                <DataGridTextColumn Header="菜品单价" Binding="{Binding price}"></DataGridTextColumn>
+                <DataGridTextColumn Header="菜品单价" Binding="{Binding price,Converter={StaticResource priceConverter}}"></DataGridTextColumn>
                 <DataGridTextColumn Header="菜品类别" Binding="{Binding foodClass}"></DataGridTextColumn>
                 <DataGridTextColumn Header="描述" Binding="{Binding foodTip}"></DataGridTextColumn>
                 <DataGridTextColumn Header="计算策略" Binding="{Binding st}"></DataGridTextColumn>

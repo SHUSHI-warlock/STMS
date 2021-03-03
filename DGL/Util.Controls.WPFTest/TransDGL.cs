@@ -81,7 +81,7 @@ namespace Util.Controls.WPFTest
          * 参数：无
          * 返回值：Store[] 只包含id,name,loc
          */
-        public Store[] GetStores()
+        public List<Store> GetStores()
         {
             XmlDocument document = new XmlDocument();
 
@@ -115,8 +115,7 @@ namespace Util.Controls.WPFTest
                 list.Add(temp);
 
             }
-            Store[] stores = list.ToArray();
-            return stores;
+            return list;
         }
 
         /**
@@ -132,19 +131,19 @@ namespace Util.Controls.WPFTest
             XmlElement addstore = document.CreateElement("addstore");//CreateElement（节点名称）
 
             XmlElement ID = document.CreateElement("id");
-            ID.InnerText = store.GetId(); //设置其值
+            ID.InnerText = store.id; //设置其值
             XmlElement NM = document.CreateElement("name");
-            NM.InnerText = store.GetName(); //设置其值
+            NM.InnerText = store.name; //设置其值
             XmlElement LOC = document.CreateElement("loc");
-            LOC.InnerText = store.GetLoc(); //设置其值
+            LOC.InnerText = store.loc; //设置其值
             XmlElement MAS = document.CreateElement("master");
-            MAS.InnerText = store.GetMaster(); //设置其值
+            MAS.InnerText = store.master; //设置其值
             XmlElement PAS = document.CreateElement("pass");
-            PAS.InnerText = store.GetPa(); //设置其值
+            PAS.InnerText = store.pa; //设置其值
             XmlElement RENT = document.CreateElement("rent");
-            RENT.InnerText = store.GetRent().ToString(); //设置其值
+            RENT.InnerText = store.rent.ToString(); //设置其值
             XmlElement LES = document.CreateElement("lease");
-            LES.InnerText = store.GetLease().ToString(); //设置其值
+            LES.InnerText = store.isLease.ToString(); //设置其值
 
             addstore.AppendChild(ID);
             addstore.AppendChild(NM);
@@ -318,19 +317,19 @@ namespace Util.Controls.WPFTest
             XmlElement changestore = document.CreateElement("changestore");//CreateElement（节点名称）
 
             XmlElement ID = document.CreateElement("id");
-            ID.InnerText = store.GetId(); //设置其值
+            ID.InnerText = store.id; //设置其值
             XmlElement NM = document.CreateElement("name");
-            NM.InnerText = store.GetName(); //设置其值
+            NM.InnerText = store.name; //设置其值
             XmlElement LOC = document.CreateElement("loc");
-            LOC.InnerText = store.GetLoc(); //设置其值
+            LOC.InnerText = store.loc; //设置其值
             XmlElement MAS = document.CreateElement("master");
-            MAS.InnerText = store.GetMaster(); //设置其值
+            MAS.InnerText = store.master; //设置其值
             XmlElement PAS = document.CreateElement("pass");
-            PAS.InnerText = store.GetMaster(); //设置其值
+            PAS.InnerText = store.pa; //设置其值
             XmlElement RENT = document.CreateElement("rent");
-            RENT.InnerText = store.GetRent().ToString(); //设置其值
+            RENT.InnerText = store.rent.ToString(); //设置其值
             XmlElement LES = document.CreateElement("lease");
-            LES.InnerText = store.GetLease().ToString(); //设置其值
+            LES.InnerText = store.isLease.ToString(); //设置其值
 
             changestore.AppendChild(ID);
             changestore.AppendChild(NM);
@@ -375,7 +374,7 @@ namespace Util.Controls.WPFTest
          * 参数：店铺id
          * 返回值：成功返回Food[] 否则返回null
          */
-        public Food[] GetFoods(string id)
+        public List<Food> GetFoods(string id)
         {
             XmlDocument document = new XmlDocument();
 
@@ -413,8 +412,7 @@ namespace Util.Controls.WPFTest
                         );
                     list.Add(temp);
                 }
-                Food[] foods = list.ToArray();
-                return foods;
+                return list;
             }
             else
                 return null;
@@ -434,17 +432,17 @@ namespace Util.Controls.WPFTest
             XmlElement SID = document.CreateElement("sid");
             SID.InnerText = storeid; //设置其值
             XmlElement FID = document.CreateElement("fid");
-            FID.InnerText = food.GetId(); //设置其值
+            FID.InnerText = food.id; //设置其值
             XmlElement NM = document.CreateElement("name");
-            NM.InnerText = food.GetName(); //设置其值
+            NM.InnerText = food.name; //设置其值
             XmlElement CLS = document.CreateElement("class");
-            CLS.InnerText = food.GetFoodClass(); //设置其值
+            CLS.InnerText = food.foodClass; //设置其值
             XmlElement ST = document.CreateElement("st");
-            ST.InnerText = food.GetSt(); //设置其值
+            ST.InnerText = food.st; //设置其值
             XmlElement TIP = document.CreateElement("tip");
-            TIP.InnerText = food.GetFoodTip(); //设置其值
+            TIP.InnerText = food.foodTip; //设置其值
             XmlElement PRS = document.CreateElement("price");
-            PRS.InnerText = food.GetPrice().ToString(); //设置其值
+            PRS.InnerText = food.price.ToString(); //设置其值
 
             addfood.AppendChild(SID);
             addfood.AppendChild(FID);
@@ -498,17 +496,17 @@ namespace Util.Controls.WPFTest
             XmlElement SID = document.CreateElement("sid");
             SID.InnerText = storeid; //设置其值
             XmlElement FID = document.CreateElement("fid");
-            FID.InnerText = food.GetId(); //设置其值
+            FID.InnerText = food.id; //设置其值
             XmlElement NM = document.CreateElement("name");
-            NM.InnerText = food.GetName(); //设置其值
+            NM.InnerText = food.name; //设置其值
             XmlElement CLS = document.CreateElement("class");
-            CLS.InnerText = food.GetFoodClass(); //设置其值
+            CLS.InnerText = food.foodClass; //设置其值
             XmlElement ST = document.CreateElement("st");
-            ST.InnerText = food.GetSt(); //设置其值
+            ST.InnerText = food.st; //设置其值
             XmlElement TIP = document.CreateElement("tip");
-            TIP.InnerText = food.GetFoodTip(); //设置其值
+            TIP.InnerText = food.foodTip; //设置其值
             XmlElement PRS = document.CreateElement("price");
-            PRS.InnerText = food.GetPrice().ToString(); //设置其值
+            PRS.InnerText = food.price.ToString(); //设置其值
 
             changefood.AppendChild(SID);
             changefood.AppendChild(FID);
@@ -624,7 +622,7 @@ namespace Util.Controls.WPFTest
          * 参数：店铺ID
          * 返回值：Bill[] 错误返回null
          */
-        public Bill[] GetBills(string id)
+        public List<Bill> GetBills(string id)
         {
             XmlDocument document = new XmlDocument();
 
@@ -659,8 +657,7 @@ namespace Util.Controls.WPFTest
                         );
                     list.Add(temp);
                 }
-                Bill[] bills = list.ToArray();
-                return bills;
+                return list;
             }
             else
                 return null;

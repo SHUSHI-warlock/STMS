@@ -75,7 +75,7 @@ namespace Util.Controls.WPFTest
 
             //将数据输入数据库
             Store s = new Store(ShopNumber, Location, ShopName, Master, Rent, Password, IsLease);
-            int result = dgl.CreateStore(s);
+            int result = dgl.ChangeStore(s);
             if (result == 1)
             {
                 MessageBox.Show("修改成功");

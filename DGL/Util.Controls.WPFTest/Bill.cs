@@ -7,11 +7,11 @@ namespace Util.Controls.WPFTest
 {
     class Bill
     {
-        private string labelid { get; set; }
-        private string storeid { get; set; }
-        private string time { get; set; }
-        private int cost { get; set; }
-        private int billState { get; set; }
+        public string labelid { get; set; }
+        public string storeid { get; set; }
+        public string time { get; set; }
+        public int cost { get; set; }
+        public int billState { get; set; }
         public Bill() { }
 
         public Bill(string labelid, string storeid, int cost, string time)

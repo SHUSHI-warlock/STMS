@@ -57,6 +57,7 @@ namespace Util.Controls.WPFTest
             {
                 MessageBox.Show("创建成功");
                 //Console.WriteLine("创建成功");
+                this.Close();
             }
             else if (result == 0)
             {

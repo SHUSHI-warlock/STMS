@@ -39,24 +39,24 @@
             <TextBlock HorizontalAlignment="Left" Margin="358,16,0,0" TextWrapping="Wrap" FontSize="26" Text="店铺管理" VerticalAlignment="Top"/>
 
         </Grid>
-        <RadioButton x:Name="r1" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="35,87,683,318" RenderTransformOrigin="0.537,0.321" ></RadioButton>
-        <RadioButton x:Name="r2" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="161,87,557,318"></RadioButton>
-        <RadioButton x:Name="r3" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="288,87,430,318"></RadioButton>
-        <RadioButton x:Name="r4" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="416,87,302,318"></RadioButton>
-        <RadioButton x:Name="r5" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="548,87,170,318"></RadioButton>
-        <RadioButton x:Name="r6" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="675,87,43,318"></RadioButton>
-        <RadioButton x:Name="r7" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="35,185,683,220"></RadioButton>
-        <RadioButton x:Name="r8" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="161,185,557,220"></RadioButton>
-        <RadioButton x:Name="r9" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="288,185,430,220" Checked="r9_Checked"></RadioButton>
-        <RadioButton x:Name="r10" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="416,185,302,220"></RadioButton>
-        <RadioButton x:Name="r11" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="548,185,170,220"></RadioButton>
-        <RadioButton x:Name="r12" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="675,185,43,220"></RadioButton>
-        <RadioButton x:Name="r13" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="35,293,683,112" RenderTransformOrigin="0.47,0.719"></RadioButton>
-        <RadioButton x:Name="r14" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="161,293,557,112"></RadioButton>
-        <RadioButton x:Name="r15" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="288,293,430,112"></RadioButton>
-        <RadioButton x:Name="r16" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="416,293,302,112"></RadioButton>
-        <RadioButton x:Name="r17" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="548,293,170,112" RenderTransformOrigin="5.619,3.239"></RadioButton>
-        <RadioButton x:Name="r18" Width="100" Height="60" Style="{StaticResource BoxRadioButton}" Margin="675,293,43,112"></RadioButton>
+        <RadioButton x:Name="r1" Width="100" Height="80" Style="{StaticResource BoxRadioButton}" Margin="39,93,686.6,299" RenderTransformOrigin="0.537,0.321" />
+        <RadioButton x:Name="r2" Width="100" Height="80" Style="{StaticResource BoxRadioButton}" Margin="165,87,560.6,296"/>
+        <RadioButton x:Name="r3" Width="100" Height="80" Style="{StaticResource BoxRadioButton}" Margin="292,87,433.6,296"/>
+        <RadioButton x:Name="r4" Width="100" Height="80" Style="{StaticResource BoxRadioButton}" Margin="420,90,305.6,296"/>
+        <RadioButton x:Name="r5" Width="100" Height="80" Style="{StaticResource BoxRadioButton}" Margin="552,90,173.6,296"/>
+        <RadioButton x:Name="r6" Width="100" Height="80" Style="{StaticResource BoxRadioButton}" Margin="679,90,46.6,296"/>
+        <RadioButton x:Name="r7" Width="100" Height="80" Style="{StaticResource BoxRadioButton}" Margin="39,188,686.6,201"/>
+        <RadioButton x:Name="r8" Width="100" Style="{StaticResource BoxRadioButton}" Margin="165,188,560.6,202"/>
+        <RadioButton x:Name="r9" Width="100" Style="{StaticResource BoxRadioButton}" Margin="292,188,433.6,202" Checked="r9_Checked"/>
+        <RadioButton x:Name="r10" Width="100" Style="{StaticResource BoxRadioButton}" Margin="420,188,305.6,202"/>
+        <RadioButton x:Name="r11" Width="100" Style="{StaticResource BoxRadioButton}" Margin="552,188,173.6,202"/>
+        <RadioButton x:Name="r12" Width="100" Style="{StaticResource BoxRadioButton}" Margin="679,188,46.6,202"/>
+        <RadioButton x:Name="r13" Width="100" Style="{StaticResource BoxRadioButton}" Margin="39,293,686.6,88" RenderTransformOrigin="0.47,0.719"/>
+        <RadioButton x:Name="r14" Width="100" Style="{StaticResource BoxRadioButton}" Margin="165,296,560.6,88"/>
+        <RadioButton x:Name="r15" Width="100" Style="{StaticResource BoxRadioButton}" Margin="292,296,433.6,88"/>
+        <RadioButton x:Name="r16" Width="100" Style="{StaticResource BoxRadioButton}" Margin="420,296,305.6,88"/>
+        <RadioButton x:Name="r17" Width="100" Style="{StaticResource BoxRadioButton}" Margin="552,296,173.6,88" RenderTransformOrigin="5.619,3.239"/>
+        <RadioButton x:Name="r18" Width="100" Style="{StaticResource BoxRadioButton}" Margin="679,296,46.6,88"/>
         <StackPanel Margin="0,25,0,-360">
             <xly:FButton Width="156" Height="50" FIcon="&#xe64f;" Margin="5,0,0,0" CornerRadius="16,0,0,16" AllowsAnimation="True" Click="FButton_Click_before">上一页</xly:FButton>
             <xly:FButton Width="155" Height="50" FIcon="&#xe628;" CornerRadius="0" Click="FButton_Click_Add">添加</xly:FButton>
