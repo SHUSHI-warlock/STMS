@@ -23,9 +23,15 @@ namespace MsgTransTest
         public void test()
         {
             //1.登录
-            int er = dkj.LoginIn("1S3F3W", "000");
+            int er;
+            Store s = dkj.LoginIn("1S3F3W", "000",out er);
             if (er == 1)
+            {
                 Console.Out.WriteLine("登录成功！");
+                Console.Out.WriteLine("店铺名："+s.name);
+                Console.Out.WriteLine("店铺id："+s.id);
+                Console.Out.WriteLine("店铺地址："+s.loc);
+            }
             else if (er == 0)
             {
                 Console.Out.WriteLine("登录失败！");

@@ -402,3 +402,4 @@ C:\Users\李正浩\Desktop\DGL\Util.Controls.WPFTest\obj\x86\Debug\Util.Controls
 C:\Users\李正浩\Desktop\DGL\Util.Controls.WPFTest\obj\x86\Debug\Util.Controls.WPFTest.exe
 C:\Users\李正浩\Desktop\DGL\Util.Controls.WPFTest\obj\x86\Debug\Util.Controls.WPFTest.pdb
 C:\Users\李正浩\Desktop\DGL\Util.Controls.WPFTest\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\DGL\Util.Controls.WPFTest\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs

@@ -30,7 +30,7 @@ namespace MsgTransTest
         * 参数：id表示Label ID；pwd表示Label 密码
         * 返回值：登录成功返回1，登录失败返回0，未知错误返回-1
         */
-        public int LoginIn(string id, string pwd)
+        public Store LoginIn(string id, string pwd,out int State)
         {
             XmlDocument document = new XmlDocument();
 
@@ -59,20 +59,31 @@ namespace MsgTransTest
             string state = "";
             state = xmlRoot["state"].InnerText;
 
+
+            Store temp = null;
             if (state.CompareTo("true") == 0)
             {
+                XmlNode xmlStore = xmlRoot.GetElementsByTagName("restaurant")[0];
+                temp = new Store(
+                    xmlStore["id"].InnerText,
+                    xmlStore["loc"].InnerText,
+                    xmlStore["name"].InnerText,
+                    null,
+                    0,
+                    null,
+                    false
+                    );
                 Console.WriteLine(state);
-                return 1;
+                State = 1;
             }
             else if (state.CompareTo("false") == 0)
             {
                 Console.WriteLine(state);
-                return 0;
+                State = 0;
             }
             else
-            {
-                return -1;
-            }
+                State = -1;
+            return temp;
         }
         /**
          * 1 验证完毕

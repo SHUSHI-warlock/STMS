@@ -85,10 +85,8 @@ namespace MsgTransTest
         {
             XmlDocument document = new XmlDocument();
 
-
             XmlElement getstores = document.CreateElement("getstores");//CreateElement（节点名称）
             document.AppendChild(getstores);
-
 
             Msg msg = new Msg(EProtocol.EP_Request, ETopService.ET_DGL, 1, document);
 

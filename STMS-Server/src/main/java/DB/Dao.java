@@ -914,7 +914,7 @@ public class Dao {
             state = conn.createStatement();
             rs = state.executeQuery(ana);
             while (rs.next()) {
-                pass=DESUtils.getDecryptString(rs.getString("S_Pa"));
+                pass= DESUtils.getDecryptString(rs.getString("S_Pa"));
                 if(pass.equals(pa))
                     a=1;
             }
@@ -947,7 +947,7 @@ public class Dao {
             state = conn.createStatement();
             rs = state.executeQuery(ana);
             while (rs.next()) {
-                pass=DESUtils.getDecryptString(rs.getString("L_Pa"));
+                pass= DESUtils.getDecryptString(rs.getString("L_Pa"));
                 if(pass.equals(pa))
                     a=1;
             }
@@ -980,7 +980,7 @@ public class Dao {
             state = conn.createStatement();
             rs = state.executeQuery(ana);
             while (rs.next()) {
-                pass=DESUtils.getDecryptString(rs.getString("U_Pa"));
+                pass= DESUtils.getDecryptString(rs.getString("U_Pa"));
                 if(pass.equals(pa))
                     a=1;
             }
@@ -1012,7 +1012,7 @@ public class Dao {
             state = conn.createStatement();
             rs = state.executeQuery(ana);
             while (rs.next()) {
-                pass=DESUtils.getDecryptString(rs.getString("U_Pa"));
+                pass= DESUtils.getDecryptString(rs.getString("U_Pa"));
                 if(pass.equals(pa))
                     a=1;
             }

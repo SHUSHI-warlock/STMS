@@ -31,10 +31,10 @@ namespace MsgTransTest
             dGLtest.test();
             */
 
-            /* 打卡机测试完成
+            // 打卡机测试完成
             DKJtest dKJtest = new DKJtest();
             dKJtest.test();
-            */
+            
 
             /* 卡管理测试完成
             KGLtest kGLtest = new KGLtest();
@@ -46,7 +46,7 @@ namespace MsgTransTest
 
 
             //wpf演示
-            dgl = TransDGL.GetInstance();
+            //dgl = TransDGL.GetInstance();
 
             //登录
             int er = Login();

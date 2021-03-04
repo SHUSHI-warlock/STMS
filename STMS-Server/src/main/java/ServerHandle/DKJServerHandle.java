@@ -4,6 +4,7 @@ import DB.Dao;
 import Data.Bill;
 import Data.Food;
 import Data.FoodOrder;
+import Data.Store;
 import MsgTrans.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -90,6 +91,23 @@ public class DKJServerHandle extends AbstractServerHandle {
         if (a > 0) {
             //System.out.println("成功");
             storeId = id;
+            //返回店铺信息
+            Store s = Dao.getStoreById(id);
+
+            Element Eid = document.createElement("id");
+            Element Eloc = document.createElement("loc");
+            Element Ename = document.createElement("name");
+            Element Estore = document.createElement("restaurant");
+
+            Eid.setTextContent(s.id);
+            Eloc.setTextContent(s.loc);
+            Ename.setTextContent(s.name);
+
+            Estore.appendChild(Eid);        //挂store
+            Estore.appendChild(Eloc);       //挂store
+            Estore.appendChild(Ename);      //挂store
+            root.appendChild(Estore);       //挂root
+
             elementState.setTextContent("true");
         } else
             //System.out.println("失败");
