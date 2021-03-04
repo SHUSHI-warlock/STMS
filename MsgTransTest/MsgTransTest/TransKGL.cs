@@ -319,5 +319,23 @@ namespace MsgTransTest
             else
                 return null;
         }
+        /**
+         * 关闭Socket
+         * 成功关闭返回1；不成功关闭返回0
+         */
+        public int CloseSocket()
+        {
+            Msg msg = new Msg(EProtocol.EP_Disconnect, ETopService.ET_KGL, 0, null);
+            this.msgSendReceiver.SendMsg(msg);
+            try
+            {
+                ServerConn.SocketClose();
+                return 1;
+            }
+            catch(Exception)
+            {
+                return 0;
+            }
+        }
     }
 }
