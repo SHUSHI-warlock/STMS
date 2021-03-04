@@ -45,6 +45,7 @@ namespace MsgTransTest
             }
             return false;
         }
+
         public static bool SocketTest()
         {
             bool blockingState = socket.Blocking;

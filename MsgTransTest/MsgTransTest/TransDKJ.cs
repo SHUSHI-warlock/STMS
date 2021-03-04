@@ -221,5 +221,11 @@ namespace MsgTransTest
                 default: return -4;
             }
         }
+
+        //断开连接
+        public bool CloseConn()
+        {
+            return ServerConn.SocketClose();
+        } 
     }
 }

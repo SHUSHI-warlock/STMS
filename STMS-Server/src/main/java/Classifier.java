@@ -1,3 +1,4 @@
+import MsgTrans.ETopService;
 import MsgTrans.Msg;
 import MsgTrans.MsgSendReceiver;
 import ServerHandle.AbstractServerHandle;
@@ -22,30 +23,43 @@ public class Classifier implements Runnable{
     public void run() {
         ///获取消息
         Msg msg = null;
+        boolean flag = true;
         try {
-            msg = msr.ReceiveMsg();
+            while (flag) {
+                msg = msr.ReceiveMsg();
 
-            switch (msg.getProtocol()) {
-                case EP_Verify:
-                    LoginVerify(msg);
-                case EP_Disconnect:
-                    DisConnect();
-                case EP_Other:
-                    System.out.println("其他");
-                default:
-                    System.out.println("未知的种类");
+                switch (msg.getProtocol()) {
+                    case EP_Verify:
+                        flag = !(LoginVerify(msg)); //这里要取反
+                        break;
+                    case EP_Disconnect:
+                        DisConnect();
+                        flag = false;
+                        break;
+                    case EP_Other:
+                        System.out.println("其他");
+                        msg.PrintHead();
+                        flag = false;
+                        break;
+                    default:
+                        System.out.println("未知的种类");
+                        msg.PrintHead();
+                        flag = false;
+                        break;
+                }
             }
         } catch (Exception e) {
-            System.out.println("异常信息如下：");
-            e.getMessage();
             e.printStackTrace();
+        }
+        finally {
+            DisConnect();
         }
     }
 
     /**
      * 协议类型为登录
      */
-    private void LoginVerify(Msg m) throws Exception{
+    private boolean LoginVerify(Msg m) throws Exception {
         ServerHandleFactory factory = ServerHandleFactory.getInstance();
         AbstractServerHandle service = factory.getServerHandle(m.getTopService(), msr);
         try {
@@ -53,15 +67,26 @@ public class Classifier implements Runnable{
             if (service.ServiceVerify(m) > 0) {
                 //服务进行
                 service.ServerHandle();
-            }
+                DisConnect();
+                return true;
+            } else
+                return false;
         } catch (Exception e) {
             msr.SocketClose();
-            System.out.println("异常信息如下：");
-            e.getMessage();
+            System.out.println("服务"+ m.getTopService().toString()+"返回错误！");
             e.printStackTrace();
         }
+        DisConnect();
+        return false;
     }
-    private void DisConnect() throws Exception {
-        msr.SocketClose();
+    private void DisConnect() {
+        try {
+            msr.SocketClose();
+            System.out.println("连接已断开");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("socket断开失败！");
+        }
+
     }
 }

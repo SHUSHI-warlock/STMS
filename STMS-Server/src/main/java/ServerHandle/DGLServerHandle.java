@@ -29,26 +29,43 @@ public class DGLServerHandle extends AbstractServerHandle {
 
     @Override
     public void ServerHandle() throws Exception {
-        while (true) {
+        boolean flag = true;
+        while (flag) {
             Msg msg = msr.ReceiveMsg();
-            switch (msg.getLowService()) {
-                case 1 -> SendStores(msg);
-                case 2 -> CreateStore(msg);
-                case 3 -> DeleteStore(msg);
-                case 4 -> SendStore(msg);
-                case 5 -> ChangeStore(msg);
-                case 6 -> SendOrder(msg);
-                case 7 -> CreateFood(msg);
-                case 8 -> ChangeFood(msg);
-                case 9 -> DeleteFood(msg);
-                case 10 -> SendBill(msg);
-                default -> {
+            switch (msg.getProtocol()) {
+                case EP_Verify -> {
+                    if (ServiceVerify(msg) <= 0)
+                        flag = false;
+                }
+                case EP_Disconnect -> {
+                    System.out.println("客户端断开连接!");
+                    flag = false;
+                }
+                case EP_Other -> {
                     msg.PrintHead();
-                    throw new Exception("未知的服务请求！");
+                    System.out.println("未知的消息类型！");
+                    flag = false;
+                }
+                default -> {
+                    switch (msg.getLowService()) {
+                        case 1 -> SendStores(msg);
+                        case 2 -> CreateStore(msg);
+                        case 3 -> DeleteStore(msg);
+                        case 4 -> SendStore(msg);
+                        case 5 -> ChangeStore(msg);
+                        case 6 -> SendOrder(msg);
+                        case 7 -> CreateFood(msg);
+                        case 8 -> ChangeFood(msg);
+                        case 9 -> DeleteFood(msg);
+                        case 10 -> SendBill(msg);
+                        default -> {
+                            msg.PrintHead();
+                            throw new Exception("未知的服务请求！");
+                        }
+                    }
                 }
             }
         }
-
     }
 
     /**
