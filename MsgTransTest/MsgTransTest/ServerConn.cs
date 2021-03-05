@@ -65,7 +65,7 @@ namespace MsgTransTest
             }
             finally
             {
-                socket.Blocking = blockingState;    // 恢复状态
+                socket.Blocking = blockingState;// 恢复状态
             }
         }
     }   

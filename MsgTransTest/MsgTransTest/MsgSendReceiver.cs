@@ -17,20 +17,13 @@ namespace MsgTransTest
         }
         public void SendMsg(Msg msg)
         {
-            if (ServerConn.SocketTest())
-            {
-                string msgStr = string.Format("{0,-4}", (int)msg.GetProtocol())
+            string msgStr = string.Format("{0,-4}", (int)msg.GetProtocol())
                     + string.Format("{0,-4}", (int)msg.GetTopService())
                     + string.Format("{0,-4}", msg.GetLowService())
                     + string.Format("{0,-4}", msg.GetLength())
                     + msg.GetContent().InnerXml;
-                byte[] buffer = Encoding.UTF8.GetBytes(msgStr);
-                mySocket.Send(buffer);
-            }
-            else
-            {
-                throw new Exception("连接断开！");
-            }
+            byte[] buffer = Encoding.UTF8.GetBytes(msgStr);
+            mySocket.Send(buffer);
         }
         public Msg ReceiveMsg()
         {
