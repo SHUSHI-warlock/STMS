@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:卡管理"
         mc:Ignorable="d"
-        Title="充值界面" Height="450" Width="800">
+        Title="充值界面" Height="350" Width="600">
     <Grid>
-        <Label Content="请输入需要充值的金额" HorizontalAlignment="Left" Margin="219,65,0,0" VerticalAlignment="Top" Height="56" Width="491" FontSize="36"/>
-        <TextBox Name="textbox1" HorizontalAlignment="Left" Height="40" Margin="132,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537"/>
-        <Button Content="确认充值" HorizontalAlignment="Left" Margin="635,334,0,0" VerticalAlignment="Top" Width="119" Height="52" FontSize="22" Click="Button_Click"/>
+        <Label Content="请输入需要充值的金额" HorizontalAlignment="Left" Margin="115,53,0,0" VerticalAlignment="Top" Height="56" Width="370" FontSize="36" FontFamily="Sylfaen"/>
+        <TextBox Name="textbox1" HorizontalAlignment="Left" Height="40" Margin="79,157,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="443"/>
+        <Button Content="确认充值" HorizontalAlignment="Left" Margin="403,242,0,0" VerticalAlignment="Top" Width="119" Height="52" FontSize="22" Click="Button_Click"/>
 
     </Grid>
 </Window>

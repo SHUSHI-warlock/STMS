@@ -29,7 +29,15 @@ namespace 卡管理
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(MainWindow.label.id);
+            double number = Convert.ToDouble(textbox1.Text.Trim());
+            if (number < 0)
+            {
+                MessageBox.Show("充值的数据不能为负数！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if(textbox1.Text.ToString().Contains("."))
+            {
+                MessageBox.Show("充值的数据不能为小数！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             Label l = new Label(MainWindow.label.id, MainWindow.label.name, MainWindow.label.password, int.Parse(textbox1.Text));
             int result = ytj.ChangeLabel(l);
             if (result == 1)

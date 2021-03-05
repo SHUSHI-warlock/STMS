@@ -44,9 +44,7 @@ namespace 卡管理
                 this.Hide();
                 Window1 a = new Window1();
                 a.ShowDialog();
-
                 textbox2.Password = "";
-
                 this.Show();
             }
             else if (er == 0)
@@ -60,6 +58,8 @@ namespace 卡管理
                 return;
             }
         }
+
+
         //public static User user;
     }
 }

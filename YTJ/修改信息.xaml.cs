@@ -27,35 +27,38 @@ namespace 卡管理
             InitializeComponent();
         }
         private TransYTJ ytj = TransYTJ.GetInstance();
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            Label l = new Label(textbox1.Text, textbox2.Text, password1.Password, MainWindow.label.money);
-            int result1 = ytj.ChangeLabel(l);
-            if (result1 == 1)
+            if (textbox1.Text != string.Empty && textbox2.Text != string.Empty && password1.Text != string.Empty
+               && password2.Text != string.Empty)
             {
-                MessageBox.Show("修改成功！", "congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else if (result1 == 0)
-            {
-                MessageBox.Show("修改失败！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                textbox1.Text = MainWindow.label.id;
+                if (password1.Text.Equals(password2.Text))
+                {
+                    Label l = new Label(textbox1.Text, textbox2.Text, password1.Text, MainWindow.label.money);
+                    int result1 = ytj.ChangeLabel(l);
+                    if (result1 == 1)
+                    {
+                        MessageBox.Show("修改成功！", "congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else if (result1 == 0)
+                    {
+                        MessageBox.Show("修改失败！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("未知错误", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("两次输入密码不一致", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
-                MessageBox.Show("未知错误", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("还有项目未填", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
     }
-
 }

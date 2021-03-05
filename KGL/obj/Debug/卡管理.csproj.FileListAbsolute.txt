@@ -24,19 +24,9 @@ F:\My FILS\大三\ZZT\STMS\STMS\KGL\bin\Debug\卡管理.exe.config
 F:\My FILS\大三\ZZT\STMS\STMS\KGL\bin\Debug\卡管理.exe
 F:\My FILS\大三\ZZT\STMS\STMS\KGL\bin\Debug\卡管理.pdb
 F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\卡管理.csprojAssemblyReference.cache
-F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\MainWindow.g.cs
-F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\Window1.g.cs
-F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\Window2.g.cs
-F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\Window3.g.cs
-F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\Window4.g.cs
 F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\App.g.cs
 F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\卡管理_MarkupCompile.cache
 F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\卡管理_MarkupCompile.lref
-F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\MainWindow.baml
-F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\Window1.baml
-F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\Window2.baml
-F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\Window3.baml
-F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\Window4.baml
 F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\卡管理.g.resources
 F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\卡管理.Properties.Resources.resources
 F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\卡管理.csproj.GenerateResource.cache
@@ -81,3 +71,9 @@ E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\KGL\obj\Debug\卡管�
 E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\KGL\obj\Debug\卡管理.csproj.CoreCompileInputs.cache
 E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\KGL\obj\Debug\卡管理.exe
 E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\KGL\obj\Debug\卡管理.pdb
+F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\登录界面.g.cs
+F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\用户管理.g.cs
+F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\注册用户.g.cs
+F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\登录界面.baml
+F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\用户管理.baml
+F:\My FILS\大三\ZZT\STMS\STMS\KGL\obj\Debug\注册用户.baml

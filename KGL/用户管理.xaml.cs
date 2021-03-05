@@ -156,8 +156,7 @@ namespace 卡管理
                 password1.Text = u.password;
                 textbox2.Text = u.name;
                 yue.Text = u.money.ToString();
-            }    
-          
+            }            
         }
     }
 }
