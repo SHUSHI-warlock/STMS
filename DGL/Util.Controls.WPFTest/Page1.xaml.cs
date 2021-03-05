@@ -54,42 +54,68 @@ namespace Util.Controls.WPFTest
             String ShopName = t3.Text;
             String ShopNumber = t2.Text;
             String Location = t1.Text;
+            String Master = t6.Text;
+            String Password = t4.Text;
+            bool IsLease = false;
             int Rent=0;
             try
             {
                 Rent = t5.Text.ToInt();
+                if (c1.SelectedItem.ToString() == "是")
+                {
+                    IsLease = true;
+                    if (t1.Text == "" || t2.Text == "" || t3.Text == "" || t4.Text == "" || t5.Text == "" || t6.Text == "")
+                    {
+                        MessageBox.Show("该店铺已经出租，请将全部信息输入后再进行创建！");
+                    }
+                    else
+                    {
+                        //将数据输入数据库
+                        Store s = new Store(ShopNumber, Location, ShopName, Master, Rent, Password, IsLease);
+                        int result = dgl.ChangeStore(s);
+                        if (result == 1)
+                        {
+                            MessageBox.Show("修改成功");
+                            //Console.WriteLine("修改成功");
+                        }
+                        else if (result == 0)
+                        {
+                            MessageBox.Show("修改失败");
+                            //Console.WriteLine("修改失败");
+                        }
+                        else
+                        {
+                            MessageBox.Show("未知错误");
+                            //Console.WriteLine("未知错误");
+                        }
+                    }
+                }
+                else
+                {
+                    //将数据输入数据库
+                    Store s = new Store(ShopNumber, Location, ShopName, Master, Rent, Password, IsLease);
+                    int result = dgl.ChangeStore(s);
+                    if (result == 1)
+                    {
+                        MessageBox.Show("修改成功");
+                        //Console.WriteLine("修改成功");
+                    }
+                    else if (result == 0)
+                    {
+                        MessageBox.Show("修改失败");
+                        //Console.WriteLine("修改失败");
+                    }
+                    else
+                    {
+                        MessageBox.Show("未知错误");
+                        //Console.WriteLine("未知错误");
+                    }
+                }
             }
             catch
             {
                 MessageBox.Show("请输入正确的租金价格！");
                 t5.Text = "";
-            }
-            
-            String Master = t6.Text;
-            String Password = t4.Text;
-            bool IsLease = false;
-            if (c1.SelectedItem.ToString() == "是")
-            {
-                IsLease = true;
-            }
-
-            //将数据输入数据库
-            Store s = new Store(ShopNumber, Location, ShopName, Master, Rent, Password, IsLease);
-            int result = dgl.ChangeStore(s);
-            if (result == 1)
-            {
-                MessageBox.Show("修改成功");
-                //Console.WriteLine("修改成功");
-            }
-            else if (result == 0)
-            {
-                MessageBox.Show("修改失败");
-                //Console.WriteLine("修改失败");
-            }
-            else
-            {
-                MessageBox.Show("未知错误");
-                //Console.WriteLine("未知错误");
             }
         }
     }

@@ -74,3 +74,24 @@ F:\My FILS\大三\ZZT\STMS\STMS\YTJ\obj\Debug\卡管理_MarkupCompile.cache
 F:\My FILS\大三\ZZT\STMS\STMS\YTJ\obj\Debug\卡管理_MarkupCompile.lref
 F:\My FILS\大三\ZZT\STMS\STMS\YTJ\obj\Debug\卡管理.exe
 F:\My FILS\大三\ZZT\STMS\STMS\YTJ\obj\Debug\卡管理.pdb
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\bin\Debug\卡管理.exe.config
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\bin\Debug\卡管理.exe
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\bin\Debug\卡管理.pdb
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\卡管理.csprojAssemblyReference.cache
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\登录界面.g.cs
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\用户管理.g.cs
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\修改信息.g.cs
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\充值金额.g.cs
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\App.g.cs
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\卡管理_MarkupCompile.cache
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\卡管理_MarkupCompile.lref
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\登录界面.baml
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\用户管理.baml
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\修改信息.baml
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\充值金额.baml
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\卡管理.g.resources
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\卡管理.Properties.Resources.resources
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\卡管理.csproj.GenerateResource.cache
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\卡管理.csproj.CoreCompileInputs.cache
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\卡管理.exe
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\卡管理.pdb

@@ -33,15 +33,27 @@ namespace 卡管理
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (Text1.Text != string.Empty && Text2.Text != string.Empty && password1.Password != string.Empty
-                && password2.Password != string.Empty && Text3.Text != string.Empty)
+                && password2.Password != string.Empty  )
             {
+                foreach (Label l in MainWindow.labels)
+                {
+                    if (l.id.Equals(Text1.Text))
+                    {
+                        MessageBox.Show("卡号重复！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Text1.Text = "";
+                        return;
+                    }
+                }
+
+
                 if (password1.Password.Equals(password2.Password))
                 {
-                    Label l = new Label(Text1.Text,Text2.Text,password1.Password,int.Parse(Text3.Text));
+                    Label l = new Label(Text1.Text,Text2.Text,password1.Password,0);
                     int result = kgl.AddLable(l);
                     if (result == 1)
                     {
                         MessageBox.Show("创建成功！", "congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
+                        this.DialogResult = true;
                     }
                     else if (result == 0)
                     {
@@ -63,16 +75,6 @@ namespace 卡管理
             }
         }
 
-        private void Text1_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            foreach (Label l in MainWindow.labels)
-            {
-                if (l.id.Equals(Text1.Text))
-                {
-                    MessageBox.Show("卡号重复！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-                    Text1.Text = "";
-                }
-            }
-        }
+        
     }
 }

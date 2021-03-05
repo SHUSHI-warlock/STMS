@@ -227,7 +227,14 @@ namespace MsgTransTest
          */
         public int CloseSocket()
         {
-            Msg msg = new Msg(EProtocol.EP_Disconnect, ETopService.ET_DKJ, 0, null);
+            XmlDocument document = new XmlDocument();
+
+            XmlElement disconnect = document.CreateElement("disconnect");//CreateElement（节点名称）
+
+            document.AppendChild(disconnect);
+
+            Msg msg = new Msg(EProtocol.EP_Disconnect, ETopService.ET_DKJ, 0, document);
+
             this.msgSendReceiver.SendMsg(msg);
             try
             {

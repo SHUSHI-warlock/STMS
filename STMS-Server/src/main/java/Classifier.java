@@ -67,7 +67,7 @@ public class Classifier implements Runnable{
             if (service.ServiceVerify(m) > 0) {
                 //服务进行
                 service.ServerHandle();
-                DisConnect();
+                //DisConnect();
                 return true;
             } else
                 return false;
@@ -76,7 +76,7 @@ public class Classifier implements Runnable{
             System.out.println("服务"+ m.getTopService().toString()+"返回错误！");
             e.printStackTrace();
         }
-        DisConnect();
+        //DisConnect();
         return false;
     }
     private void DisConnect() {
