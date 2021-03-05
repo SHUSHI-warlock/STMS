@@ -33,18 +33,6 @@ namespace Util.Controls.WPFTest
                 Console.Out.WriteLine("获取失败！");
             else
             {
-                /*
-                foreach (Bill b in bs)
-                {
-                    var d1 = new Bill();
-
-                    d1.SetLabelid(b.GetLabelid());
-                    d1.SetStoreid(b.GetStoreid());
-                    d1.SetTime(b.GetTime());
-                    d1.SetCost(b.GetCost());
-                    ds.Add(d1);
-                }
-                */
                 this.gridList.ItemsSource = ds;
             }
         }
