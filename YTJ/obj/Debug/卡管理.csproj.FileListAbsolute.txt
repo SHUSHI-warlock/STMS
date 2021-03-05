@@ -95,3 +95,4 @@ E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\卡管�
 E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\卡管理.csproj.CoreCompileInputs.cache
 E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\卡管理.exe
 E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\卡管理.pdb
+E:\study\MyCode\vs\作业与上机\程序设计方法\STMS\YTJ\obj\Debug\GeneratedInternalTypeHelper.g.cs

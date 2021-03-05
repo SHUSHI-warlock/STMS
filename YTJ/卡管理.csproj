@@ -63,6 +63,7 @@
     <Compile Include="Label.cs" />
     <Compile Include="Msg.cs" />
     <Compile Include="MsgSendReceiver.cs" />
+    <Compile Include="PriceConverter.cs" />
     <Compile Include="ServerConn.cs" />
     <Compile Include="Store.cs" />
     <Compile Include="TransYTJ.cs" />

@@ -29,29 +29,32 @@ namespace 卡管理
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            double number = Convert.ToDouble(textbox1.Text.Trim());
-            if (number < 0)
+            double number;
+            if (double.TryParse(textbox1.Text.Trim(), out number))
             {
-                MessageBox.Show("充值的数据不能为负数！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else if(textbox1.Text.ToString().Contains("."))
-            {
-                MessageBox.Show("充值的数据不能为小数！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            Label l = new Label(MainWindow.label.id, MainWindow.label.name, MainWindow.label.password, int.Parse(textbox1.Text));
-            int result = ytj.ChangeLabel(l);
-            if (result == 1)
-            {
-                MessageBox.Show("充值成功！", "congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else if (result == 0)
-            {
-                MessageBox.Show("充值失败！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (number < 0)
+                {
+                    MessageBox.Show("充值的数据不能为负数！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                Label l = ytj.GetLabel();
+                l.Money += (int)(number * 100);
+                int result = ytj.ReCharge(l);
+                if (result == 1)
+                {
+                    MessageBox.Show("充值成功！", "congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
+                    this.DialogResult = true;
+                }
+                else if (result == 0)
+                {
+                    MessageBox.Show("充值失败！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    MessageBox.Show("未知错误！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
-            {
-                MessageBox.Show("未知错误！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+                MessageBox.Show("输入格式有误！");
         }
     }
 }

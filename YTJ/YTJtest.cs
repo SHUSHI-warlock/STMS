@@ -130,7 +130,7 @@ namespace MsgTransTest
             Console.Out.WriteLine("卡号:" + l.id);
             Console.Out.WriteLine("卡持有者:" + l.name);
             Console.Out.WriteLine("卡密码:" + l.password);
-            Console.Out.WriteLine("卡余额:" + l.money);
+            Console.Out.WriteLine("卡余额:" + l.Money);
         }
     }
 }

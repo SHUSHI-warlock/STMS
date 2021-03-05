@@ -25,6 +25,9 @@ namespace 卡管理
         public Window2()
         {
             InitializeComponent();
+            Label label = ytj.GetLabel();
+            textbox1.Text = label.id;
+            textbox2.Text = label.name;
         }
         private TransYTJ ytj = TransYTJ.GetInstance();
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -32,10 +35,10 @@ namespace 卡管理
             if (textbox1.Text != string.Empty && textbox2.Text != string.Empty && password1.Text != string.Empty
                && password2.Text != string.Empty)
             {
-                textbox1.Text = MainWindow.label.id;
+                
                 if (password1.Text.Equals(password2.Text))
                 {
-                    Label l = new Label(textbox1.Text, textbox2.Text, password1.Text, MainWindow.label.money);
+                    Label l = new Label(textbox1.Text, textbox2.Text, password1.Text, MainWindow.label.Money);
                     int result1 = ytj.ChangeLabel(l);
                     if (result1 == 1)
                     {

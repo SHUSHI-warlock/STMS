@@ -14,6 +14,8 @@ import java.util.Date;
 public class test {
 
     public static void main(String[] args) throws ParseException {
+        System.out.println(DESUtils.getDecryptString("PJdghg1Nqjs="));
+
         //getOrder();       //ok
         //getFood();        //ok
         //addFood();        //ok
@@ -350,7 +352,7 @@ public class test {
             System.out.println("余额："+a);
     }
 
-    public static void Caculate()   {
+    public static void Caculate(){
 
         int a=Dao.CaculateTurnover("1S3F3W");
         if(a>0)
