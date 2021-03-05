@@ -9,7 +9,7 @@
         xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
         mc:Ignorable="d" Background="#5656CA"
         WindowStyle="None"
-        Title="Window2" Height="450" Width="800">
+        Title="Window2" Height="450" Width="800" ResizeMode="NoResize" >
     <Window.Resources>
         <collections:ArrayList x:Key="items">
             <system:String >是</system:String>

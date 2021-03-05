@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         WindowStyle="None"
         Background="#5656CA"
-        Title="Window1" Height="478.209" Width="832.239">
+        Title="Window1" Height="478.209" Width="832.239" ResizeMode="NoResize">
     <Window.Resources>
         <Style TargetType="StackPanel">
             <Setter Property="Height" Value="80"/>

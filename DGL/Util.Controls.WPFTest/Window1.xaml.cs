@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,7 +28,7 @@ namespace Util.Controls.WPFTest
         //String[] shop = new String[112];
         public Window1()
         {
-            
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
 
             dgl = TransDGL.GetInstance();
@@ -44,12 +45,12 @@ namespace Util.Controls.WPFTest
             stores = ls.ToArray();
             //stores = dgl.GetStores();
 
-            RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
+            RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
             if (stores.Length >= 18)
             {
-                for (int i = 0; i < 19; i++)
+                for (int i = 0; i < 18; i++)
                 {
-                    if (stores[i].GetName() != null)
+                    if (stores[i].id!="")
                     {
                         rads[i].DataContext = stores[i];
                         //rads[i].Content = stores[i].GetName();
@@ -64,7 +65,7 @@ namespace Util.Controls.WPFTest
             {
                 for(int i = 0; i < stores.Length; i++)
                 {
-                    if (stores[i].GetName() != null)
+                    if (stores[i].id!="")
                     {
                         rads[i].DataContext = stores[i];
                         //rads[i].Content = stores[i].GetName();
@@ -74,7 +75,7 @@ namespace Util.Controls.WPFTest
                         break;
                     }
                 }
-                for (int j = stores.Length; j < 19; j++)
+                for (int j = stores.Length; j < 18; j++)
                 {
                     rads[j].Visibility = Visibility.Hidden;
                 }
@@ -99,8 +100,8 @@ namespace Util.Controls.WPFTest
 
         private void FButton_Click_Delete(object sender, RoutedEventArgs e)
         {
-            RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
-            for(int i = 0; i < 19; i++)
+            RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
+            for(int i = 0; i < 18; i++)
             {
                 if (rads[i].IsChecked == true)
                 {
@@ -113,17 +114,21 @@ namespace Util.Controls.WPFTest
                         {
                             MessageBox.Show("删除成功");
                             //Console.WriteLine("删除成功");
+                            for(int a = 0; a < 18; a++)
+                            {
+                                rads[a].Visibility = Visibility.Visible;
+                            }
                             List<Store> ls = new List<Store>();
                             ls = dgl.GetStores();
                             stores = ls.ToArray();
-                            RadioButton[] rads2 = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
+                            RadioButton[] rads2 = { r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
                             if (stores.Length >= 18)
                             {
-                                for (int j = 0; j < 19; j++)
+                                for (int j = 0; j < 18; j++)
                                 {
                                     if (stores[j].GetName() != null)
                                     {
-                                        rads2[j].DataContext = stores[i];
+                                        rads2[j].DataContext = stores[j];
                                     }
                                     else
                                     {
@@ -137,12 +142,16 @@ namespace Util.Controls.WPFTest
                                 {
                                     if (stores[j].GetName() != null)
                                     {
-                                        rads[j].DataContext = stores[i];
+                                        rads[j].DataContext = stores[j];
                                     }
                                     else
                                     {
                                         break;
                                     }
+                                }
+                                for (int j = stores.Length; j < 18; j++)
+                                {
+                                    rads[j].Visibility = Visibility.Hidden;
                                 }
                             }
                             page = 0;
@@ -158,34 +167,6 @@ namespace Util.Controls.WPFTest
                             //Console.WriteLine("未知错误");
                         }
                     }
-                    /*
-                    if (rads[i].Content.ToString() != null)
-                    {
-                        String name = rads[i].Content.ToString();
-                        foreach (Store s in stores)
-                        {
-                            if (s.GetName() == rads[i].Content.ToString())
-                            {
-                                int result = dgl.DeleteStore(s.GetId());
-                                if (result == 1)
-                                {
-                                    MessageBox.Show("删除成功");
-                                    //Console.WriteLine("删除成功");
-                                }
-                                else if (result == 0)
-                                {
-                                    MessageBox.Show("删除失败");
-                                    //Console.WriteLine("删除失败");
-                                }
-                                else
-                                {
-                                    MessageBox.Show("未知错误");
-                                    //Console.WriteLine("未知错误");
-                                }
-                            }
-                        }
-                    }
-                    */
                     else
                     {
                         MessageBox.Show("请选择店铺后点击!");
@@ -195,24 +176,27 @@ namespace Util.Controls.WPFTest
             }
         }
 
-
-        private void FButton_Click_Add(object sender, RoutedEventArgs e)
+        void windowclosed()
         {
-            Window2 win = new Window2();
-            win.Show();
-            //刷新店铺信息
-            //stores = dgl.GetStores();
             List<Store> ls = new List<Store>();
             ls = dgl.GetStores();
+
             stores = ls.ToArray();
-            RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
+            //stores = dgl.GetStores();
+
+            RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
+            for(int a = 0; a < 18; a++)
+            {
+                rads[a].Visibility = Visibility.Visible;
+            }
             if (stores.Length >= 18)
             {
-                for (int i = 0; i < 19; i++)
+                for (int i = 0; i < 18; i++)
                 {
-                    if (stores[i].GetName() != null)
+                    if (stores[i].id != "")
                     {
                         rads[i].DataContext = stores[i];
+                        //rads[i].Content = stores[i].GetName();
                     }
                     else
                     {
@@ -224,23 +208,39 @@ namespace Util.Controls.WPFTest
             {
                 for (int i = 0; i < stores.Length; i++)
                 {
-                    if (stores[i].GetName() != null)
+                    if (stores[i].id != "")
                     {
                         rads[i].DataContext = stores[i];
+                        //rads[i].Content = stores[i].GetName();
                     }
                     else
                     {
                         break;
                     }
                 }
+                for (int j = stores.Length; j < 18; j++)
+                {
+                    rads[j].Visibility = Visibility.Hidden;
+                }
             }
             page = 0;
+            this.IsEnabled = true;
+        }
+
+        private void FButton_Click_Add(object sender, RoutedEventArgs e)
+        {
+            this.IsEnabled = false;
+            Window2 win = new Window2();
+            //win.Show();
+            win.windowclose += new windowCloseEvent(windowclosed);
+            win.ShowDialog();
+          
         }
 
         private void FButton_Click_Enter(object sender, RoutedEventArgs e)
         {
-            RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
-            for (int i = 0; i < 19; i++)
+            RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
+            for (int i = 0; i < 18; i++)
             {
                 if (rads[i].IsChecked == true)
                 {
@@ -250,30 +250,19 @@ namespace Util.Controls.WPFTest
 
                     //String name = rads[i].Content.ToString();
 
-                    if (name == "")
+                    if (ss.id == "")
                     {
                         MessageBox.Show("请选择商店后进行点击!");
                     }
                     else
                     {
 
-                        this.Visibility = Visibility.Hidden;
-                        Window6 win2 = new Window6(ss.name, ss.id);
-                        win2.Show();
-                        this.Visibility = Visibility.Visible;
+                        this.IsEnabled = false;
 
-                        /*
-                        foreach (Store s in stores)
-                        {
-                            if (s.GetName() == rads[i].Content.ToString())
-                            {
-                                this.Visibility = Visibility.Hidden;
-                                Window6 win2 = new Window6(name, s.GetId());
-                                win2.Show();
-                                this.Visibility = Visibility.Visible;
-                            }
-                        }
-                        */
+                        Window6 win2 = new Window6(ss.name, ss.id);
+                        win2.windowclose += new windowCloseEvent2(windowclosed);
+                        win2.ShowDialog();
+                        //win2.Show();
 
                     }
                     
@@ -289,13 +278,18 @@ namespace Util.Controls.WPFTest
             }
             else
             {
-                RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
-
-                for (int i = 0; i < 19; i++)
+               
+                RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
+                for(int j = 0; j < 18; j++)
                 {
-                    if(stores[(page - 1) * 18 + i].GetName()!=null)
+                    rads[j].Visibility = Visibility.Visible;
+                }
+                page--;
+                for (int i = 0; i < 18; i++)
+                {
+                    if(stores[page * 18 + i].id!="")
                     {
-                        rads[i].DataContext = stores[(page - 1) * 18 + i];
+                        rads[i].DataContext = stores[page * 18 + i];
                         //rads[i].Content = stores[(page - 1) * 18 + i].GetName();
                     }
                     else
@@ -303,21 +297,22 @@ namespace Util.Controls.WPFTest
                         break;
                     }
                 }
-                page--;
+                
             }
         }
         private void FButton_Click_next(object sender, RoutedEventArgs e)
         {
 
-            RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
+            RadioButton[] rads = { r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18 };
             int i = 0;
-            if (page * 18 + i + 18 <= 112)
-            {
+            //if (page * 18 + i + 18 <= 112)
+            //{
                 if (stores.Length - (page+1) * 18 >= 18)
                 {
-                    for (; i < 19; i++)
+                    page++;
+                    for (; i < 18; i++)
                     {
-                        if (stores[page * 18 + i].GetName() != null)
+                        if (stores[page * 18 + i].id!="")
                         {
                             rads[i].DataContext = stores[page * 18 + i];
                             //rads[i].Content = stores[page * 18 + i].GetName();
@@ -329,11 +324,12 @@ namespace Util.Controls.WPFTest
 
                     }
                 }
-                else
+                else if((stores.Length-(page+1)*18) > 0)
                 {
-                    for (; i < (stores.Length - (page+1) * 18); i++)
+                    page++;
+                    for (; i < (stores.Length - (page * 18)); i++)
                     {
-                        if (stores[page * 18 + i].GetName() != null)
+                        if (stores[page * 18 + i].id!="")
                         {
                             rads[i].DataContext = stores[page * 18 + i];
                             //rads[i].Content = stores[page * 18 + i].GetName();
@@ -343,17 +339,21 @@ namespace Util.Controls.WPFTest
                             break;
                         }
                     }
-                    for(int j = (stores.Length - (page + 1) * 18); j < 19; j++)
+                    for(int j = (stores.Length - (page * 18)); j < 18; j++)
                     {
                         rads[j].Visibility = Visibility.Hidden;
                     }
                 }
-                page++;
-            }
-            else
-            {
-                MessageBox.Show("已经是在最后一页了");
-            }
+                else
+                {
+                    MessageBox.Show("已经是最后一页了！");
+                }
+                
+           // }
+            //else
+           // {
+           //     MessageBox.Show("已经是在最后一页了");
+           // }
 
         }
 

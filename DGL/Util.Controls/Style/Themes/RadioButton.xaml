@@ -54,7 +54,7 @@
                     <Grid x:Name="grid" VerticalAlignment="Center">
                         <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}"  Height="{TemplateBinding Height}" HorizontalAlignment="Center"
                                 Background="{TemplateBinding Background}" Width="{TemplateBinding Width}">
-                            <StackPanel  Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button},AncestorLevel=1},Path=ActualWidth}">
+                            <StackPanel Width="100" Height="80">
                                 <Label Content="{Binding id}" HorizontalAlignment="Left" FontSize="8" Height="25"/>
                                 <Label Content="{Binding name}" FontSize="16" HorizontalAlignment="Center" Height="25"/>
                                 <Label Content="{Binding loc}" HorizontalAlignment="Right" FontSize="8" Height="25"/>

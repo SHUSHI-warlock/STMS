@@ -8,7 +8,7 @@
         xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
         xmlns:local="clr-namespace:Util.Controls.WPFTest"
         mc:Ignorable="d" Background="{StaticResource WindowBackground}" WindowStyle="None"
-        Title="Window3" Height="450" Width="800">
+        Title="Window3" Height="450" Width="800" ResizeMode="NoResize">
     <Window.Resources>
         <collections:ArrayList x:Key="items">
             <system:String >是</system:String>
@@ -22,11 +22,11 @@
     <Grid>
         <TextBox x:Name="t1" Width="200" Margin="115,95,477,308" xly:ControlAttachProperty.Watermark="请输入菜品名" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="菜品名："/>
-        <TextBox x:Name="t2" Width="200" Margin="115,155,477,246" xly:ControlAttachProperty.Watermark="请输入菜品号" 
+        <TextBox x:Name="t2" Width="200" Margin="115,155,477,246" IsReadOnly="True" xly:ControlAttachProperty.Watermark="请输入菜品号" 
                          Style="{StaticResource LabelTextBox}"  xly:ControlAttachProperty.Label=" 菜品号："/>
         <TextBox x:Name="t3" Width="200" Margin="115,224,477,174" xly:ControlAttachProperty.Watermark="请输入菜品类别" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="类别："/>
-        <ComboBox Name="c1" Margin="437,94,154.6,308.2" ItemsSource="{StaticResource items2}" xly:ControlAttachProperty.Label="策略： " 
+        <ComboBox Name="c1" Margin="442,94,158,308" ItemsSource="{StaticResource items2}" xly:ControlAttachProperty.Label="策略： " 
                       Style="{StaticResource LabelComboBox}"  Width="Auto" Height="Auto" />
         <TextBox x:Name="t6" Width="200" Margin="438,224,154,174" IsReadOnly="True" xly:ControlAttachProperty.Watermark="" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="店铺："/>
