@@ -14,19 +14,21 @@ using System.Windows.Threading;
 
 namespace Util.Controls.WPFTest
 {
+    public delegate void windowCloseEvent2();
     /// <summary>
     /// Window6.xaml 的交互逻辑
     /// </summary>
     public partial class Window6 : Window
     {
+        public event windowCloseEvent2 windowclose;
         private DispatcherTimer ShowTimer;
-        
+
         public String getname { get; set;}
         public String Number { get; set; }
         public Window6(String name,String storeNumber)
         {
-            
 
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
 
             ShowTime();    //在这里窗体加载的时候不执行文本框赋值，窗体上不会及时的把时间显示出来，而是等待了片刻才显示了出来
@@ -37,10 +39,19 @@ namespace Util.Controls.WPFTest
             Page1 p = new Page1(name,storeNumber);
             getname = name;
             Number = storeNumber;
+            textBlock.Text = "店铺号：" + Number;
             Page_Change.Content = new Frame()
             {
                 Content = p
             };
+        }
+
+        private void strickEvent()
+        {
+            if (windowclose != null)
+            {
+                windowclose();
+            }
         }
 
         public void ShowCurTimer(object sender, EventArgs e)
@@ -57,6 +68,7 @@ namespace Util.Controls.WPFTest
 
         private void FButton_Click_Exit(object sender, RoutedEventArgs e)
         {
+            strickEvent();
             this.Close();
         }
 

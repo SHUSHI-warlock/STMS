@@ -8,7 +8,7 @@
         xmlns:xly="clr-namespace:Util.Controls;assembly=Util.Controls"
         xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
         mc:Ignorable="d" Background="#5656CA"  WindowStyle="None"
-        Title="Window4" Height="450" Width="800">
+        Title="Window4" Height="450" Width="800" ResizeMode="NoResize">
     <Window.Resources>
         <collections:ArrayList x:Key="items">
             <system:String >是</system:String>
@@ -24,17 +24,17 @@
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="菜品名："/>
         <TextBox x:Name="t2" Width="200" Margin="115,155,477,246" xly:ControlAttachProperty.Watermark="请输入菜品号" 
                          Style="{StaticResource LabelTextBox}"  xly:ControlAttachProperty.Label=" 菜品号："/>
-        <TextBox x:Name="t3" Width="200" Margin="115,227,477,171" xly:ControlAttachProperty.Watermark="请输入菜品类别" 
+        <TextBox x:Name="t3" Height="49" Width="200" Margin="119,227,481,171" xly:ControlAttachProperty.Watermark="请输入菜品类别" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="类别："/>
         <TextBox x:Name="t6" Width="200" Margin="438,227,154,171" IsReadOnly="True" xly:ControlAttachProperty.Watermark="" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="店铺："/>
-        <ComboBox Name="c1" Margin="439,77,152.6,325.2" ItemsSource="{StaticResource items2}" xly:ControlAttachProperty.Label="策略： " 
+        <ComboBox Name="c1" Margin="439,77,158,325" ItemsSource="{StaticResource items2}" xly:ControlAttachProperty.Label="策略： " 
                       Style="{StaticResource LabelComboBox}"  Width="Auto" Height="Auto" />
         <TextBox x:Name="t5" Width="200" Margin="438,155,154,246" xly:ControlAttachProperty.Watermark="请输入菜品单价" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="单价："/>
         <TextBox x:Name="t9" Width="200" Margin="438,304,154,97" IsReadOnly="True" xly:ControlAttachProperty.Watermark="" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="店铺号："/>
-        <TextBox x:Name="t8" Width="Auto" Margin="115,305,474,96" xly:ControlAttachProperty.Watermark="请输入菜品描述" 
+        <TextBox x:Name="t8" Width="Auto" Margin="120,305,481,96" xly:ControlAttachProperty.Watermark="请输入菜品描述" 
                          Style="{StaticResource LabelTextBox}" xly:ControlAttachProperty.Label="描述：" RenderTransformOrigin="0.5,0.5">
             <TextBox.RenderTransform>
                 <TransformGroup>

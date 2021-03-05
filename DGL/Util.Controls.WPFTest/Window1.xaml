@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         WindowStyle="None"
         Background="#5656CA"
-        Title="Window1" Height="478.209" Width="832.239">
+        Title="Window1" Height="478.209" Width="832.239" ResizeMode="NoResize">
     <Window.Resources>
         <Style TargetType="StackPanel">
             <Setter Property="Height" Value="80"/>
@@ -39,7 +39,7 @@
             <TextBlock HorizontalAlignment="Left" Margin="358,16,0,0" TextWrapping="Wrap" FontSize="26" Text="店铺管理" VerticalAlignment="Top"/>
 
         </Grid>
-        <RadioButton x:Name="r1" Width="100" Height="80" Style="{StaticResource BoxRadioButton}" Margin="39,93,686.6,299" RenderTransformOrigin="0.537,0.321" />
+        <RadioButton x:Name="r1" Width="100" Height="80" Style="{StaticResource BoxRadioButton}" Margin="42,96,690,302.4" RenderTransformOrigin="0.537,0.321" />
         <RadioButton x:Name="r2" Width="100" Height="80" Style="{StaticResource BoxRadioButton}" Margin="165,87,560.6,296"/>
         <RadioButton x:Name="r3" Width="100" Height="80" Style="{StaticResource BoxRadioButton}" Margin="292,87,433.6,296"/>
         <RadioButton x:Name="r4" Width="100" Height="80" Style="{StaticResource BoxRadioButton}" Margin="420,90,305.6,296"/>

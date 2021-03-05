@@ -17,13 +17,20 @@ namespace Util.Controls.WPFTest
         }
         public void SendMsg(Msg msg)
         {
-            string msgStr = string.Format("{0,-4}", (int)msg.GetProtocol())
-                + string.Format("{0,-4}", (int)msg.GetTopService())
-                + string.Format("{0,-4}", msg.GetLowService())
-                + string.Format("{0,-4}", msg.GetLength())
-                + msg.GetContent().InnerXml;
-            byte[] buffer = Encoding.UTF8.GetBytes(msgStr);
-            mySocket.Send(buffer);
+            //if (ServerConn.SocketTest())
+            {
+                string msgStr = string.Format("{0,-4}", (int)msg.GetProtocol())
+                    + string.Format("{0,-4}", (int)msg.GetTopService())
+                    + string.Format("{0,-4}", msg.GetLowService())
+                    + string.Format("{0,-4}", msg.GetLength())
+                    + msg.GetContent().InnerXml;
+                byte[] buffer = Encoding.UTF8.GetBytes(msgStr);
+                mySocket.Send(buffer);
+            }
+            //else
+            //{
+            //    throw new Exception("连接断开！");
+            
         }
         public Msg ReceiveMsg()
         {

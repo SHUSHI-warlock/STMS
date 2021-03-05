@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Util.Controls.WPFTest"
         xmlns:xly="clr-namespace:Util.Controls;assembly=Util.Controls"
         mc:Ignorable="d" Background="{StaticResource WindowBackground}" WindowStyle="None"
-        Title="Window6" Height="450" Width="800">
+        Title="Window6" Height="450" Width="800" ResizeMode="NoResize">
     <Grid>
         <ContentControl x:Name="Page_Change" HorizontalAlignment="Left" Margin="83,84,0,0" VerticalAlignment="Top" Height="348" Width="709" BorderBrush="White" BorderThickness="1,1,1,1"/>
         <xly:FButton FIcon="" Margin="0,115,714,287" Width="Auto" Height="40" Background="#12B512" IsDefault="True" MouseOverBackground="#08EE08" Click="FButton_Click_Shop" RenderTransformOrigin="0.007,3.525">店铺信息</xly:FButton>
@@ -32,6 +32,7 @@
 
             <xly:FButton Margin="699,10,10,39" Width="Auto" Height="Auto" Background="#FF931E1E" IsDefault="True" MouseOverBackground="#FFC52929" Click="FButton_Click_Exit">退出</xly:FButton>
             <TextBlock HorizontalAlignment="Left" Margin="330,26,0,0" TextWrapping="Wrap" Text="店铺管理" FontSize="24" VerticalAlignment="Top"/>
+            <TextBlock Name="textBlock" HorizontalAlignment="Left" Margin="534,37,0,0" TextWrapping="Wrap" Text="" FontSize="16" VerticalAlignment="Top"/>
 
         </Grid>
     </Grid>
