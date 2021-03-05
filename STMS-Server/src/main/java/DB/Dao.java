@@ -506,7 +506,6 @@ public class Dao {
 
     }
 
-
     public static int deleteLabel(Label l){
         //删除已有的消费卡
         String sql = "delete from T_Label where L_Id='" + l.id + "'";

@@ -50,6 +50,8 @@ namespace 卡管理
                     if (result1 == 1)
                     {
                         MessageBox.Show("删除成功！", "congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
+                        List<Label> labels = kgl.GetLabel();
+                        listView.ItemsSource = labels;
                     }
                     else if (result1 == 0)
                     {
@@ -70,7 +72,7 @@ namespace 卡管理
             initList();
         }
 
-        private void Recharge(object sender, RoutedEventArgs e)
+        private void Change(object sender, RoutedEventArgs e)
         {
             slabel = listView.SelectedItem as Label;
             int intyue = 0;
@@ -79,26 +81,10 @@ namespace 卡管理
             else
             {
                 Label u = listView.SelectedItem as Label;
-                try
-                {
-                    intyue = int.Parse(yue.Text);
-                    if (intyue < 0)
-                    {
-                        MessageBox.Show("余额不可为负！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-                        yue.Text = "";
-                        return;
-                    }
-                }
-                catch (FormatException ex)
-                {
-                    MessageBox.Show("余额不可为非整数！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-                    yue.Text = "";
-                    return;
-                }
                 MessageBoxResult result = MessageBox.Show("确认是否修改账号为 " + u.id + " 的用户", "警告", MessageBoxButton.OKCancel, MessageBoxImage.Question);
-                if (result == MessageBoxResult.OK && password1.Password == password1_Copy.Password)
+                if (result == MessageBoxResult.OK)
                 {
-                    Label l = new Label(textbox1.Text, textbox2.Text, password1.Password, intyue);
+                    Label l = new Label(u.id, textbox2.Text, password1.Text, intyue);
                     int result1 = kgl.ChangeLabel(l);
                     if (result1 == 1)
                     {
@@ -107,11 +93,7 @@ namespace 卡管理
                         listView.ItemsSource = labels;
                         textbox1.Text = "";
                         textbox2.Text = "";
-                        yue.Text = "";
-                        password1.Password = "";
-                        password1_Copy.Password = "";
-
-
+                        password1.Text = "";
                     }
                     else if (result1 == 0)
                     {
@@ -158,18 +140,24 @@ namespace 卡管理
             }
         }
 
-        private void textbox1_TextChanged(object sender, TextChangedEventArgs e)
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (slabel == null)
-                return;
-            foreach (Label l in MainWindow.labels)
+            Label u = listView.SelectedItem as Label;
+            if (u == null)
             {
-                if (l.id.Equals(textbox1.Text) && !l.id.Equals(slabel.id))
-                {
-                    MessageBox.Show("卡号重复！", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-                    textbox1.Text = "";
-                }
+                textbox1.Text = "";
+                password1.Text = "";
+                textbox2.Text = "";
+                yue.Text = "";
             }
+            else
+            {
+                textbox1.Text = u.id;
+                password1.Text = u.password;
+                textbox2.Text = u.name;
+                yue.Text = u.money.ToString();
+            }    
+          
         }
     }
 }
