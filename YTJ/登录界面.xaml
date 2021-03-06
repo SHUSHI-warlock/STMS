@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:卡管理"
         mc:Ignorable="d"
-        Title="登录界面" Height="300" Width="500">
+        Title="登录界面" Height="300" Width="500" ResizeMode="NoResize">
     <Grid>
         <Label Content="欢迎进入一体机系统" HorizontalAlignment="Left" Height="45" Margin="136,42,0,0" VerticalAlignment="Top" Width="235" FontSize="24" FontFamily="Sylfaen"/>
         <Label Content="账号" HorizontalAlignment="Left" Margin="63,108,0,0" VerticalAlignment="Top" Height="37" Width="50" FontSize="18"/>

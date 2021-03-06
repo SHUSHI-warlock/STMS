@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:卡管理"
         mc:Ignorable="d"
-        Title="主操作界面" Height="450" Width="800">
+        Title="主操作界面" Height="450" Width="800" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="95*"/>
