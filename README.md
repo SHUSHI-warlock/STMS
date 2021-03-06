@@ -9,5 +9,5 @@
 + DKJ 打卡机程序
 + YTJ 一体机程序
 + KGL 卡管理程序
-+ DGL 店铺管理程序
++ OrderingMeals 店铺管理程序
 
