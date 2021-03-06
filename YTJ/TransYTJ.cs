@@ -131,7 +131,7 @@ namespace MsgTransTest
             XmlElement PA = document.CreateElement("pa");
             PA.InnerText = label.password; //设置其值
             XmlElement LAS = document.CreateElement("lass");
-            LAS.InnerText = label.money.ToString(); //设置其值
+            LAS.InnerText = label.Money.ToString(); //设置其值
             
             changelabel.AppendChild(ID);
             changelabel.AppendChild(NM);
@@ -185,7 +185,7 @@ namespace MsgTransTest
             XmlElement PA = document.CreateElement("pa");
             PA.InnerText = label.password; //设置其值
             XmlElement LAS = document.CreateElement("lass");
-            LAS.InnerText = label.money.ToString(); //设置其值
+            LAS.InnerText = label.Money.ToString(); //设置其值
             
             recharge.AppendChild(ID);
             recharge.AppendChild(NM);

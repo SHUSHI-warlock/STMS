@@ -5,19 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:卡管理"
         mc:Ignorable="d"
-        Title="注册界面" Height="401.878" Width="685.549">
+        Title="注册界面" Height="350.50" Width="400.549" ResizeMode="NoResize">
     <Grid Margin="0,0,3.2,8">
-        <Label Content="卡号" HorizontalAlignment="Left" Margin="94,98,0,0" VerticalAlignment="Top"/>
-        <TextBox  Name="Text1" HorizontalAlignment="Left" Height="21" Margin="152,100,0,0" VerticalAlignment="Top" Width="364" TextChanged="Text1_TextChanged"/>
-        <Label Content="姓名" HorizontalAlignment="Left" Margin="94,130,0,0" VerticalAlignment="Top"/>
-        <Label Content="确认密码" HorizontalAlignment="Left" Margin="94,204,0,0" VerticalAlignment="Top"/>
-        <Label Content="密码" HorizontalAlignment="Left" Margin="94,166,0,0" VerticalAlignment="Top"/>
-        <Label Content="余额" HorizontalAlignment="Left" Margin="94,238,0,0" VerticalAlignment="Top"/>
-        <TextBox  Name="Text2"  HorizontalAlignment="Left" Height="21" Margin="154,134,0,0" VerticalAlignment="Top" Width="362"/>
-        <PasswordBox PasswordChar="*" x:Name="password1" HorizontalAlignment="Left" Margin="154,169,0,0"   VerticalAlignment="Top" Width="362" Height="21" />
-        <PasswordBox PasswordChar="*" x:Name="password2" HorizontalAlignment="Left" Margin="154,205,0,0" VerticalAlignment="Top" Width="362" Height="21"/>
-        <TextBox  Name="Text3" HorizontalAlignment="Left" Height="21" Margin="152,242,0,0" VerticalAlignment="Top" Width="364"/>
-        <Button Content="添加" HorizontalAlignment="Left" Margin="526,295,0,0" VerticalAlignment="Top" Width="119" Click="Button_Click" Height="37"/>
-        <Label Content="请输入信息" HorizontalAlignment="Left" Height="54" Margin="274,49,0,0" VerticalAlignment="Top" Width="122" FontSize="22"/>
+        <Label Content="卡号" HorizontalAlignment="Left" Margin="25,93,0,0" VerticalAlignment="Top" Width="36"/>
+        <TextBox  Name="Text1" HorizontalAlignment="Left" Height="21" Margin="88,96,0,0" VerticalAlignment="Top" Width="275" />
+        <Label Content="姓名" HorizontalAlignment="Left" Margin="25,126,0,0" VerticalAlignment="Top" Width="36"/>
+        <Label Content="确认密码" HorizontalAlignment="Left" Margin="25,200,0,0" VerticalAlignment="Top" Width="63"/>
+        <Label Content="密码" HorizontalAlignment="Left" Margin="25,163,0,0" VerticalAlignment="Top" Width="36"/>
+        <TextBox  Name="Text2"  HorizontalAlignment="Left" Height="21" Margin="90,130,0,0" VerticalAlignment="Top" Width="273"/>
+        <PasswordBox PasswordChar="*" x:Name="password1" HorizontalAlignment="Left" Margin="90,165,0,0"   VerticalAlignment="Top" Width="273" Height="21" />
+        <PasswordBox PasswordChar="*" x:Name="password2" HorizontalAlignment="Left" Margin="90,201,0,0" VerticalAlignment="Top" Width="273" Height="21"/>
+        <Button Content="添加" HorizontalAlignment="Left" Margin="285,249,0,0" VerticalAlignment="Top" Width="78" Click="Button_Click" Height="37"/>
+        <Label Content="请输入信息" HorizontalAlignment="Left" Height="54" Margin="147,26,0,0" VerticalAlignment="Top" Width="133" FontSize="24" FontFamily="Sylfaen"/>
     </Grid>
 </Window>

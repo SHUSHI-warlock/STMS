@@ -41,9 +41,11 @@ namespace 卡管理
             {
                 MessageBox.Show("欢迎管理员" + textbox1.Text + "进入", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                 labels= kgl.GetLabel();
+                this.Hide();
                 Window1 a = new Window1();
                 a.ShowDialog();
-
+                textbox2.Password = "";
+                this.Show();
             }
             else if (er == 0)
             {
@@ -56,6 +58,8 @@ namespace 卡管理
                 return;
             }
         }
+
+
         //public static User user;
     }
 }

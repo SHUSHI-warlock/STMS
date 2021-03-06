@@ -369,6 +369,8 @@ public class YTJServerHandle extends AbstractServerHandle{
                 //System.out.println("失败");
                 elementState.setTextContent("false");
 
+            document.appendChild(root);
+
             //生成消息
             Msg result = null;
             try {

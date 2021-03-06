@@ -13,9 +13,9 @@ public class DBUtil {
     public static Connection getConnection(){
 
         JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-        DB_URL = "jdbc:mysql://localhost:3306/aaaaaa?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+        DB_URL = "jdbc:mysql://localhost:3306/STMS?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
         Name = "root";
-        Pwd = "lijiahui123";
+        Pwd = "000000";
         //String epwd=DESUtils.getEncryptString(Pwd);
         //String dpwd=DESUtils.getDecryptString(epwd);
 

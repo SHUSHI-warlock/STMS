@@ -5,19 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:卡管理"
         mc:Ignorable="d"
-        Title="修改信息" Height="450" Width="800">
+        Title="修改信息" Height="350" Width="400" ResizeMode="NoResize">
     <Grid>
-        <Label Content="请输入信息" HorizontalAlignment="Left" Height="54" Margin="357,54,0,0" VerticalAlignment="Top" Width="139" FontSize="22"/>
-        <Label Content="账号" HorizontalAlignment="Left" Margin="90,129,0,0" VerticalAlignment="Top" FontSize="16" Width="48"/>
-        <Label Content="密码" HorizontalAlignment="Left" Margin="90,184,0,0" VerticalAlignment="Top" FontSize="16" Width="48"/>
-        <Label Content="" HorizontalAlignment="Left" Margin="90,243,0,0" VerticalAlignment="Top" FontSize="16" Width="11"/>
-        <Label Content="确认密码" HorizontalAlignment="Left" Margin="90,232,0,0" VerticalAlignment="Top" FontSize="16" RenderTransformOrigin="0.76,-1.118" Width="84"/>
-        <TextBox Name="textbox1"  HorizontalAlignment="Left" Height="26" Margin="237,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="436" SpellCheck.IsEnabled="True"/>
-        <PasswordBox Name="password1" HorizontalAlignment="Left" Margin="237,184,0,0" VerticalAlignment="Top" Height="26" Width="436"/>
-        <PasswordBox Name="password2" HorizontalAlignment="Left" Margin="237,234,0,0" VerticalAlignment="Top" Height="26" Width="436"/>
-        <Label Content="姓名" HorizontalAlignment="Left" Margin="90,279,0,0" VerticalAlignment="Top" FontSize="16" Width="48"/>
-        <TextBox Name="textbox2"  HorizontalAlignment="Left" Height="26" Margin="237,283,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="436" SpellCheck.IsEnabled="True"/>
-        <Button Name="Button" Content="提交" HorizontalAlignment="Left" Margin="663,362,0,0" VerticalAlignment="Top" Width="75" Height="28" FontSize="18" Click="Button_Click_1"/>
+        <Label Content="请输入信息" HorizontalAlignment="Left" Height="54" Margin="140,30,0,0" VerticalAlignment="Top" Width="139" FontSize="22" FontFamily="Sylfaen"/>
+        <Label Content="账号" HorizontalAlignment="Left" Margin="54,94,0,0" VerticalAlignment="Top" Width="48"/>
+        <Label Content="密码" HorizontalAlignment="Left" Margin="54,129,0,0" VerticalAlignment="Top" Width="48" RenderTransformOrigin="-1.163,-1.26"/>
+        <Label Content="" HorizontalAlignment="Left" Margin="116,239,0,0" VerticalAlignment="Top" FontSize="16" Width="11"/>
+        <Label Content="确认密码" HorizontalAlignment="Left" Margin="43,164,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.76,-1.118" Width="84"/>
+        <TextBox Name="textbox1"  HorizontalAlignment="Left" Height="21" Margin="102,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242" SpellCheck.IsEnabled="True" IsReadOnly="True"/>
+        <TextBox Name="password1" HorizontalAlignment="Left" Margin="102,131,0,0" VerticalAlignment="Top" Height="21" Width="242"/>
+        <TextBox Name="password2" HorizontalAlignment="Left" Margin="102,167,0,0" VerticalAlignment="Top" Height="21" Width="242"/>
+        <Label Content="姓名" HorizontalAlignment="Left" Margin="54,199,0,0" VerticalAlignment="Top" Width="48" RenderTransformOrigin="-0.871,-1.692"/>
+        <TextBox Name="textbox2"  HorizontalAlignment="Left" Height="21" Margin="102,203,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242" SpellCheck.IsEnabled="True"/>
+        <Button Name="Button" Content="提交" HorizontalAlignment="Left" Margin="269,249,0,0" VerticalAlignment="Top" Width="75" Height="28" FontSize="18" Click="Button_Click_1"/>
 
     </Grid>
 </Window>

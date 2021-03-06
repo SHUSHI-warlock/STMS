@@ -9,6 +9,8 @@ public class STServer {
     private static int PORT = 7000; //端口号
     public static void main(String[] args) {
         //1.先开启营业额结算服务
+        WeekTask weekTask = new WeekTask();
+        weekTask.run("2021-3-5 20:28:00",1000*60*60*24*7);
 
         //在端口号上创建一个服务器套接字
         ServerSocket serverSocket = null;

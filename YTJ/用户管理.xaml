@@ -5,24 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:卡管理"
         mc:Ignorable="d"
-        Title="操作界面" Height="450" Width="800">
-    <Grid>
-        <Button Content="修改信息" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="110" Height="23" FontSize="14" Click="Button_Click"/>
-        <Button Content="查看消费记录" HorizontalAlignment="Left" Margin="254,9,0,0" VerticalAlignment="Top" Width="114" Height="23" Click="Button_Click_1"/>
-        <Button Content="充值" HorizontalAlignment="Left" Margin="125,10,0,0" VerticalAlignment="Top" Width="124" Height="23" Click="Button_Click_2" IsCancel="True"/>
-        <ListView Name="listView" HorizontalAlignment="Left" Height="382" VerticalAlignment="Top" Width="794" Margin="0,38,-0.4,0">
+        Title="操作界面" Height="450" Width="800" ResizeMode="NoResize">
+    <Window.Resources>
+        <local:PriceConverter x:Key="priceConverter"/>
+    </Window.Resources>
+    
+    <Grid x:Name="grid" Margin="0 10 0 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="110"/>
+            <ColumnDefinition Width="1*"/>
+
+        </Grid.ColumnDefinitions>
+        
+        <Button Content="修改信息" HorizontalAlignment="Center" Grid.Column="0"  VerticalAlignment="Center" Width="110" Height="23" FontSize="14" Click="Button_Click"/>
+        <Button Content="查看消费记录" HorizontalAlignment="Center" Grid.Column="1"  VerticalAlignment="Center" Width="110" Height="23" FontSize="14" Click="Button_Click_1"/>
+        <Button Content="充值" HorizontalAlignment="Center" Grid.Column="2"  VerticalAlignment="Center" Width="110" Height="23" FontSize="14" Click="Button_Click_2" IsCancel="True"/>
+        <Label Content="欢迎：" HorizontalAlignment="Right" Grid.Column="3"  VerticalAlignment="Center"/>
+        <Label x:Name="userid" Content="{Binding name}" HorizontalAlignment="Left" Grid.Column="4"  VerticalAlignment="Center"/>
+        <Label Content="您的当前余额为：" HorizontalAlignment="Right" Grid.Column="5"  VerticalAlignment="Center"/>
+        <Label x:Name="cost" Content="" HorizontalAlignment="Left" Grid.Column="6"  VerticalAlignment="Center"/>
+        <ListView Name="listView" Grid.Row="1" Grid.ColumnSpan="7" Margin="20 0 20 10">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="  卡号  " DisplayMemberBinding="{Binding labelid}" Width="100"/>
                     <GridViewColumn Header="  消费店铺  " DisplayMemberBinding="{Binding storeid}" Width="auto"/>
-                    <GridViewColumn Header="  消费金额  " DisplayMemberBinding="{Binding cost}" Width="auto"/>
+                    <GridViewColumn Header="  消费金额  " DisplayMemberBinding="{Binding cost,Converter={StaticResource priceConverter}}" Width="auto"/>
                     <GridViewColumn Header="  消费时间  " DisplayMemberBinding="{Binding time}" Width="150"/>
-
-
-                    <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-
+        
     </Grid>
 </Window>

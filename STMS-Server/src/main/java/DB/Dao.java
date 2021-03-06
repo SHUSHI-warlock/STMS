@@ -560,7 +560,6 @@ public class Dao {
 
     }
 
-
     public static int deleteLabel(Label l){
         //删除已有的消费卡
         String sql = "delete from T_Label where L_Id='" + l.id + "'";
@@ -916,10 +915,12 @@ public class Dao {
         try {
             state = conn.createStatement();
             rs = state.executeQuery(cal);
-            while (rs.next()) {
+            if (rs.next()) {
                 total -= rs.getInt("S_Rent");
                 master = rs.getString("S_Master");
             }
+            else
+                return -1;
         } catch (Exception e) {
             e.printStackTrace();
             return -1;
@@ -930,9 +931,11 @@ public class Dao {
         try {
             state = conn.createStatement();
             rs = state.executeQuery(fin);
-            while (rs.next()) {
+            if(rs.next()) {
                 total += rs.getInt("L_Lass");
             }
+            else
+                return -1;
         } catch (Exception e) {
             e.printStackTrace();
             return -1;

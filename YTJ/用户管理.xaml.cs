@@ -21,11 +21,21 @@ namespace 卡管理
     /// </summary>
     public partial class Window1 : Window
     {
-        
+        Label label;
         public Window1()
         {
             InitializeComponent();
+            label = ytj.GetLabel();
+            this.grid.DataContext = label;
+            refreash();
         }
+
+        private void refreash()
+        {
+            label = ytj.GetLabel();
+            this.cost.Content = ((double)label.Money/100).ToString()+"元";
+        }
+
         private TransYTJ ytj = TransYTJ.GetInstance();
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -55,6 +65,7 @@ namespace 卡管理
             Window4 a = new Window4();
             this.Hide();
             a.ShowDialog();
+            refreash();
             this.ShowDialog();
         }
     }

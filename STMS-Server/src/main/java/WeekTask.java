@@ -7,7 +7,6 @@ public class WeekTask {
     private long weekS ;
 
     public void run(String firstTime, long weekSpan){
-
         try {
             // 首次运行时间
             Date startTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(firstTime);
@@ -24,16 +23,18 @@ public class WeekTask {
                 public void run() {
                     weekS = (( end - start ) / weekSpan) + 1 ;
                     System.out.print("第"+ weekS + "周营业额结算\n");
-                    System.out.print("第"+ weekS + "次营业额结算\n");
                     weekS++;
                     //对每个店铺结算营业额
                     ArrayList<Store> stores = Dao.getAllStore();
-                    Iterator<Store> list = stores.iterator();
-                    while(list.hasNext()){
-                        int rt = Dao.CaculateTurnover(list.next().id);
-                        if(rt > 0) System.out.println("店铺" + list.next().id + "营业额结算成功，营业额为"+ rt +"！\n");
-                        if(rt == -1) System.out.println("店铺" + list.next().id + "营业额结算失败！\n");
-                        if(rt == -2) System.out.println("店铺" + list.next().id + "未出租！\n");
+                    System.out.println("店铺数："+stores.size());
+                    for(int i=0;i<stores.size();i++)
+                    {
+                        Store s = stores.get(i);
+                        int rt = Dao.CaculateTurnover(s.id);
+                        if(rt > 0) System.out.println("店铺" + s.id + "营业额结算成功！\n");
+                        else if(rt == -2) System.out.println("店铺" + s.id + "未出租！\n");
+                        else
+                            System.out.println("店铺" + s.id + "营业额结算失败！\n");
                     }
                 }
             };

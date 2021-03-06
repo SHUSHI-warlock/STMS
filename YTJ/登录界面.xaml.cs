@@ -36,10 +36,11 @@ namespace 卡管理
             if (er == 1)
             {
                 MessageBox.Show("欢迎" + textbox1.Text + "进入", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
-                label = ytj.GetLabel();
+
+                this.Hide();
                 Window1 a = new Window1();
                 a.ShowDialog();
-
+                this.Show();
             }
             else if (er == 0)
             {
